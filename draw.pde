@@ -44,40 +44,37 @@ void drawTrenchWalls3D(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positi
 
 void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
 
+  PImage mudAndGrasTexture = loadImage("texture_mudAndGras.jpg");
+  
   beginShape();
-
+  
+  texture(mudAndGrasTexture);
+  textureWrap(REPEAT);
+  textureMode(NORMAL);
   int c = 0;
 
   PVector prevTrench = new PVector();
+  
+  int sizeOfBents = toDraw.size()-1;
 
   for (PVector trenchLineBent : toDraw) {
-
-
 
     if (c == 0) {
 
       prevTrench = trenchLineBent;  
 
-      //ellipse(positionToDraw.x + trenchLineBent.x,positionToDraw.y + trenchLineBent.y,20,20);
-
-      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y);
+      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0,0);
       
     } else {
 
-
-      //ellipse(positionToDraw.x + trenchLineBent.x,positionToDraw.y + trenchLineBent.y,20,20);
-
-      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y);
-
-      //line(positionToDraw.x + prevTrench.x,positionToDraw.y + prevTrench.y,positionToDraw.x + trenchLineBent.x,positionToDraw.y + trenchLineBent.y);
+      if(sizeOfBents-5 < c)vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0,1);else
+      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0,0);
 
       prevTrench = trenchLineBent;
     }
 
     c++;
 
-
-    //print(trenchLineBent);
   }
 
 

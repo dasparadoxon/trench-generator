@@ -44,15 +44,19 @@ void draw() {
 }
 
 void generate() {
+  
+  
+  int trenchOffset = 250;
+  int trenchWidth = 130;
 
   leftTrenchLine = generateTrenchLine("left");
-  rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right",250);
+  rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right",trenchWidth);
 
   rightTrenchWall = generateTrenchWall(rightTrenchLine);
 
   leftTrenchWall = generateTrenchWall(leftTrenchLine);
 
-  trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine,250);
+  trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
   
   leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine);
   rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine);
@@ -103,10 +107,6 @@ void realDraw() {
 
   drawTrenchFloor3D(trenchFloor, new PVector(0, 1, 0));
 
-  translate(0, 0);
-
-  sphere(20);
-  
   drawTrenchWoodWalls(leftTrenchWoodWalls);
   drawTrenchWoodWalls(rightTrenchWoodWalls);
 }
