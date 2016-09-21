@@ -44,13 +44,9 @@ void drawTrenchWalls3D(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positi
 
 void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
 
-  PImage mudAndGrasTexture = loadImage("texture_mudAndGras.jpg");
   
   beginShape();
-  
-  texture(mudAndGrasTexture);
-  textureWrap(REPEAT);
-  textureMode(NORMAL);
+
   int c = 0;
 
   PVector prevTrench = new PVector();
@@ -63,12 +59,12 @@ void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
 
       prevTrench = trenchLineBent;  
 
-      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0,0);
+      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0);
       
     } else {
 
-      if(sizeOfBents-5 < c)vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0,1);else
-      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0,0);
+
+      vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y,0);
 
       prevTrench = trenchLineBent;
     }
