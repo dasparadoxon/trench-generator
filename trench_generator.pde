@@ -12,6 +12,7 @@ ArrayList<ArrayList<PVector>> rightTrenchWall;
 ArrayList<PVector> trenchFloor;
 
 ArrayList<trenchWoodWall> leftTrenchWoodWalls;
+ArrayList<trenchWoodWall> rightTrenchWoodWalls;
 
 PeasyCam camera;
 QueasyCam qCamera;
@@ -45,15 +46,16 @@ void draw() {
 void generate() {
 
   leftTrenchLine = generateTrenchLine("left");
-  rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right");
+  rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right",250);
 
   rightTrenchWall = generateTrenchWall(rightTrenchLine);
 
   leftTrenchWall = generateTrenchWall(leftTrenchLine);
 
-  trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine);
+  trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine,250);
   
   leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine);
+  rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine);
 }
 
 void keyPressedToGenerate() {
@@ -81,7 +83,7 @@ void realDraw() {
 
   background(255, 255, 255);
 
-  scale(0.2);
+  scale(0.1);
   translate(-width/2, -height/2);
   rotateX(PI/4);
   /*rotateZ(PI/8);*/
@@ -89,13 +91,13 @@ void realDraw() {
   fill(51, 137, 58);
 
 
-  drawTrenchLine3D(leftTrenchLine, new PVector(00, 1, 0));
-  drawTrenchLine3D(rightTrenchLine, new PVector(100, 1, 0));
+  drawTrenchLine3D(leftTrenchLine, new PVector(0, 1, 0));
+  drawTrenchLine3D(rightTrenchLine, new PVector(0, 1, 0));
 
   fill(137, 87, 51);
 
-  drawTrenchWalls3D(leftTrenchWall, new PVector(00, 1, 0));
-  drawTrenchWalls3D(rightTrenchWall, new PVector(100, 1, 0));
+  drawTrenchWalls3D(leftTrenchWall, new PVector(0, 1, 0));
+  drawTrenchWalls3D(rightTrenchWall, new PVector(0, 1, 0));
 
   fill(51, 51, 0);
 
@@ -106,4 +108,5 @@ void realDraw() {
   sphere(20);
   
   drawTrenchWoodWalls(leftTrenchWoodWalls);
+  drawTrenchWoodWalls(rightTrenchWoodWalls);
 }

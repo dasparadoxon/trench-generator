@@ -68,9 +68,11 @@ ArrayList<PVector> generateTrenchLine(String allignment) {
   return tempTrenchLine;
 }
 
+/***
+*   Clones a Trench Line 
+*///
 
-
-ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String allignment) {
+ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String allignment,int offsetX) {
 
   int numberOfTrenchBents = 10;
   int progressionInUnits = 1;
@@ -80,16 +82,13 @@ ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String 
   tempTrenchLine = new ArrayList<PVector>(numberOfTrenchBents);
 
   for (int trenchBent=0; trenchBent<numberOfTrenchBents; trenchBent++) {
+    
+    PVector vectorToClone = trenchLineToClone.get(trenchBent).copy();
+    
+    vectorToClone.x += offsetX;
 
-    tempTrenchLine.add(trenchLineToClone.get(trenchBent));
+    tempTrenchLine.add(vectorToClone);
 
-    int xStep = (int)random(width/10, width/5);
-
-    if ((int)random(0, 1)==1)xStep = -xStep;
-
-    tempTrenchLine.get(trenchBent).x = xStep;
-
-    progressionInUnits += xStep;
   }  
 
 
@@ -158,7 +157,7 @@ ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) 
   return tempTrenchWall;
 }
 
-ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVector> right) {
+ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVector> right, int offsetX) {
 
   ArrayList<PVector> tempTrenchFloor;
 
@@ -170,14 +169,14 @@ ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVecto
 
     PVector shift = left.get(trenchBent);
 
-    tempTrenchFloor.add(new PVector(shift.x, shift.y, shift.z -100));
+    tempTrenchFloor.add(new PVector(shift.x, shift.y, shift.z - 100));
   }
 
   for (int trenchBent=right.size()-1 -3; trenchBent > -1; trenchBent--) {
 
     PVector shift = left.get(trenchBent);
 
-    tempTrenchFloor.add(new PVector(shift.x+100, shift.y, shift.z -100));
+    tempTrenchFloor.add(new PVector(shift.x+ offsetX, shift.y, shift.z -100));
   } 
 
   PVector lastshift = left.get(0);
