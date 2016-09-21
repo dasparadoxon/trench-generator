@@ -61,6 +61,7 @@ void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
       //ellipse(positionToDraw.x + trenchLineBent.x,positionToDraw.y + trenchLineBent.y,20,20);
 
       vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y);
+      
     } else {
 
 
@@ -81,4 +82,30 @@ void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
 
 
   endShape();
+}
+
+void drawTrenchWoodWalls(ArrayList<trenchWoodWall> trenchWoodWallsToDraw){
+  
+  int i = 0;
+  
+  for (trenchWoodWall trenchWoodWallToDraw : trenchWoodWallsToDraw) {
+    
+    i++;
+    
+    trenchWoodWallElement firstWallElement = trenchWoodWallToDraw.wallElements.get(0);
+    
+    //print(i+" : Centerpos: "+ firstWallElement.centerPosition + "\n");
+    
+    pushMatrix();
+    
+    fill(255,0,0);
+    
+    translate(firstWallElement.centerPosition.x,firstWallElement.centerPosition.y,firstWallElement.centerPosition.z);
+    
+    sphere(10);
+    
+    popMatrix();
+    
+  }
+  
 }

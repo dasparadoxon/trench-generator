@@ -188,7 +188,7 @@ ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVecto
   return tempTrenchFloor;
 }
 
-ArrayList<trenchWoodWall> generateTrenchWoodWall(ArrayList<PVector> trenchLine){
+ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine){
   
   ArrayList<trenchWoodWall> tempTrenchWoodWalls;
   
@@ -201,8 +201,6 @@ ArrayList<trenchWoodWall> generateTrenchWoodWall(ArrayList<PVector> trenchLine){
     tempTrenchWoodWall = new trenchWoodWall(trenchLine.get(trenchBent),trenchLine.get(trenchBent+1));
     
     tempTrenchWoodWalls.add(tempTrenchWoodWall);
-    
-    
   
   }
   

@@ -19,8 +19,6 @@ class trenchWoodWall {
   
   trenchWoodWall(PVector origin,PVector second){
     
-    
-    
     PVector lOrigin = origin.copy();
     PVector lSecond = second.copy();
     
@@ -38,6 +36,8 @@ class trenchWoodWall {
     
     PVector centerPos = lOrigin.add(relNorm.mult(lengthOfElement/2));
     
+    //centerPos = origin.copy();
+    
     trenchWoodWallElement tempWallElement = new trenchWoodWallElement();
     
     tempWallElement.rotation = angleInDegrees;
@@ -46,7 +46,8 @@ class trenchWoodWall {
     
     wallElements.add(tempWallElement);
     
-    print("Creating new Trench Wood Wall between "+origin+" and "+second+" with angle : "+angleInDegrees+" and length :"+lengthOfElement+"\n");
+    //print("Creating new Trench Wood Wall between "+origin+" and "+second+" with angle : "+angleInDegrees+" and length :"+lengthOfElement+"\n");
+    //print("Centerpos: "+ centerPos + "\n");
     
   }
   

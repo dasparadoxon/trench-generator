@@ -11,7 +11,7 @@ ArrayList<ArrayList<PVector>> rightTrenchWall;
 
 ArrayList<PVector> trenchFloor;
 
-ArrayList<trenchWoodWall> leftTrenchWoodWall;
+ArrayList<trenchWoodWall> leftTrenchWoodWalls;
 
 PeasyCam camera;
 QueasyCam qCamera;
@@ -53,7 +53,7 @@ void generate() {
 
   trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine);
   
-  leftTrenchWoodWall = generateTrenchWoodWall(leftTrenchLine);
+  leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine);
 }
 
 void keyPressedToGenerate() {
@@ -76,6 +76,8 @@ void keyPressedToGenerate() {
 }
 
 void realDraw() {
+  
+  lights();
 
   background(255, 255, 255);
 
@@ -102,4 +104,6 @@ void realDraw() {
   translate(0, 0);
 
   sphere(20);
+  
+  drawTrenchWoodWalls(leftTrenchWoodWalls);
 }
