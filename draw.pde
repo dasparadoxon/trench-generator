@@ -92,19 +92,25 @@ void drawTrenchWoodWalls(ArrayList<trenchWoodWall> trenchWoodWallsToDraw){
     
     i++;
     
-    trenchWoodWallElement firstWallElement = trenchWoodWallToDraw.wallElements.get(0);
+    for (trenchWoodWallElement trenchWallElement : trenchWoodWallToDraw.wallElements) {
     
-    //print(i+" : Centerpos: "+ firstWallElement.centerPosition + "\n");
+      trenchWoodWallElement firstWallElement = trenchWoodWallToDraw.wallElements.get(0);
+      
+      //print(i+" : Centerpos: "+ firstWallElement.centerPosition + "\n");
+      
+      pushMatrix();
+      
+      fill(203,127,26);
+      
+      translate(trenchWallElement.centerPosition.x,trenchWallElement.centerPosition.y,trenchWallElement.centerPosition.z);
+      
+      rotateZ(trenchWallElement.rotation);
+      
+      box(10,trenchWallElement.lengthOfElement,trenchWoodWallToDraw.heightOfWoodElement);
+      
+      popMatrix();
     
-    pushMatrix();
-    
-    fill(255,0,0);
-    
-    translate(firstWallElement.centerPosition.x,firstWallElement.centerPosition.y,firstWallElement.centerPosition.z);
-    
-    sphere(10);
-    
-    popMatrix();
+    }
     
   }
   

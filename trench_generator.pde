@@ -77,11 +77,11 @@ void keyPressedToGenerate() {
 
 void realDraw() {
   
-  lights();
+  //lights();
 
   background(255, 255, 255);
 
-  scale(0.1);
+  scale(0.2);
   translate(-width/2, -height/2);
   rotateX(PI/4);
   /*rotateZ(PI/8);*/
