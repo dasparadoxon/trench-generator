@@ -16,9 +16,15 @@ class trenchWoodWall {
   
   float centerRotation = 0f;
   
+  PVector originVector;
+  PVector secondVector;
+  
   ArrayList<trenchWoodWallElement> wallElements = new ArrayList<trenchWoodWallElement>();
   
   trenchWoodWall(PVector origin,PVector second){
+    
+    originVector = origin.copy();
+    secondVector = second.copy();
     
     PVector lOrigin = origin.copy();
     PVector lSecond = second.copy();
