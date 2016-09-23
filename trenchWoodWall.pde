@@ -5,8 +5,28 @@ class trenchWoodWallElement {
     float lengthOfElement;
 }
 
+class ladder {
+  
+  PVector topLeft;
+  PVector topRight;
+  PVector bottomLeft;
+  PVector bottomRight;  
+  
+  float w,h;
+  float rotation;
+  
+  int leaderHeight = 10;
+  
+  int ladderWidth = 30;
+  int ladderHeight = 70;  
+  
+}
+
 
 class trenchWoodWall {
+  
+  boolean hasLadder = false;
+  ladder theLadder;
   
   int numberOfWoodsOnWall = 10;
   int heightOfWall = 100;
@@ -21,7 +41,9 @@ class trenchWoodWall {
   
   ArrayList<trenchWoodWallElement> wallElements = new ArrayList<trenchWoodWallElement>();
   
-  trenchWoodWall(PVector origin,PVector second){
+  trenchWoodWall(PVector origin,PVector second,boolean addLadder){
+    
+    hasLadder = addLadder;
     
     originVector = origin.copy();
     secondVector = second.copy();
@@ -36,6 +58,8 @@ class trenchWoodWall {
     float lengthOfElement = PVector.sub(origin,second).mag();
     
     PVector relNorm = rel.normalize().copy();
+    
+    PVector relNormForLater = relNorm.copy();
     
     PVector centerPos = lOrigin.add(relNorm.mult(lengthOfElement/2));
     
@@ -73,6 +97,48 @@ class trenchWoodWall {
         tempWallElement.lengthOfElement = lengthOfElement;
         
         wallElements.add(tempWallElement);
+      
+    }
+    
+    if(hasLadder){
+      
+      
+      
+      theLadder = new ladder();
+      
+      theLadder.rotation = -angleInDegrees4;
+      
+      theLadder.leaderHeight = -100;
+      
+      //PVector leftTopOfTheLadder = PVector.add(origin,);
+      
+      theLadder.topLeft = centerPos.copy();
+      
+      theLadder.topLeft = PVector.add(theLadder.topLeft,PVector.mult(relNormForLater,15));
+      
+      //theLadder.topLeft.rotate(10);
+      
+      
+      theLadder.topRight = centerPos.copy();
+      
+      theLadder.topRight = PVector.add(theLadder.topRight,PVector.mult(relNormForLater,-15));
+      
+      
+      theLadder.bottomLeft = centerPos.copy();
+      
+      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft,PVector.mult(relNormForLater,15));
+      
+      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft,new PVector(0,0,-theLadder.leaderHeight));
+      
+      //theLadder.bottomLeft.rotate(20);
+      
+      
+      theLadder.bottomRight = centerPos.copy();
+      
+      theLadder.bottomRight = PVector.add(theLadder.bottomRight,PVector.mult(relNormForLater,-15));
+      
+      theLadder.bottomRight = PVector.add(theLadder.bottomRight,new PVector(0,0,-theLadder.leaderHeight));
+
       
     }
     

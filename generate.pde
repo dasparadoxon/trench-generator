@@ -1,9 +1,7 @@
-
-
+/*************************************************************************************
+*
+*************************************************************************************/
 ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents) {
-  
-  print(numberOfTrenchBents);
-
 
   int progressionInUnits = 1;
 
@@ -42,7 +40,6 @@ ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents)
     progressionInUnits += xStep;
   }  
 
-
   if (allignment == "left") {
 
     PVector leftDownCorner = new PVector(0, height, 0);
@@ -72,13 +69,11 @@ ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents)
   return tempTrenchLine;
 }
 
-/***
-*   Clones a Trench Line 
-*///
-
+/*************************************************************************************
+*
+*************************************************************************************/
 ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String allignment,int offsetX,int numberOfTrenchBents) {
 
-  //int numberOfTrenchBents = 10;
   int progressionInUnits = 1;
 
   ArrayList<PVector> tempTrenchLine;
@@ -95,7 +90,6 @@ ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String 
 
   }  
 
-
   if (allignment == "left") {
 
     PVector leftDownCorner = new PVector(0, height, 0);
@@ -125,6 +119,9 @@ ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String 
   return tempTrenchLine;
 }
 
+/*************************************************************************************
+*
+*************************************************************************************/
 ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) {
 
   int wall_height = 100;
@@ -161,6 +158,9 @@ ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) 
   return tempTrenchWall;
 }
 
+/*************************************************************************************
+*
+*************************************************************************************/
 ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVector> right, int offsetX) {
 
   ArrayList<PVector> tempTrenchFloor;
@@ -191,6 +191,9 @@ ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVecto
   return tempTrenchFloor;
 }
 
+/*************************************************************************************
+*
+*************************************************************************************/
 ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine){
   
   ArrayList<trenchWoodWall> tempTrenchWoodWalls;
@@ -201,7 +204,7 @@ ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine)
     
     trenchWoodWall tempTrenchWoodWall;
   
-    tempTrenchWoodWall = new trenchWoodWall(trenchLine.get(trenchBent),trenchLine.get(trenchBent+1));
+    tempTrenchWoodWall = new trenchWoodWall(trenchLine.get(trenchBent),trenchLine.get(trenchBent+1),true);
     
     tempTrenchWoodWalls.add(tempTrenchWoodWall);
   
