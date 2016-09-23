@@ -1,8 +1,10 @@
 
 
-ArrayList<PVector> generateTrenchLine(String allignment) {
+ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents) {
+  
+  print(numberOfTrenchBents);
 
-  int numberOfTrenchBents = 10;
+
   int progressionInUnits = 1;
 
   ArrayList<PVector> tempTrenchLine;
@@ -11,7 +13,7 @@ ArrayList<PVector> generateTrenchLine(String allignment) {
 
   for (int trenchBent=0; trenchBent < numberOfTrenchBents; trenchBent++) {
 
-    int yStep = (int)random(35, 120);
+    int yStep = (int)random((height/numberOfTrenchBents), (height/numberOfTrenchBents));
 
     PVector newTrenchBent = new PVector(width/2, progressionInUnits, 0);
 
@@ -23,6 +25,8 @@ ArrayList<PVector> generateTrenchLine(String allignment) {
 
     tempTrenchLine.add(newTrenchBent);
   }
+  
+  if(numberOfTrenchBents<2)numberOfTrenchBents = 1;
 
   if (tempTrenchLine.get(numberOfTrenchBents-1).y < width)
     tempTrenchLine.get(numberOfTrenchBents-1).y = width;
@@ -72,9 +76,9 @@ ArrayList<PVector> generateTrenchLine(String allignment) {
 *   Clones a Trench Line 
 *///
 
-ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String allignment,int offsetX) {
+ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String allignment,int offsetX,int numberOfTrenchBents) {
 
-  int numberOfTrenchBents = 10;
+  //int numberOfTrenchBents = 10;
   int progressionInUnits = 1;
 
   ArrayList<PVector> tempTrenchLine;

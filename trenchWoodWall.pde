@@ -56,7 +56,7 @@ class trenchWoodWall {
     
     float angleInDegrees4 = PVector.angleBetween(relNorm,defaultAngle);
     
-    print("A4:"+degrees(angleInDegrees4)+" | Rel/Normalized : ("+rel+"/"+relNorm.normalize()+") Angle:"+a+"\n");
+    //print("A4:"+degrees(angleInDegrees4)+" | Rel/Normalized : ("+rel+"/"+relNorm.normalize()+") Angle:"+a+"\n");
     
     if(rel.x < 0)angleInDegrees4 = -angleInDegrees4;
     
