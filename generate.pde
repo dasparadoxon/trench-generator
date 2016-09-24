@@ -11,14 +11,14 @@ ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents)
 
   for (int trenchBent=0; trenchBent < numberOfTrenchBents; trenchBent++) {
 
-    int yStep = (int)random((height/numberOfTrenchBents), (height/numberOfTrenchBents));
+    int yStep = (int)random((battlefield.dimensions.x/numberOfTrenchBents), (battlefield.dimensions.x/numberOfTrenchBents));
 
-    PVector newTrenchBent = new PVector(width/2, progressionInUnits, 0);
+    PVector newTrenchBent = new PVector(battlefield.dimensions.x/2, progressionInUnits, 0);
 
     progressionInUnits += yStep;
 
-    if (progressionInUnits >= 800) {
-      progressionInUnits = 800;
+    if (progressionInUnits >= battlefield.dimensions.x) {
+      progressionInUnits = (int)battlefield.dimensions.x;
     }
 
     tempTrenchLine.add(newTrenchBent);
@@ -26,12 +26,12 @@ ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents)
   
   if(numberOfTrenchBents<2)numberOfTrenchBents = 1;
 
-  if (tempTrenchLine.get(numberOfTrenchBents-1).y < width)
-    tempTrenchLine.get(numberOfTrenchBents-1).y = width;
+  if (tempTrenchLine.get(numberOfTrenchBents-1).y < battlefield.dimensions.x)
+    tempTrenchLine.get(numberOfTrenchBents-1).y = battlefield.dimensions.x;
 
   for (int trenchBent=0; trenchBent<numberOfTrenchBents; trenchBent++) {
 
-    int xStep = (int)random(width/10, width/5);
+    int xStep = (int)random(battlefield.dimensions.x/10, battlefield.dimensions.x/5);
 
     if ((int)random(0, 1)==1)xStep = -xStep;
 
@@ -42,7 +42,7 @@ ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents)
 
   if (allignment == "left") {
 
-    PVector leftDownCorner = new PVector(0, height, 0);
+    PVector leftDownCorner = new PVector(0, battlefield.dimensions.y, 0);
 
     tempTrenchLine.add(leftDownCorner);
 
@@ -55,11 +55,11 @@ ArrayList<PVector> generateTrenchLine(String allignment,int numberOfTrenchBents)
 
   if (allignment == "right") {
 
-    PVector rightDownCorner = new PVector(width, height, 0);
+    PVector rightDownCorner = new PVector(battlefield.dimensions.x, battlefield.dimensions.y, 0);
 
     tempTrenchLine.add(rightDownCorner);
 
-    PVector rightUpCorner = new PVector(width, 0, 0);
+    PVector rightUpCorner = new PVector(battlefield.dimensions.x, 0, 0);
 
     tempTrenchLine.add(rightUpCorner);
 
@@ -92,7 +92,7 @@ ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String 
 
   if (allignment == "left") {
 
-    PVector leftDownCorner = new PVector(0, height, 0);
+    PVector leftDownCorner = new PVector(0,  battlefield.dimensions.y, 0);
 
     tempTrenchLine.add(leftDownCorner);
 
@@ -105,11 +105,11 @@ ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String 
 
   if (allignment == "right") {
 
-    PVector rightDownCorner = new PVector(width, height, 0);
+    PVector rightDownCorner = new PVector( battlefield.dimensions.x,  battlefield.dimensions.y, 0);
 
     tempTrenchLine.add(rightDownCorner);
 
-    PVector rightUpCorner = new PVector(width, 0, 0);
+    PVector rightUpCorner = new PVector( battlefield.dimensions.x, 0, 0);
 
     tempTrenchLine.add(rightUpCorner);
 
@@ -223,20 +223,22 @@ ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine,
   return tempTrenchWoodWalls;
 }
 
-
+/*************************************************************************************
+*
+*************************************************************************************/
 ArrayList<RowOfBarbedWire> generateBarbedWireRows(ArrayList<PVector> leftTrenchLine){
   
    ArrayList<RowOfBarbedWire> tempRowOfBarbedWire;
    
    tempRowOfBarbedWire = new ArrayList<RowOfBarbedWire>();
    
-   int numberOfRows = (int)random(5,20);
+   int numberOfRows = (int)random(battlefield.dimensions.x/120,battlefield.dimensions.x/120 + battlefield.dimensions.x/45);
    
    for(int i=0;i<numberOfRows;i++){
      
      RowOfBarbedWire tempWire = new RowOfBarbedWire();
      
-     tempWire.centerPosition = new PVector(400 + random(1,300),100 + random(1,600), 16);      
+     tempWire.centerPosition = new PVector(battlefield.dimensions.x / 4 + random(200,350),100 + random(1,battlefield.dimensions.y-100), 16);      
      
      tempRowOfBarbedWire.add(tempWire);
    }

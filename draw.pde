@@ -278,7 +278,7 @@ void drawLadder(ladder ladderToDraw){
   vertex(-ladderWidth/2, ladderHeight/2, 20);
   vertex(-ladderWidth/2, -ladderHeight/2, 20);*/
   
-  stroke();
+  stroke(0);
 
   endShape();
 

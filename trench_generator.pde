@@ -28,6 +28,7 @@ int pressed = 0;
 int sliderValue = 100;
 
 Slider trenchBentsSlider;
+Slider battleFieldDimensionSlider;
 
 boolean regenerate;
 
@@ -38,13 +39,15 @@ PImage barbedWireTextureImage;
 
 int numberOfTrenchBents = 10;
 
+Battlefield battlefield = new Battlefield(1800,1800);
+
 void setup() {
   
   numberOfTrenchBents = 30;
 
   size(800, 800, P3D);
   
-  pg = createGraphics(800,800, P3D);
+  //pg = createGraphics(battlefield.dimensions.x,battlefield.dimensions.y, P3D);
   
   cp5 = new ControlP5(this);
   
@@ -63,6 +66,16 @@ void setup() {
      .setCaptionLabel("TRENCH BENTS");
      
      ;  
+     
+  battleFieldDimensionSlider = cp5.addSlider("battleFieldDimensions")
+     .setPosition(20,60)
+     .setRange(600,4000)
+     .setValue(800)
+     .setWidth(200)
+     .setHeight(20)
+     .setCaptionLabel("BATTLEFIELD DIMENSIONS");
+     
+     ;     
 
   stroke(0, 0, 0);
 
@@ -145,10 +158,8 @@ void realDraw() {
   scale(0.4);
   translate(-width/2, -height/2);
   rotateX(PI/4);
-  /*rotateZ(PI/8);*/
 
   fill(81, 89, 0);
-
 
   drawTrenchLine3D(leftTrenchLine, new PVector(0, 1, 0));
   drawTrenchLine3D(rightTrenchLine, new PVector(0, 1, 0));
@@ -173,7 +184,7 @@ void realDraw() {
 void gui() {
   hint(DISABLE_DEPTH_TEST);
   camera.beginHUD();
-  rect(10,10,400,40);
+  rect(10,10,320,80);
   cp5.draw();
   camera.endHUD();
   hint(ENABLE_DEPTH_TEST);
@@ -189,4 +200,15 @@ void sliderValue(float trenchBentsSliderValue) {
     }
 
   //println("a slider event. trenchBents: "+trenchBentsSliderValue);
+}
+
+void battleFieldDimensions(float battleFieldDimensionsValue){
+ 
+      if(battleFieldDimensionsValue>1){
+  
+      battlefield.dimensions.set(new PVector(battleFieldDimensionsValue,battleFieldDimensionsValue,0));
+
+      regenerate = true;
+    }
+  
 }
