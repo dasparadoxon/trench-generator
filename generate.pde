@@ -194,19 +194,29 @@ ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVecto
 /*************************************************************************************
 *
 *************************************************************************************/
-ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine){
+ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder,String allignment){
   
   ArrayList<trenchWoodWall> tempTrenchWoodWalls;
   
   tempTrenchWoodWalls = new ArrayList<trenchWoodWall>();
   
+  int c = 0;
+  
   for (int trenchBent=0; trenchBent<trenchLine.size()-1 -3; trenchBent++) {
     
     trenchWoodWall tempTrenchWoodWall;
+    
+    boolean placeLadder = false;
+    
+    if((c%3) == 0)placeLadder = true;else placeLadder = false;
+    
+    if(hasLadder == false)placeLadder = false;
   
-    tempTrenchWoodWall = new trenchWoodWall(trenchLine.get(trenchBent),trenchLine.get(trenchBent+1),true);
+    tempTrenchWoodWall = new trenchWoodWall(trenchLine.get(trenchBent),trenchLine.get(trenchBent+1),placeLadder,allignment);
     
     tempTrenchWoodWalls.add(tempTrenchWoodWall);
+    
+    c++;
   
   }
   

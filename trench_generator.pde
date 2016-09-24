@@ -31,6 +31,8 @@ boolean regenerate;
 
 PGraphics pg;
 
+PImage ladderTextureImage;
+
 int numberOfTrenchBents = 10;
 
 void setup() {
@@ -45,7 +47,7 @@ void setup() {
   
   cp5.setAutoDraw(false);
   
-
+  ladderTextureImage = loadImage("ladder.png");
   
   trenchBentsSlider = cp5.addSlider("sliderValue")
      .setPosition(20,20)
@@ -102,8 +104,8 @@ void generate() {
 
   trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
   
-  leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine);
-  rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine);
+  leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine,false,"right");
+  rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine,true,"right");
 }
 
 void keyPressedToGenerate() {
@@ -149,7 +151,7 @@ void realDraw() {
   drawTrenchWalls3D(leftTrenchWall, new PVector(0, 1, 0));
   drawTrenchWalls3D(rightTrenchWall, new PVector(0, 1, 0));
 
-  fill(51, 51, 0);
+  fill(111, 111, 0);
 
   drawTrenchFloor3D(trenchFloor, new PVector(0, 1, 0));
 

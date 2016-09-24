@@ -41,7 +41,7 @@ class trenchWoodWall {
   
   ArrayList<trenchWoodWallElement> wallElements = new ArrayList<trenchWoodWallElement>();
   
-  trenchWoodWall(PVector origin,PVector second,boolean addLadder){
+  trenchWoodWall(PVector origin,PVector second,boolean addLadder,String allignment){
     
     hasLadder = addLadder;
     
@@ -102,42 +102,67 @@ class trenchWoodWall {
     
     if(hasLadder){
       
+      PVector normalVector = relNormForLater.copy();
       
+      normalVector.rotate(HALF_PI);
       
       theLadder = new ladder();
       
       theLadder.rotation = -angleInDegrees4;
       
-      theLadder.leaderHeight = -100;
+      theLadder.ladderHeight = -100;
       
-      //PVector leftTopOfTheLadder = PVector.add(origin,);
+      int allignment_distance = 4;
+      int allignment_distance_bottom = 35;
+      
+      if(allignment=="left"){
+        
+           allignment_distance = 35;
+           allignment_distance_bottom = 4;
+      }
+        
+      
       
       theLadder.topLeft = centerPos.copy();
       
+      theLadder.topLeft.z += 20;
+      
       theLadder.topLeft = PVector.add(theLadder.topLeft,PVector.mult(relNormForLater,15));
       
-      //theLadder.topLeft.rotate(10);
-      
+      theLadder.topLeft = PVector.add(theLadder.topLeft,PVector.mult(normalVector,allignment_distance));
+
+    
       
       theLadder.topRight = centerPos.copy();
       
+      theLadder.topRight.z += 20;
+      
       theLadder.topRight = PVector.add(theLadder.topRight,PVector.mult(relNormForLater,-15));
+      
+      theLadder.topRight = PVector.add(theLadder.topRight,PVector.mult(normalVector,allignment_distance));
+ 
       
       
       theLadder.bottomLeft = centerPos.copy();
       
+     // theLadder.bottomLeft.z += 20;
+      
       theLadder.bottomLeft = PVector.add(theLadder.bottomLeft,PVector.mult(relNormForLater,15));
       
-      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft,new PVector(0,0,-theLadder.leaderHeight));
+      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft,new PVector(0,0,theLadder.ladderHeight));
       
-      //theLadder.bottomLeft.rotate(20);
+      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft,PVector.mult(normalVector,allignment_distance_bottom));
       
       
       theLadder.bottomRight = centerPos.copy();
       
+      //theLadder.bottomLeft.z += 20;
+      
       theLadder.bottomRight = PVector.add(theLadder.bottomRight,PVector.mult(relNormForLater,-15));
       
-      theLadder.bottomRight = PVector.add(theLadder.bottomRight,new PVector(0,0,-theLadder.leaderHeight));
+      theLadder.bottomRight = PVector.add(theLadder.bottomRight,new PVector(0,0,theLadder.ladderHeight));
+      
+      theLadder.bottomRight = PVector.add(theLadder.bottomRight,PVector.mult(normalVector,allignment_distance_bottom));
 
       
     }
