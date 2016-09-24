@@ -8,7 +8,9 @@ Sandbags are now added. When theres a ladder, the sandbag is not placed</br>
 
 It is using <a href="http://www.sojamo.de/libraries/controlP5/">controlP5</a> for UI Elements and <a href="http://mrfeinberg.com/peasycam/">peasycam</a> as camera script.<br/>
 
-<img src="trench14.jpg">
+<img src="trench14.jpg"><br/>
+
+<img src="trench17.jpg">
 
 <br/>
 
