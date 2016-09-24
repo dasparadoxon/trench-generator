@@ -16,6 +16,8 @@ ArrayList<PVector> trenchFloor;
 ArrayList<trenchWoodWall> leftTrenchWoodWalls;
 ArrayList<trenchWoodWall> rightTrenchWoodWalls;
 
+ArrayList<RowOfBarbedWire> barbedWireRows;
+
 PeasyCam camera;
 QueasyCam qCamera;
 
@@ -32,6 +34,7 @@ boolean regenerate;
 PGraphics pg;
 
 PImage ladderTextureImage;
+PImage barbedWireTextureImage;
 
 int numberOfTrenchBents = 10;
 
@@ -48,6 +51,8 @@ void setup() {
   cp5.setAutoDraw(false);
   
   ladderTextureImage = loadImage("ladder.png");
+  
+  barbedWireTextureImage = loadImage("stacheldraht.png");
   
   trenchBentsSlider = cp5.addSlider("sliderValue")
      .setPosition(20,20)
@@ -106,6 +111,8 @@ void generate() {
   
   leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine,false,false,"left");
   rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine,true,true,"right");
+  
+  barbedWireRows = generateBarbedWireRows(leftTrenchLine);
 }
 
 void keyPressedToGenerate() {
@@ -157,6 +164,8 @@ void realDraw() {
 
   drawTrenchWoodWalls(leftTrenchWoodWalls);
   drawTrenchWoodWalls(rightTrenchWoodWalls);
+  
+  drawBarbedWireRows(barbedWireRows);
   
   gui();
 }

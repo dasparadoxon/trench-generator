@@ -222,3 +222,24 @@ ArrayList<trenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine,
   
   return tempTrenchWoodWalls;
 }
+
+
+ArrayList<RowOfBarbedWire> generateBarbedWireRows(ArrayList<PVector> leftTrenchLine){
+  
+   ArrayList<RowOfBarbedWire> tempRowOfBarbedWire;
+   
+   tempRowOfBarbedWire = new ArrayList<RowOfBarbedWire>();
+   
+   int numberOfRows = (int)random(5,20);
+   
+   for(int i=0;i<numberOfRows;i++){
+     
+     RowOfBarbedWire tempWire = new RowOfBarbedWire();
+     
+     tempWire.centerPosition = new PVector(400 + random(1,300),100 + random(1,600), 16);      
+     
+     tempRowOfBarbedWire.add(tempWire);
+   }
+   
+   return tempRowOfBarbedWire;
+}

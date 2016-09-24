@@ -150,6 +150,47 @@ void drawSandBags(ArrayList<sandBag> trenchWoodWallToPutSandBagsOn){
   
 }
 
+void drawBarbedWireRows(ArrayList<RowOfBarbedWire> barbedWireRowsToDraw){
+  
+  for (RowOfBarbedWire barbedWireRowToDraw : barbedWireRowsToDraw) {
+    
+      PVector pos = barbedWireRowToDraw.centerPosition.copy();
+    
+      pushMatrix();
+      
+      //translate(pos.x,pos.y,pos.z);
+      
+
+      
+      beginShape();
+      
+      int lengthOfRow = 60;
+      int heightOfRow = 20;
+      int widthOfRow = 120;
+      
+      texture(barbedWireTextureImage);
+      textureMode(NORMAL);
+      
+      noStroke();
+      
+      vertex(pos.x , pos.y + lengthOfRow, pos.z - heightOfRow,0,0);
+      vertex(pos.x , pos.y + lengthOfRow, pos.z + heightOfRow,0,1);
+      vertex(pos.x , pos.y - lengthOfRow, pos.z + heightOfRow,1,1);
+      vertex(pos.x , pos.y - lengthOfRow, pos.z - heightOfRow,1,0);
+      vertex(pos.x , pos.y + lengthOfRow, pos.z - heightOfRow,0,0);      
+
+      stroke(0);
+      
+      endShape();
+      
+      rotateY(radians(90));
+      
+      popMatrix();
+  }
+  
+}
+
+
 void drawLadderWithSpheres(ladder ladderToDraw) {
   
    int zOffset = -80;
@@ -215,7 +256,12 @@ void drawLadder(ladder ladderToDraw){
 
   beginShape();
   
+  noStroke();
+      
+  
   texture(ladderTextureImage);
+  
+  textureMode(IMAGE);
 
    vertex(ladderToDraw.topLeft.x, ladderToDraw.topLeft.y, ladderToDraw.topLeft.z,0,0);
    vertex(ladderToDraw.topRight.x, ladderToDraw.topRight.y, ladderToDraw.topRight.z,73,0);
@@ -231,6 +277,8 @@ void drawLadder(ladder ladderToDraw){
   vertex(ladderWidth/2, ladderHeight/2, 20);
   vertex(-ladderWidth/2, ladderHeight/2, 20);
   vertex(-ladderWidth/2, -ladderHeight/2, 20);*/
+  
+  stroke();
 
   endShape();
 
