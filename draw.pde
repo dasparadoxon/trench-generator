@@ -141,7 +141,7 @@ void drawSandBags(ArrayList<sandBag> trenchWoodWallToPutSandBagsOn){
       
       rotateZ(sandBagToDraw.rotation);
       
-      fill(255,0,255);
+      fill(212, 184, 101);  
       
       box(15,sandBagToDraw.lengthOfBag,15);
       
@@ -162,7 +162,9 @@ void drawLadderWithSpheres(ladder ladderToDraw) {
    
    pushMatrix();
    
-   fill(124, 124, 210);  
+   // R: 212  G: 184  B: 101
+   
+   fill(212, 184, 101);  
    
    translate(ladderToDraw.topLeft.x, ladderToDraw.topLeft.y, ladderToDraw.topLeft.z + zOffset);
    
