@@ -1,11 +1,13 @@
 This is a simple project in Processing 3.x to generate a trench like in World War 1.
 
-Right now you can change the number of bents in the trench line. There will be objects for the <br/>
-wall wood work and now some ladders. No export yet possible.
+Right now you can change the number of bents in the trench line. <br/>
+<BR>
+Added some ladders with a transparent texture.<br/>
+
 
 It is using <a href="http://www.sojamo.de/libraries/controlP5/">controlP5</a> for UI Elements and <a href="http://mrfeinberg.com/peasycam/">peasycam</a> as camera script.<br/>
 
-<img src="https://pbs.twimg.com/media/CtEOxTEWYAQTNHa.jpg">
+<img src="https://pbs.twimg.com/media/CtE-VNKWgAACA-o.jpg">
 
 <br/>
 
