@@ -22,10 +22,24 @@ class ladder {
   
 }
 
+class sandBag {
+  
+  public static final int lengthOfBag = 31;
+  
+  int adaptedLength;
+  
+  PVector centerPosition;
+  
+  float rotation;
+  
+}
+
 
 class trenchWoodWall {
   
   boolean hasLadder = false;
+  boolean hasSandbags = false;
+  
   ladder theLadder;
   
   int numberOfWoodsOnWall = 10;
@@ -41,9 +55,12 @@ class trenchWoodWall {
   
   ArrayList<trenchWoodWallElement> wallElements = new ArrayList<trenchWoodWallElement>();
   
-  trenchWoodWall(PVector origin,PVector second,boolean addLadder,String allignment){
+  ArrayList<sandBag> sandBags = new ArrayList<sandBag>();
+  
+  trenchWoodWall(PVector origin,PVector second,boolean addLadder,String allignment,boolean addSandbags){
     
     hasLadder = addLadder;
+    hasSandbags = addSandbags;
     
     originVector = origin.copy();
     secondVector = second.copy();
@@ -169,6 +186,65 @@ class trenchWoodWall {
     
     //print("Creating new Trench Wood Wall between "+origin+" and "+second+" with angle : "+tempWallElement.rotation+") and length :"+lengthOfElement+"\n");
     //print("Centerpos: "+ centerPos + "\n");
+    
+    //if(!hasLadder){
+      
+        if(hasSandbags){
+        
+        PVector normalVector = relNormForLater.copy();
+        
+        normalVector.rotate(HALF_PI);
+        
+        createSandBags(lengthOfElement,centerPos,relNormForLater,-angleInDegrees4,normalVector,allignment,hasLadder);
+      //}
+    }
+    
+  }
+  
+  void createSandBags(float lengthOfElement,PVector centerPosition, PVector surfaceEdgeDirVec, float rotateTo, PVector normalVector, String alignment,boolean hasLadder ){
+    
+      print("NUmber of bags :"+(lengthOfElement / sandBag.lengthOfBag)+"\n");
+    
+      int numberOfBags = (int)floor(lengthOfElement / sandBag.lengthOfBag); 
+      
+      if((numberOfBags % 2)==0) 
+        numberOfBags--;
+      
+      int positionShift = 35;
+      
+      int alignmentShift = 18;
+      
+      sandBag tempSandBag;
+      
+      for(int i=0;i<numberOfBags;i++){
+        
+        
+    
+        tempSandBag = new sandBag();
+        
+        tempSandBag.centerPosition = centerPosition;
+        
+        tempSandBag.centerPosition = PVector.add(tempSandBag.centerPosition,PVector.mult(surfaceEdgeDirVec,(i * positionShift)-(positionShift*(numberOfBags/2))));
+        
+        if(alignment=="right"){
+          alignmentShift = -alignmentShift;
+          normalVector = new PVector(-normalVector.x,-normalVector.y,-normalVector.z);
+        }
+        alignmentShift = -alignmentShift;
+        normalVector = new PVector(-normalVector.x,-normalVector.y,-normalVector.z);
+        
+        tempSandBag.centerPosition = PVector.add(tempSandBag.centerPosition,PVector.mult(normalVector,-22));
+        
+        tempSandBag.rotation = rotateTo;
+        
+        //tempSandBag.adaptedLength = 
+        
+        if(!hasLadder)
+          sandBags.add(tempSandBag);
+    
+        if(hasLadder && (i != (numberOfBags/2)))
+          sandBags.add(tempSandBag);
+      }
     
   }
   

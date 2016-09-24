@@ -109,6 +109,8 @@ void drawTrenchWoodWalls(ArrayList<trenchWoodWall> trenchWoodWallsToDraw) {
 
     if (trenchWoodWallToDraw.hasLadder)
       drawLadder(trenchWoodWallToDraw.theLadder);
+      
+     drawSandBags(trenchWoodWallToDraw.sandBags);
   }
 
   trenchWoodWall lastWall = trenchWoodWallsToDraw.get(trenchWoodWallsToDraw.size()-1);
@@ -125,6 +127,27 @@ void drawTrenchWoodWalls(ArrayList<trenchWoodWall> trenchWoodWallsToDraw) {
 
   if (lastWall.hasLadder)
     drawLadder(lastWall.theLadder);
+    
+  drawSandBags(lastWall.sandBags);
+}
+
+void drawSandBags(ArrayList<sandBag> trenchWoodWallToPutSandBagsOn){
+  
+  for (sandBag sandBagToDraw : trenchWoodWallToPutSandBagsOn) {
+    
+      pushMatrix();
+      
+      translate(sandBagToDraw.centerPosition.x,sandBagToDraw.centerPosition.y,sandBagToDraw.centerPosition.z);
+      
+      rotateZ(sandBagToDraw.rotation);
+      
+      fill(255,0,255);
+      
+      box(15,sandBagToDraw.lengthOfBag,15);
+      
+      popMatrix();
+  }
+  
 }
 
 void drawLadderWithSpheres(ladder ladderToDraw) {

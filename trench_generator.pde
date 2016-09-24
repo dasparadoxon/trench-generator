@@ -104,8 +104,8 @@ void generate() {
 
   trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
   
-  leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine,false,"right");
-  rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine,true,"right");
+  leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine,false,false,"left");
+  rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine,true,true,"right");
 }
 
 void keyPressedToGenerate() {
@@ -140,7 +140,7 @@ void realDraw() {
   rotateX(PI/4);
   /*rotateZ(PI/8);*/
 
-  fill(51, 137, 58);
+  fill(81, 89, 0);
 
 
   drawTrenchLine3D(leftTrenchLine, new PVector(0, 1, 0));
