@@ -1,25 +1,23 @@
+/*************************************************************************************
+* WW1 TRENCH GENERATOR
+* 
+* Creates a trench which parameters can be live changed and exportet to XML 
+* for use in other programms
+* 
+*************************************************************************************/
 import controlP5.*;
 
+import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import peasy.*;
-import queasycam.*;
-
-
-ArrayList<PVector> leftTrenchLine;
-ArrayList<PVector> rightTrenchLine;
-
-ArrayList<ArrayList<PVector>> leftTrenchWall;
-ArrayList<ArrayList<PVector>> rightTrenchWall;
-
-ArrayList<PVector> trenchFloor;
-
-ArrayList<trenchWoodWall> leftTrenchWoodWalls;
-ArrayList<trenchWoodWall> rightTrenchWoodWalls;
-
-ArrayList<RowOfBarbedWire> barbedWireRows;
 
 PeasyCam camera;
-QueasyCam qCamera;
 
 ControlP5 cp5;
 
@@ -30,9 +28,10 @@ int sliderValue = 100;
 Slider trenchBentsSlider;
 Slider battleFieldDimensionSlider;
 
-boolean regenerate;
+Trench trench;
+TrenchDrawer trenchDrawer;
 
-PGraphics pg;
+boolean regenerate;
 
 PImage ladderTextureImage;
 PImage barbedWireTextureImage;
@@ -41,13 +40,20 @@ int numberOfTrenchBents = 10;
 
 Battlefield battlefield = new Battlefield(1800,1800);
 
+void setUpXML(){
+ 
+  //DocumentBuilderFactory factory =
+  //  DocumentBuilderFactory.newInstance();
+  //DocumentBuilder builder = factory.newDocumentBuilder();
+}
+
 void setup() {
+  
+  //setUpXML();
   
   numberOfTrenchBents = 30;
 
   size(800, 800, P3D);
-  
-  //pg = createGraphics(battlefield.dimensions.x,battlefield.dimensions.y, P3D);
   
   cp5 = new ControlP5(this);
   
@@ -81,52 +87,27 @@ void setup() {
 
   camera = new PeasyCam(this, 0, 0, 0, 500);
   
+  trench = new Trench();
+  trenchDrawer = new TrenchDrawer(trench);
 
-  //qCamera = new QueasyCam(this);
-  //qCamera.position = new PVector(0,0,900);
-
-  //camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
-
-  generate();
-
-  realDraw();
-
+  regenerate = true;
 }
 
 void draw() {
   
   if(regenerate){
     
-      //numberOfTrenchBents = (int)trenchBentsSliderValue;
-    
-      generate();
+      trench.generateStraightTrench();
       
       regenerate = false;
   }
 
-  realDraw();
+  trenchDrawer.drawTrench();
+  
+  gui();
 }
 
-void generate() {
-  
-  
-  int trenchOffset = 250;
-  int trenchWidth = 130;
 
-  leftTrenchLine = generateTrenchLine("left",numberOfTrenchBents);
-  rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right",trenchWidth,numberOfTrenchBents);
-
-  rightTrenchWall = generateTrenchWall(rightTrenchLine);
-
-  leftTrenchWall = generateTrenchWall(leftTrenchLine);
-
-  trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
-  
-  leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine,false,false,"left");
-  rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine,true,true,"right");
-  
-  barbedWireRows = generateBarbedWireRows(leftTrenchLine);
-}
 
 void keyPressedToGenerate() {
 
@@ -136,9 +117,8 @@ void keyPressedToGenerate() {
   if (pressed == 1) {
     pressed = 2;
 
-    generate();
+    //generate();
 
-    realDraw();
   }
 
   if (keyPressed == false && pressed == 2) {
@@ -147,40 +127,11 @@ void keyPressedToGenerate() {
   }
 }
 
-void realDraw() {
-  
 
-  
-  //lights();
 
-  background(255, 255, 255);
-
-  scale(0.4);
-  translate(-width/2, -height/2);
-  rotateX(PI/4);
-
-  fill(81, 89, 0);
-
-  drawTrenchLine3D(leftTrenchLine, new PVector(0, 1, 0));
-  drawTrenchLine3D(rightTrenchLine, new PVector(0, 1, 0));
-
-  fill(137, 87, 51);
-
-  drawTrenchWalls3D(leftTrenchWall, new PVector(0, 1, 0));
-  drawTrenchWalls3D(rightTrenchWall, new PVector(0, 1, 0));
-
-  fill(111, 111, 0);
-
-  drawTrenchFloor3D(trenchFloor, new PVector(0, 1, 0));
-
-  drawTrenchWoodWalls(leftTrenchWoodWalls);
-  drawTrenchWoodWalls(rightTrenchWoodWalls);
-  
-  drawBarbedWireRows(barbedWireRows);
-  
-  gui();
-}
-
+/*************************************************************************************
+*
+*************************************************************************************/
 void gui() {
   hint(DISABLE_DEPTH_TEST);
   camera.beginHUD();
@@ -198,17 +149,15 @@ void sliderValue(float trenchBentsSliderValue) {
 
       regenerate = true;
     }
-
-  //println("a slider event. trenchBents: "+trenchBentsSliderValue);
 }
 
 void battleFieldDimensions(float battleFieldDimensionsValue){
  
-      if(battleFieldDimensionsValue>1){
+  if(battleFieldDimensionsValue>1){
   
-      battlefield.dimensions.set(new PVector(battleFieldDimensionsValue,battleFieldDimensionsValue,0));
-
-      regenerate = true;
-    }
+    battlefield.dimensions.set(new PVector(battleFieldDimensionsValue,battleFieldDimensionsValue,0));
+    
+    regenerate = true;
+  }
   
 }

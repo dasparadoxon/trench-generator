@@ -1,11 +1,11 @@
-class trenchWoodWallElement {
+class TrenchWoodWallElement {
   
     float rotation;
     PVector centerPosition;
     float lengthOfElement;
 }
 
-class ladder {
+class Ladder {
   
   PVector topLeft;
   PVector topRight;
@@ -22,7 +22,7 @@ class ladder {
   
 }
 
-class sandBag {
+class SandBag {
   
   public static final int lengthOfBag = 31;
   
@@ -35,12 +35,12 @@ class sandBag {
 }
 
 
-class trenchWoodWall {
+class TrenchWoodWall {
   
   boolean hasLadder = false;
   boolean hasSandbags = false;
   
-  ladder theLadder;
+  Ladder theLadder;
   
   int numberOfWoodsOnWall = 10;
   int heightOfWall = 100;
@@ -53,11 +53,11 @@ class trenchWoodWall {
   PVector originVector;
   PVector secondVector;
   
-  ArrayList<trenchWoodWallElement> wallElements = new ArrayList<trenchWoodWallElement>();
+  ArrayList<TrenchWoodWallElement> wallElements = new ArrayList<TrenchWoodWallElement>();
   
-  ArrayList<sandBag> sandBags = new ArrayList<sandBag>();
+  ArrayList<SandBag> sandBags = new ArrayList<SandBag>();
   
-  trenchWoodWall(PVector origin,PVector second,boolean addLadder,String allignment,boolean addSandbags){
+  TrenchWoodWall(PVector origin,PVector second,boolean addLadder,String allignment,boolean addSandbags){
     
     hasLadder = addLadder;
     hasSandbags = addSandbags;
@@ -106,7 +106,7 @@ class trenchWoodWall {
     for(int elementNr = 0; elementNr < numberOfElements; elementNr++){
     
       
-        trenchWoodWallElement tempWallElement = new trenchWoodWallElement();
+        TrenchWoodWallElement tempWallElement = new TrenchWoodWallElement();
         
         tempWallElement.rotation = -angleInDegrees4;
         tempWallElement.centerPosition = centerPos.copy();
@@ -123,7 +123,7 @@ class trenchWoodWall {
       
       normalVector.rotate(HALF_PI);
       
-      theLadder = new ladder();
+      theLadder = new Ladder();
       
       theLadder.rotation = -angleInDegrees4;
       
@@ -203,9 +203,9 @@ class trenchWoodWall {
   
   void createSandBags(float lengthOfElement,PVector centerPosition, PVector surfaceEdgeDirVec, float rotateTo, PVector normalVector, String alignment,boolean hasLadder ){
     
-      print("NUmber of bags :"+(lengthOfElement / sandBag.lengthOfBag)+"\n");
+      print("NUmber of bags :"+(lengthOfElement / SandBag.lengthOfBag)+"\n");
     
-      int numberOfBags = (int)floor(lengthOfElement / sandBag.lengthOfBag); 
+      int numberOfBags = (int)floor(lengthOfElement / SandBag.lengthOfBag); 
       
       if((numberOfBags % 2)==0) 
         numberOfBags--;
@@ -214,13 +214,13 @@ class trenchWoodWall {
       
       int alignmentShift = 18;
       
-      sandBag tempSandBag;
+      SandBag tempSandBag;
       
       for(int i=0;i<numberOfBags;i++){
         
         
     
-        tempSandBag = new sandBag();
+        tempSandBag = new SandBag();
         
         tempSandBag.centerPosition = centerPosition;
         
