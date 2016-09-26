@@ -6,14 +6,44 @@ class TrenchDrawer {
     
       trench = trenchToDraw;
   }
+  
+  void drawCircleBase(){
+    
+    pushMatrix();
+      
+      translate(0,0);
+      
+      fill(0,0,255);
+      translate(0,0);
+      sphere(20);
+      
+      popMatrix();
+   
+    for(PVector circlePoint:trench.leftOrOuterTrenchLine){
+      
+      pushMatrix();
+      
+      translate(width/2,0);
+      
+      translate(circlePoint.x,circlePoint.y,circlePoint.z);
+      sphere(10);
+      
+      popMatrix();
+    }
+    
+  }
 
   void drawTrench() {
 
     background(255, 255, 255);
 
     scale(0.4);
-    translate(-width/2, -height/2);
+    //translate(-width/2, -height/2);
     rotateX(PI/4);
+    
+    drawCircleBase();
+
+    /*
 
     fill(81, 89, 0);
 
@@ -33,6 +63,8 @@ class TrenchDrawer {
     drawTrenchWoodWalls(trench.rightTrenchWoodWalls);
 
     drawBarbedWireRows(trench.barbedWireRows);
+    
+    */
     
   }  
 

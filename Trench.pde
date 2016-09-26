@@ -1,7 +1,7 @@
 class Trench {
 
-  ArrayList<PVector> leftTrenchLine;
-  ArrayList<PVector> rightTrenchLine;
+  ArrayList<PVector> leftOrOuterTrenchLine;
+  ArrayList<PVector> rightOrInnerTrenchLine;
 
   ArrayList<ArrayList<PVector>> leftTrenchWall;
   ArrayList<ArrayList<PVector>> rightTrenchWall;
@@ -13,7 +13,15 @@ class Trench {
 
   ArrayList<RowOfBarbedWire> barbedWireRows;
   
+  
+  
   Trench(){
+    
+  }
+  
+  void generateTrench(){
+   
+    leftOrOuterTrenchLine = generateTrenchCirle("OUTER",false,null);
     
   }
 
@@ -22,20 +30,80 @@ class Trench {
     int trenchOffset = 250;
     int trenchWidth = 130;
 
-    leftTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
-    rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right", trenchWidth, numberOfTrenchBents);
+    leftOrOuterTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
+    rightOrInnerTrenchLine = cloneTrenchLine(leftOrOuterTrenchLine, "right", trenchWidth, numberOfTrenchBents);
 
-    rightTrenchWall = generateTrenchWall(rightTrenchLine);
+    rightTrenchWall = generateTrenchWall(rightOrInnerTrenchLine);
 
-    leftTrenchWall = generateTrenchWall(leftTrenchLine);
+    leftTrenchWall = generateTrenchWall(leftOrOuterTrenchLine);
 
-    trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
+    trenchFloor = generateTrenchFloor(leftOrOuterTrenchLine, rightOrInnerTrenchLine, trenchWidth);
 
-    leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine, false, false, "left");
-    rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine, true, true, "right");
+    leftTrenchWoodWalls = generateTrenchWoodWalls(leftOrOuterTrenchLine, false, false, "left");
+    rightTrenchWoodWalls = generateTrenchWoodWalls(rightOrInnerTrenchLine, true, true, "right");
 
-    barbedWireRows = generateBarbedWireRows(leftTrenchLine);
+    barbedWireRows = generateBarbedWireRows(leftOrOuterTrenchLine);
+    
+    
   }  
+  
+  ArrayList<PVector> generateTrenchCirle(String alignment,boolean clone,ArrayList<PVector> toClone) {
+    
+      ArrayList<PVector> circleTrenchPoints = new ArrayList<PVector>();
+    
+      int yOffset = (int)battlefield.dimensions.y / 4;
+      int xOffset = (int)battlefield.dimensions.y / 2;
+      
+      int xStepSize = 20;
+      
+      int zOffset = 100;
+      
+      int amplitudeMultiplier = 100;
+      
+      int circleSize = 2;
+      
+      
+      
+      for(int sinusCounter = 0; sinusCounter < 200;sinusCounter = sinusCounter + xStepSize){
+        
+            float sinusValue = sin(radians(sinusCounter)) * amplitudeMultiplier;
+            float cosValue = cos(radians(sinusCounter))*amplitudeMultiplier;
+            
+            int yPos = yOffset - (int)sinusValue;
+            
+            PVector tempCirclePoint = new PVector(xOffset + cosValue * circleSize,yPos * circleSize,100);
+            
+            circleTrenchPoints.add(tempCirclePoint);
+            
+            print("tempCirclePoint:"+tempCirclePoint+"\n");
+        
+      }
+      
+      for(int sinusCounter = 160; sinusCounter < 360;sinusCounter = sinusCounter + xStepSize){
+        
+            float sinusValue = sin(radians(sinusCounter)) * amplitudeMultiplier;
+            float cosValue = cos(radians(sinusCounter))*amplitudeMultiplier;
+            
+            int yPos = yOffset - (int)sinusValue;
+            
+            PVector tempCirclePoint = new PVector(xOffset + cosValue * circleSize,yPos * circleSize,zOffset);
+            
+            circleTrenchPoints.add(tempCirclePoint);
+            
+            print("tempCirclePoint:"+tempCirclePoint+"\n");
+      }     
+      
+      if(alignment == "OUTER"){
+        
+         circleTrenchPoints.add(new PVector(0,0,zOffset));
+         circleTrenchPoints.add(new PVector(battlefield.dimensions.x,0,zOffset));
+         circleTrenchPoints.add(new PVector(battlefield.dimensions.x,battlefield.dimensions.y,zOffset));
+         circleTrenchPoints.add(new PVector(0,battlefield.dimensions.y,zOffset));
+      }
+      
+      return circleTrenchPoints;
+    
+  }
 
   /*************************************************************************************
    *

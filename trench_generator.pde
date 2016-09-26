@@ -97,7 +97,7 @@ void draw() {
   
   if(regenerate){
     
-      trench.generateStraightTrench();
+      trench.generateTrench();
       
       regenerate = false;
   }
