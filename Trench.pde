@@ -1,7 +1,7 @@
 class Trench {
 
-  ArrayList<PVector> leftOrOuterTrenchLine;
-  ArrayList<PVector> rightOrInnerTrenchLine;
+  ArrayList<PVector> leftTrenchLine;
+  ArrayList<PVector> rightTrenchLine;
 
   ArrayList<ArrayList<PVector>> leftTrenchWall;
   ArrayList<ArrayList<PVector>> rightTrenchWall;
@@ -12,98 +12,37 @@ class Trench {
   ArrayList<TrenchWoodWall> rightTrenchWoodWalls;
 
   ArrayList<RowOfBarbedWire> barbedWireRows;
-  
-  
-  
-  Trench(){
-    
-  }
-  
-  void generateTrench(){
-   
-    leftOrOuterTrenchLine = generateTrenchCirle("OUTER",false,null);
-    
+
+
+
+  Trench() {
   }
 
-  void generateStraightTrench() {
+  void generateTrench() {
+
+    generateTrenchLine();
+  }
+
+  void generateTrenchLine() {
 
     int trenchOffset = 250;
     int trenchWidth = 130;
 
-    leftOrOuterTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
-    rightOrInnerTrenchLine = cloneTrenchLine(leftOrOuterTrenchLine, "right", trenchWidth, numberOfTrenchBents);
+    leftTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
+    rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right", trenchWidth, numberOfTrenchBents);
 
-    rightTrenchWall = generateTrenchWall(rightOrInnerTrenchLine);
+    rightTrenchWall = generateTrenchWall(rightTrenchLine);
 
-    leftTrenchWall = generateTrenchWall(leftOrOuterTrenchLine);
+    leftTrenchWall = generateTrenchWall(leftTrenchLine);
 
-    trenchFloor = generateTrenchFloor(leftOrOuterTrenchLine, rightOrInnerTrenchLine, trenchWidth);
+    trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
 
-    leftTrenchWoodWalls = generateTrenchWoodWalls(leftOrOuterTrenchLine, false, false, "left");
-    rightTrenchWoodWalls = generateTrenchWoodWalls(rightOrInnerTrenchLine, true, true, "right");
+    leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine, false, false, "left");
+    rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine, true, true, "right");
 
-    barbedWireRows = generateBarbedWireRows(leftOrOuterTrenchLine);
-    
-    
+    barbedWireRows = generateBarbedWireRows(leftTrenchLine);
   }  
-  
-  ArrayList<PVector> generateTrenchCirle(String alignment,boolean clone,ArrayList<PVector> toClone) {
-    
-      ArrayList<PVector> circleTrenchPoints = new ArrayList<PVector>();
-    
-      int yOffset = (int)battlefield.dimensions.y / 4;
-      int xOffset = (int)battlefield.dimensions.y / 2;
-      
-      int xStepSize = 20;
-      
-      int zOffset = 100;
-      
-      int amplitudeMultiplier = 100;
-      
-      int circleSize = 2;
-      
-      
-      
-      for(int sinusCounter = 0; sinusCounter < 200;sinusCounter = sinusCounter + xStepSize){
-        
-            float sinusValue = sin(radians(sinusCounter)) * amplitudeMultiplier;
-            float cosValue = cos(radians(sinusCounter))*amplitudeMultiplier;
-            
-            int yPos = yOffset - (int)sinusValue;
-            
-            PVector tempCirclePoint = new PVector(xOffset + cosValue * circleSize,yPos * circleSize,100);
-            
-            circleTrenchPoints.add(tempCirclePoint);
-            
-            print("tempCirclePoint:"+tempCirclePoint+"\n");
-        
-      }
-      
-      for(int sinusCounter = 160; sinusCounter < 360;sinusCounter = sinusCounter + xStepSize){
-        
-            float sinusValue = sin(radians(sinusCounter)) * amplitudeMultiplier;
-            float cosValue = cos(radians(sinusCounter))*amplitudeMultiplier;
-            
-            int yPos = yOffset - (int)sinusValue;
-            
-            PVector tempCirclePoint = new PVector(xOffset + cosValue * circleSize,yPos * circleSize,zOffset);
-            
-            circleTrenchPoints.add(tempCirclePoint);
-            
-            print("tempCirclePoint:"+tempCirclePoint+"\n");
-      }     
-      
-      if(alignment == "OUTER"){
-        
-         circleTrenchPoints.add(new PVector(0,0,zOffset));
-         circleTrenchPoints.add(new PVector(battlefield.dimensions.x,0,zOffset));
-         circleTrenchPoints.add(new PVector(battlefield.dimensions.x,battlefield.dimensions.y,zOffset));
-         circleTrenchPoints.add(new PVector(0,battlefield.dimensions.y,zOffset));
-      }
-      
-      return circleTrenchPoints;
-    
-  }
+
 
   /*************************************************************************************
    *
@@ -237,6 +176,8 @@ class Trench {
     tempTrenchWall = new ArrayList<ArrayList<PVector>>();
 
     for (int trenchBent=0; trenchBent<trenchLine.size()-1; trenchBent++) {
+      
+      
 
       ArrayList<PVector> tempWall = new ArrayList<PVector>();
 
@@ -258,7 +199,7 @@ class Trench {
 
       tempWall.add(start);
 
-      tempTrenchWall.add(tempWall);
+      if(trenchBent > 4)tempTrenchWall.add(tempWall);
     }
 
     return tempTrenchWall;

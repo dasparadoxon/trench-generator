@@ -1,19 +1,94 @@
-class TrenchDrawer {
+class CircleTrenchDrawer {
 
   Trench trench;
 
-  TrenchDrawer(Trench trenchToDraw) {
+  CircleTrenchDrawer(Trench trenchToDraw) {
 
     trench = trenchToDraw;
   }
 
+  void drawTrenchCircleLine3D() {
+
+    //DEBUG_drawCircleBase();
+
+    pushMatrix();
+
+    translate(width/2, 0);
+
+    beginShape();
+
+    int pointIndex = 0;
+
+    for (PVector circlePoint : trench.leftTrenchLine) {
+
+      print(circlePoint+ "\n");
+
+      if (pointIndex == 5)
+        beginContour();
+
+      vertex(circlePoint.x, circlePoint.y, circlePoint.z);
+
+      pointIndex++;
+    }
+
+    endContour();
+
+    endShape();
+
+    popMatrix();
+  }
+
+  void DEBUG_drawCircleBase() {
+
+    pushMatrix();
+
+    translate(0, 0);
+
+    fill(0, 0, 255);
+    translate(0, 0);
+    sphere(20);
+
+    popMatrix();
+
+    for (PVector circlePoint : trench.leftTrenchLine) {
+
+      pushMatrix();
+
+      translate(width/2, 0);
+
+      translate(circlePoint.x, circlePoint.y, circlePoint.z);
+      sphere(10);
+
+      popMatrix();
+    }
+  }  
+
   void drawTrench() {
+    
+    String mode = "CIRCLE";
 
     background(255, 255, 255);
 
     scale(0.4);
     translate(-width/2, -height/2);
     rotateX(PI/4);
+
+    if(mode == "CIRCLE"){
+      
+      
+       fill(81, 89, 0);
+       
+       drawTrenchCircleLine3D();
+       
+       fill(137, 87, 51);
+       
+       drawTrenchWalls3D(trench.rightTrenchWall, new PVector(0, 1, 0));
+       
+       //drawTrenchWalls3D(trench.leftOrOuterTrenchLine, new PVector(0, 1, 0));
+       
+    }
+
+    /*
 
      fill(81, 89, 0);
      
@@ -33,7 +108,8 @@ class TrenchDrawer {
      drawTrenchWoodWalls(trench.rightTrenchWoodWalls);
      
      drawBarbedWireRows(trench.barbedWireRows);
-
+     
+     */
   }  
 
   void drawTrenchFloor3D(ArrayList<PVector> floorToDraw, PVector positionToDraw) {
