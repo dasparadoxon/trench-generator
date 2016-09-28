@@ -34,6 +34,9 @@ class SandBag {
 
 
 class TrenchWoodWall {
+  
+  static final String OUTSIDE = "OUTSIDE";
+  static final String INSIDE = "INSIDE"; 
 
   boolean hasLadder = false;
   boolean hasSandbags = false;
@@ -55,7 +58,7 @@ class TrenchWoodWall {
 
   ArrayList<SandBag> sandBags = new ArrayList<SandBag>();
 
-  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String allignment, boolean addSandbags) {
+  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) {
 
     hasLadder = addLadder;
     hasSandbags = addSandbags;
@@ -95,6 +98,13 @@ class TrenchWoodWall {
       tempWallElement.rotation = -angleInDegrees;
       tempWallElement.centerPosition = centerPos.copy();
       tempWallElement.centerPosition.z = - (heightOfWoodElement * elementNr) + (( (heightOfWall  - (numberOfElements * heightOfWoodElement))/numberOfElements)/2);
+      
+      if(alignment == OUTSIDE)
+        tempWallElement.centerPosition.z =  (heightOfWoodElement * elementNr) + (( (heightOfWall  - (numberOfElements * heightOfWoodElement))/numberOfElements)/2);
+        
+      if(alignment == INSIDE)
+        tempWallElement.centerPosition.z =  (heightOfWoodElement * elementNr) + (( (heightOfWall  - (numberOfElements * heightOfWoodElement))/numberOfElements)/2);        
+      
       tempWallElement.lengthOfElement = lengthOfElement;
 
       wallElements.add(tempWallElement);
@@ -115,7 +125,7 @@ class TrenchWoodWall {
       int allignment_distance = 4;
       int allignment_distance_bottom = 35;
 
-      if (allignment=="left") {
+      if (alignment=="left") {
 
         allignment_distance = 35;
         allignment_distance_bottom = 4;
@@ -169,7 +179,7 @@ class TrenchWoodWall {
 
       normalVector.rotate(HALF_PI);
 
-      createSandBags(lengthOfElement, centerPos, relNormForLater, -angleInDegrees, normalVector, allignment, hasLadder);
+      createSandBags(lengthOfElement, centerPos, relNormForLater, -angleInDegrees, normalVector, alignment, hasLadder);
     }
   }
 
@@ -202,8 +212,19 @@ class TrenchWoodWall {
       }
       alignmentShift = -alignmentShift;
       normalVector = new PVector(-normalVector.x, -normalVector.y, -normalVector.z);
+      
+      if (alignment=="OUTSIDE") {
+        alignmentShift = -alignmentShift;
+        normalVector = new PVector(-normalVector.x, -normalVector.y, -normalVector.z);
+      }
+    
 
       tempSandBag.centerPosition = PVector.add(tempSandBag.centerPosition, PVector.mult(normalVector, -22));
+      
+      if (alignment=="OUTSIDE") {
+        alignmentShift = -alignmentShift;
+        normalVector = new PVector(-normalVector.x, -normalVector.y, -normalVector.z);
+      }      
 
       tempSandBag.rotation = rotateTo;
 

@@ -22,17 +22,22 @@ class CircleTrenchDrawer {
 
     fill(81, 89, 0);
 
-    //drawTrenchLine(trench.outerTrenchLine, new PVector(0, 1, 0), OUTSIDE);
-    //drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
+    drawTrenchLine(trench.outerTrenchLine, new PVector(0, 1, 0), OUTSIDE);
+    drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
 
     fill(137, 87, 51);
 
-    //drawTrenchWalls(trench.outerTrenchWall, new PVector(0, 1, 0), OUTSIDE);
+    drawTrenchWalls(trench.outerTrenchWall, new PVector(0, 1, 0), OUTSIDE);
     drawTrenchWalls(trench.innerTrenchWall, new PVector(0, 1, 0), INSIDE);
 
     fill(111, 111, 0);
 
-    //drawTrenchFloor(trench.outerTrenchLine, new PVector(0, 1, -100));    
+    drawTrenchFloor(trench.outerTrenchLine, new PVector(0, 1, -100));
+    
+    
+    drawTrenchWoodWalls(trench.outerTrenchWoodWalls);
+    
+    //drawTrenchWoodWalls(trench.innerTrenchWoodWalls);
 
 
     /*
@@ -142,170 +147,170 @@ class CircleTrenchDrawer {
 
         c++;
       }
+    }
 
-      if (alignment == INSIDE) {
+    if (alignment == INSIDE) {
 
-        for (ArrayList<PVector> trenchWall : wallsToDraw) {
+      for (ArrayList<PVector> trenchWall : wallsToDraw) {
 
-          beginShape();
+        beginShape();
 
-          for (PVector trenchWallPoint : trenchWall) {
+        for (PVector trenchWallPoint : trenchWall) {
 
-            if (c != ringDividerIndex)
-              vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
-          }
-
-          endShape();
-
-          c++;
-        }
-      }
-      }
-    };
-
-
-    void drawTrenchWoodWalls(ArrayList<TrenchWoodWall> trenchWoodWallsToDraw) {
-
-      int i = 0;
-
-      for (TrenchWoodWall trenchWoodWallToDraw : trenchWoodWallsToDraw) {
-
-        i++;
-
-        for (TrenchWoodWallElement trenchWallElement : trenchWoodWallToDraw.wallElements) {
-
-          pushMatrix();
-
-          fill(203, 127, 26);
-
-          translate(trenchWallElement.centerPosition.x, trenchWallElement.centerPosition.y, trenchWallElement.centerPosition.z);
-
-          rotateZ(trenchWallElement.rotation);
-
-          box(10, trenchWallElement.lengthOfElement, trenchWoodWallToDraw.heightOfWoodElement);
-
-          popMatrix();
+          //if (c != ringDividerIndex)
+            vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
         }
 
-        // draw poles
+        endShape();
 
-        TrenchWoodWallElement firstWallElement = trenchWoodWallToDraw.wallElements.get(0);
+        c++;
+      }
+    }
+  };
+
+
+  void drawTrenchWoodWalls(ArrayList<TrenchWoodWall> trenchWoodWallsToDraw) {
+
+    int i = 0;
+
+    for (TrenchWoodWall trenchWoodWallToDraw : trenchWoodWallsToDraw) {
+
+      i++;
+
+      for (TrenchWoodWallElement trenchWallElement : trenchWoodWallToDraw.wallElements) {
 
         pushMatrix();
 
-        fill(0, 0, 0);
+        fill(203, 127, 26);
 
-        translate(trenchWoodWallToDraw.originVector.x, trenchWoodWallToDraw.originVector.y, trenchWoodWallToDraw.originVector.z - 40);
+        translate(trenchWallElement.centerPosition.x, trenchWallElement.centerPosition.y, trenchWallElement.centerPosition.z);
 
-        box(15, 15, 100);
+        rotateZ(trenchWallElement.rotation);
+
+        box(10, trenchWallElement.lengthOfElement, trenchWoodWallToDraw.heightOfWoodElement);
 
         popMatrix();
-
-        if (trenchWoodWallToDraw.hasLadder)
-          drawLadder(trenchWoodWallToDraw.theLadder);
-
-        drawSandBags(trenchWoodWallToDraw.sandBags);
       }
 
-      TrenchWoodWall lastWall = trenchWoodWallsToDraw.get(trenchWoodWallsToDraw.size()-1);
+      // draw poles
+
+      TrenchWoodWallElement firstWallElement = trenchWoodWallToDraw.wallElements.get(0);
 
       pushMatrix();
 
       fill(0, 0, 0);
 
-      translate(lastWall.secondVector.x, lastWall.secondVector.y, lastWall.secondVector.z - 40);
+      translate(trenchWoodWallToDraw.originVector.x, trenchWoodWallToDraw.originVector.y, trenchWoodWallToDraw.originVector.z - 40);
 
       box(15, 15, 100);
 
       popMatrix();
 
-      if (lastWall.hasLadder)
-        drawLadder(lastWall.theLadder);
+      if (trenchWoodWallToDraw.hasLadder)
+        drawLadder(trenchWoodWallToDraw.theLadder);
 
-      drawSandBags(lastWall.sandBags);
+      drawSandBags(trenchWoodWallToDraw.sandBags);
     }
 
-    void drawSandBags(ArrayList<SandBag> trenchWoodWallToPutSandBagsOn) {
+    TrenchWoodWall lastWall = trenchWoodWallsToDraw.get(trenchWoodWallsToDraw.size()-1);
 
-      for (SandBag sandBagToDraw : trenchWoodWallToPutSandBagsOn) {
+    pushMatrix();
 
-        pushMatrix();
+    fill(0, 0, 0);
 
-        translate(sandBagToDraw.centerPosition.x, sandBagToDraw.centerPosition.y, sandBagToDraw.centerPosition.z);
+    translate(lastWall.secondVector.x, lastWall.secondVector.y, lastWall.secondVector.z - 40);
 
-        rotateZ(sandBagToDraw.rotation);
+    box(15, 15, 100);
 
-        fill(212, 184, 101);  
+    popMatrix();
 
-        box(15, sandBagToDraw.lengthOfBag, 15);
+    if (lastWall.hasLadder)
+      drawLadder(lastWall.theLadder);
 
-        popMatrix();
-      }
-    }
+    drawSandBags(lastWall.sandBags);
+  }
 
-    void drawBarbedWireRows(ArrayList<RowOfBarbedWire> barbedWireRowsToDraw) {
+  void drawSandBags(ArrayList<SandBag> trenchWoodWallToPutSandBagsOn) {
 
-      for (RowOfBarbedWire barbedWireRowToDraw : barbedWireRowsToDraw) {
-
-        PVector pos = barbedWireRowToDraw.centerPosition.copy();
-
-        pushMatrix();
-
-        beginShape();
-
-        int lengthOfRow = 60;
-        int heightOfRow = 20;
-        int widthOfRow = 120;
-
-        texture(barbedWireTextureImage);
-        textureMode(NORMAL);
-
-        noStroke();
-
-        vertex(pos.x, pos.y + lengthOfRow, pos.z - heightOfRow, 0, 0);
-        vertex(pos.x, pos.y + lengthOfRow, pos.z + heightOfRow, 0, 1);
-        vertex(pos.x, pos.y - lengthOfRow, pos.z + heightOfRow, 1, 1);
-        vertex(pos.x, pos.y - lengthOfRow, pos.z - heightOfRow, 1, 0);
-        vertex(pos.x, pos.y + lengthOfRow, pos.z - heightOfRow, 0, 0);      
-
-        stroke(0);
-
-        endShape();
-
-        rotateY(radians(90));
-
-        popMatrix();
-      }
-    }
-
-    //WithPerspective
-    void drawLadder(Ladder ladderToDraw) {
+    for (SandBag sandBagToDraw : trenchWoodWallToPutSandBagsOn) {
 
       pushMatrix();
 
-      fill(40, 10, 220);
+      translate(sandBagToDraw.centerPosition.x, sandBagToDraw.centerPosition.y, sandBagToDraw.centerPosition.z);
+
+      rotateZ(sandBagToDraw.rotation);
+
+      fill(212, 184, 101);  
+
+      box(15, sandBagToDraw.lengthOfBag, 15);
+
+      popMatrix();
+    }
+  }
+
+  void drawBarbedWireRows(ArrayList<RowOfBarbedWire> barbedWireRowsToDraw) {
+
+    for (RowOfBarbedWire barbedWireRowToDraw : barbedWireRowsToDraw) {
+
+      PVector pos = barbedWireRowToDraw.centerPosition.copy();
+
+      pushMatrix();
 
       beginShape();
 
+      int lengthOfRow = 60;
+      int heightOfRow = 20;
+      int widthOfRow = 120;
+
+      texture(barbedWireTextureImage);
+      textureMode(NORMAL);
+
       noStroke();
 
-      texture(ladderTextureImage);
-
-      textureMode(IMAGE);
-
-      vertex(ladderToDraw.topLeft.x, ladderToDraw.topLeft.y, ladderToDraw.topLeft.z, 0, 0);
-      vertex(ladderToDraw.topRight.x, ladderToDraw.topRight.y, ladderToDraw.topRight.z, 73, 0);
-      vertex(ladderToDraw.bottomRight.x, ladderToDraw.bottomRight.y, ladderToDraw.bottomRight.z, 73, 257);
-      vertex(ladderToDraw.bottomLeft.x, ladderToDraw.bottomLeft.y, ladderToDraw.bottomLeft.z, 0, 257);
-      vertex(ladderToDraw.topLeft.x, ladderToDraw.topLeft.y, ladderToDraw.topLeft.z, 0, 0);
-
-      int ladderWidth = ladderToDraw.ladderWidth;
-      int ladderHeight = ladderToDraw.ladderHeight;
+      vertex(pos.x, pos.y + lengthOfRow, pos.z - heightOfRow, 0, 0);
+      vertex(pos.x, pos.y + lengthOfRow, pos.z + heightOfRow, 0, 1);
+      vertex(pos.x, pos.y - lengthOfRow, pos.z + heightOfRow, 1, 1);
+      vertex(pos.x, pos.y - lengthOfRow, pos.z - heightOfRow, 1, 0);
+      vertex(pos.x, pos.y + lengthOfRow, pos.z - heightOfRow, 0, 0);      
 
       stroke(0);
 
       endShape();
 
+      rotateY(radians(90));
+
       popMatrix();
     }
   }
+
+  //WithPerspective
+  void drawLadder(Ladder ladderToDraw) {
+
+    pushMatrix();
+
+    fill(40, 10, 220);
+
+    beginShape();
+
+    noStroke();
+
+    texture(ladderTextureImage);
+
+    textureMode(IMAGE);
+
+    vertex(ladderToDraw.topLeft.x, ladderToDraw.topLeft.y, ladderToDraw.topLeft.z, 0, 0);
+    vertex(ladderToDraw.topRight.x, ladderToDraw.topRight.y, ladderToDraw.topRight.z, 73, 0);
+    vertex(ladderToDraw.bottomRight.x, ladderToDraw.bottomRight.y, ladderToDraw.bottomRight.z, 73, 257);
+    vertex(ladderToDraw.bottomLeft.x, ladderToDraw.bottomLeft.y, ladderToDraw.bottomLeft.z, 0, 257);
+    vertex(ladderToDraw.topLeft.x, ladderToDraw.topLeft.y, ladderToDraw.topLeft.z, 0, 0);
+
+    int ladderWidth = ladderToDraw.ladderWidth;
+    int ladderHeight = ladderToDraw.ladderHeight;
+
+    stroke(0);
+
+    endShape();
+
+    popMatrix();
+  }
+}

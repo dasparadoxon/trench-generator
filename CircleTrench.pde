@@ -9,6 +9,9 @@ class CircleTrench extends Trench {
   ArrayList<ArrayList<PVector>> outerTrenchWall;
   ArrayList<ArrayList<PVector>> innerTrenchWall;  
   
+  ArrayList<TrenchWoodWall> outerTrenchWoodWalls;
+  ArrayList<TrenchWoodWall> innerTrenchWoodWalls;  
+  
   int amplitudeMultiplier = 160;
   
 
@@ -27,10 +30,12 @@ class CircleTrench extends Trench {
 
     outerTrenchWall = generateTrenchWall(outerTrenchLine);
     innerTrenchWall = generateTrenchWall(innerTrenchLine);
-    
-    //innerTrenchWall = generateTrenchWall(innerTrenchLine);
 
     trenchFloor = generateTrenchFloor(outerTrenchLine);
+    
+    outerTrenchWoodWalls = generateTrenchWoodWalls(outerTrenchLine, true, true, OUTSIDE);
+    //innerTrenchWoodWalls = generateTrenchWoodWalls(innerTrenchLine, false, false, INSIDE);
+    
   }  
 
   /*************************************************************************************
@@ -166,26 +171,31 @@ class CircleTrench extends Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String allignment) {
+  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String alignment) {
 
     ArrayList<TrenchWoodWall> tempTrenchWoodWalls;
 
     tempTrenchWoodWalls = new ArrayList<TrenchWoodWall>();
 
     int c = 0;
+    
+    int trenchPointsStartIndex = 5;
+    
+    if(alignment == INSIDE) 
+      trenchPointsStartIndex = 0;
 
-    for (int trenchBent=0; trenchBent<trenchLine.size()-1 -3; trenchBent++) {
+    for (int trenchBent=trenchPointsStartIndex; trenchBent<trenchLine.size()-1 ; trenchBent++) {
 
       TrenchWoodWall tempTrenchWoodWall;
 
       boolean placeLadder = false;
 
       if ((c%3) == 0)placeLadder = true;
-      else placeLadder = false;
+        else placeLadder = false;
 
       if (hasLadder == false)placeLadder = false;
 
-      tempTrenchWoodWall = new TrenchWoodWall(trenchLine.get(trenchBent), trenchLine.get(trenchBent+1), placeLadder, allignment, hasSandbags);
+      tempTrenchWoodWall = new TrenchWoodWall(trenchLine.get(trenchBent), trenchLine.get(trenchBent+1), placeLadder, alignment, hasSandbags);
 
       tempTrenchWoodWalls.add(tempTrenchWoodWall);
 
