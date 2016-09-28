@@ -13,7 +13,8 @@ class Trench {
 
   ArrayList<RowOfBarbedWire> barbedWireRows;
 
-
+  int trenchOffset = 250;
+  int trenchWidth = 130;
 
   Trench() {
   }
@@ -25,8 +26,7 @@ class Trench {
 
   void generateTrenchLine() {
 
-    int trenchOffset = 250;
-    int trenchWidth = 130;
+
 
     leftTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
     rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right", trenchWidth, numberOfTrenchBents);
@@ -176,8 +176,6 @@ class Trench {
     tempTrenchWall = new ArrayList<ArrayList<PVector>>();
 
     for (int trenchBent=0; trenchBent<trenchLine.size()-1; trenchBent++) {
-      
-      
 
       ArrayList<PVector> tempWall = new ArrayList<PVector>();
 
@@ -199,7 +197,8 @@ class Trench {
 
       tempWall.add(start);
 
-      if(trenchBent > 4)tempTrenchWall.add(tempWall);
+      if(trenchBent > 4)
+        tempTrenchWall.add(tempWall);
     }
 
     return tempTrenchWall;

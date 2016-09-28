@@ -1,21 +1,37 @@
 class CircleTrench extends Trench {
+  
+  static final String OUTSIDE = "OUTSIDE";
+  static final String INSIDE = "INSIDE";
+  
+  ArrayList<PVector> outerTrenchLine;
+  ArrayList<PVector> innerTrenchLine;
+
+  ArrayList<ArrayList<PVector>> outerTrenchWall;
+  ArrayList<ArrayList<PVector>> innerTrenchWall;  
 
   CircleTrench() {
   }
 
-  void generateTrench() {
+  void generate() {
 
-    generateTrench();
+    generateTrenchLine();
   }
 
   void generateTrenchLine() {
-    
-    leftTrenchLine = generateTrenchLine("OUTER", false, null);
-    
-    rightTrenchWall = generateTrenchWall(leftTrenchLine);
+
+    outerTrenchLine = generateTrenchLine(OUTSIDE, null);
+    innerTrenchLine = generateTrenchLine(INSIDE, outerTrenchLine);
+
+    outerTrenchWall = generateTrenchWall(outerTrenchLine);
+    //innerTrenchWall = generateTrenchWall(innerTrenchLine);
+
+    trenchFloor = generateTrenchFloor(outerTrenchLine);
   }  
-  
-  ArrayList<PVector> generateTrenchLine(String alignment, boolean clone, ArrayList<PVector> toClone){
+
+  /*************************************************************************************
+   *
+   *************************************************************************************/
+  ArrayList<PVector> generateTrenchLine(String alignment, ArrayList<PVector> toClone) {
 
     ArrayList<PVector> circleTrenchPoints = new ArrayList<PVector>();
 
@@ -30,7 +46,7 @@ class CircleTrench extends Trench {
 
     int circleSize = 2;
 
-    if (alignment == "OUTER") {
+    if (alignment == OUTSIDE) {
 
       circleTrenchPoints.add(new PVector(0, 0, zOffset));
       circleTrenchPoints.add(new PVector(battlefield.dimensions.x, 0, zOffset));
@@ -53,7 +69,7 @@ class CircleTrench extends Trench {
       //print("tempCirclePoint:"+tempCirclePoint+"\n");
     }
 
-    for (int sinusCounter = 160; sinusCounter < 360; sinusCounter = sinusCounter + xStepSize) {
+    for (int sinusCounter = 160; sinusCounter < 380; sinusCounter = sinusCounter + xStepSize) {
 
       float sinusValue = sin(radians(sinusCounter)) * amplitudeMultiplier;
       float cosValue = cos(radians(sinusCounter))*amplitudeMultiplier;
@@ -67,8 +83,7 @@ class CircleTrench extends Trench {
       //print("tempCirclePoint:"+tempCirclePoint+"\n");
     }     
 
-    return circleTrenchPoints;    
-    
+    return circleTrenchPoints;
   }
 
 
@@ -84,9 +99,7 @@ class CircleTrench extends Trench {
 
     tempTrenchWall = new ArrayList<ArrayList<PVector>>();
 
-    for (int trenchBent=0; trenchBent<trenchLine.size()-1; trenchBent++) {
-      
-      
+    for (int trenchBent = 0; trenchBent < trenchLine.size()-1; trenchBent++) {
 
       ArrayList<PVector> tempWall = new ArrayList<PVector>();
 
@@ -108,7 +121,8 @@ class CircleTrench extends Trench {
 
       tempWall.add(start);
 
-      if(trenchBent > 4)tempTrenchWall.add(tempWall);
+      //if(trenchBent > 4)
+      tempTrenchWall.add(tempWall);
     }
 
     return tempTrenchWall;
@@ -117,32 +131,26 @@ class CircleTrench extends Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVector> right, int offsetX) {
+  ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> trenchLine) {
 
     ArrayList<PVector> tempTrenchFloor;
+    
+    int zValueToShift = 500;
 
     tempTrenchFloor = new ArrayList<PVector>();
 
-    for (int trenchBent=0; trenchBent<left.size()-1 -2; trenchBent++) {
+    for (int trenchBent=4; trenchBent < trenchLine.size()-1; trenchBent++) {
 
-      //print("Putting "+left.get(trenchBent)+" into TrenchFloor \n");
+      PVector zShift = trenchLine.get(trenchBent);
 
-      PVector shift = left.get(trenchBent);
-
-      tempTrenchFloor.add(new PVector(shift.x, shift.y, shift.z - 100));
+      tempTrenchFloor.add(new PVector(zShift.x, zShift.y, zShift.z - zValueToShift));
+      
+     
     }
 
-    for (int trenchBent=right.size()-1 -3; trenchBent > -1; trenchBent--) {
+    PVector lastshift = trenchLine.get(0);
 
-      PVector shift = left.get(trenchBent);
-
-      tempTrenchFloor.add(new PVector(shift.x+ offsetX, shift.y, shift.z -100));
-    } 
-
-    PVector lastshift = left.get(0);
-
-    tempTrenchFloor.add(new PVector(lastshift.x, lastshift.y, lastshift.z -100));  
-
+    tempTrenchFloor.add(new PVector(lastshift.x, lastshift.y, lastshift.z -zValueToShift));  
 
     return tempTrenchFloor;
   }

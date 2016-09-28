@@ -28,8 +28,8 @@ int sliderValue = 100;
 Slider trenchBentsSlider;
 Slider battleFieldDimensionSlider;
 
-Trench trench;
-TrenchDrawer trenchDrawer;
+CircleTrench trench;
+CircleTrenchDrawer trenchDrawer;
 
 boolean regenerate;
 
@@ -87,8 +87,8 @@ void setup() {
 
   camera = new PeasyCam(this, 0, 0, 0, 500);
   
-  trench = new Trench();
-  trenchDrawer = new TrenchDrawer(trench);
+  trench = new CircleTrench();
+  trenchDrawer = new CircleTrenchDrawer(trench);
 
   regenerate = true;
 }

@@ -1,71 +1,18 @@
 class CircleTrenchDrawer {
 
-  Trench trench;
+  static final String OUTSIDE = "OUTSIDE";
+  static final String INSIDE = "INSIDE";    
 
-  CircleTrenchDrawer(Trench trenchToDraw) {
+  static final int ringDividerIndex = 4;
+
+  CircleTrench trench;
+
+  CircleTrenchDrawer(CircleTrench trenchToDraw) {
 
     trench = trenchToDraw;
   }
 
-  void drawTrenchCircleLine3D() {
-
-    //DEBUG_drawCircleBase();
-
-    pushMatrix();
-
-    translate(width/2, 0);
-
-    beginShape();
-
-    int pointIndex = 0;
-
-    for (PVector circlePoint : trench.leftTrenchLine) {
-
-      print(circlePoint+ "\n");
-
-      if (pointIndex == 5)
-        beginContour();
-
-      vertex(circlePoint.x, circlePoint.y, circlePoint.z);
-
-      pointIndex++;
-    }
-
-    endContour();
-
-    endShape();
-
-    popMatrix();
-  }
-
-  void DEBUG_drawCircleBase() {
-
-    pushMatrix();
-
-    translate(0, 0);
-
-    fill(0, 0, 255);
-    translate(0, 0);
-    sphere(20);
-
-    popMatrix();
-
-    for (PVector circlePoint : trench.leftTrenchLine) {
-
-      pushMatrix();
-
-      translate(width/2, 0);
-
-      translate(circlePoint.x, circlePoint.y, circlePoint.z);
-      sphere(10);
-
-      popMatrix();
-    }
-  }  
-
   void drawTrench() {
-    
-    String mode = "CIRCLE";
 
     background(255, 255, 255);
 
@@ -73,20 +20,20 @@ class CircleTrenchDrawer {
     translate(-width/2, -height/2);
     rotateX(PI/4);
 
-    if(mode == "CIRCLE"){
-      
-      
-       fill(81, 89, 0);
-       
-       drawTrenchCircleLine3D();
-       
-       fill(137, 87, 51);
-       
-       drawTrenchWalls3D(trench.rightTrenchWall, new PVector(0, 1, 0));
-       
-       //drawTrenchWalls3D(trench.leftOrOuterTrenchLine, new PVector(0, 1, 0));
-       
-    }
+    fill(81, 89, 0);
+
+    //drawTrenchLine(trench.outerTrenchLine, new PVector(0, 1, 0), OUTSIDE);
+
+    fill(137, 87, 51);
+
+    //drawTrenchWalls(trench.outerTrenchWall, new PVector(0, 1, 0), "OUTER");
+
+    fill(111, 111, 0);
+
+    drawTrenchFloor(trench.outerTrenchLine, new PVector(0, 1, 100));    
+
+    //drawTrenchWalls3D(trench.leftOrOuterTrenchLine, new PVector(0, 1, 0));
+
 
     /*
 
@@ -112,68 +59,79 @@ class CircleTrenchDrawer {
      */
   }  
 
-  void drawTrenchFloor3D(ArrayList<PVector> floorToDraw, PVector positionToDraw) {
+  void drawTrenchFloor(ArrayList<PVector> floorToDraw, PVector positionToDraw) {
 
     beginShape();
+
+    int firstHalfOfShapeCounter = 0;
 
     for (PVector trenchWallPoint : floorToDraw) {
-
-
-      vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
+      
+      if(firstHalfOfShapeCounter > 4)
+      
+        //print(trenchWallPoint);
+      
+        vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
+        
+        firstHalfOfShapeCounter++;
     }
+
 
     endShape();
   }
 
-  void drawTrenchWalls3D(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positionToDraw) {
+  void drawTrenchWalls(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positionToDraw, String allignment) {
 
     int c = 0;
 
     PVector prevTrench = new PVector();
 
-    for (ArrayList<PVector> trenchWall : wallsToDraw) {
+    if (allignment == "OUTER") {
 
-      beginShape();
+      for (ArrayList<PVector> trenchWall : wallsToDraw) {
 
-      for (PVector trenchWallPoint : trenchWall) {
+        beginShape();
 
-        vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
+        for (PVector trenchWallPoint : trenchWall) {
+
+          if (c != ringDividerIndex)
+            vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
+        }
+
+        endShape();
+
+        c++;
       }
-
-      endShape();
     }
   }
 
 
-  void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
+  void drawTrenchLine(ArrayList<PVector> toDraw, PVector positionToDraw, String alignment) {
+
+
+    pushMatrix();
+
+    
 
     beginShape();
 
-    int c = 0;
+    int pointIndex = 0;
 
-    PVector prevTrench = new PVector();
+    for (PVector circlePoint : toDraw) {
 
-    int sizeOfBents = toDraw.size()-1;
+      if (pointIndex == 5)
+        beginContour();
 
-    for (PVector trenchLineBent : toDraw) {
+      vertex(circlePoint.x, circlePoint.y, circlePoint.z);
 
-      if (c == 0) {
-
-        prevTrench = trenchLineBent;  
-
-        vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y, 0);
-      } else {
-
-
-        vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y, 0);
-
-        prevTrench = trenchLineBent;
-      }
-
-      c++;
+      pointIndex++;
     }
 
+    endContour();
+
     endShape();
+
+    popMatrix();
   }
 
   void drawTrenchWoodWalls(ArrayList<TrenchWoodWall> trenchWoodWallsToDraw) {
