@@ -20,17 +20,17 @@ class TrenchDrawer {
 
      fill(81, 89, 0);
      
-     drawTrenchLine3D(trench.leftTrenchLine, new PVector(0, 1, 0));
-     drawTrenchLine3D(trench.rightTrenchLine, new PVector(0, 1, 0));
+     drawTrenchLine(trench.leftTrenchLine, new PVector(0, 1, 0));
+     drawTrenchLine(trench.rightTrenchLine, new PVector(0, 1, 0));
      
      fill(137, 87, 51);
      
-     drawTrenchWalls3D(trench.leftTrenchWall, new PVector(0, 1, 0));
-     drawTrenchWalls3D(trench.rightTrenchWall, new PVector(0, 1, 0));
+     drawTrenchWalls(trench.leftTrenchWall, new PVector(0, 1, 0));
+     drawTrenchWalls(trench.rightTrenchWall, new PVector(0, 1, 0));
      
      fill(111, 111, 0);
      
-     drawTrenchFloor3D(trench.trenchFloor, new PVector(0, 1, 0));
+     drawTrenchFloor(trench.trenchFloor, new PVector(0, 1, 0));
      
      drawTrenchWoodWalls(trench.leftTrenchWoodWalls);
      drawTrenchWoodWalls(trench.rightTrenchWoodWalls);
@@ -39,7 +39,7 @@ class TrenchDrawer {
 
   }  
 
-  void drawTrenchFloor3D(ArrayList<PVector> floorToDraw, PVector positionToDraw) {
+  void drawTrenchFloor(ArrayList<PVector> floorToDraw, PVector positionToDraw) {
 
     beginShape();
 
@@ -52,7 +52,7 @@ class TrenchDrawer {
     endShape();
   }
 
-  void drawTrenchWalls3D(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positionToDraw) {
+  void drawTrenchWalls(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positionToDraw) {
 
     int c = 0;
 
@@ -72,7 +72,7 @@ class TrenchDrawer {
   }
 
 
-  void drawTrenchLine3D(ArrayList<PVector> toDraw, PVector positionToDraw) {
+  void drawTrenchLine(ArrayList<PVector> toDraw, PVector positionToDraw) {
 
     beginShape();
 

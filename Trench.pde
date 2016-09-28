@@ -14,7 +14,7 @@ class Trench {
   ArrayList<RowOfBarbedWire> barbedWireRows;
 
   int trenchOffset = 250;
-  int trenchWidth = 130;
+  int trenchWidth = 50;
 
   Trench() {
   }

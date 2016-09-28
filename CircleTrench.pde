@@ -8,6 +8,9 @@ class CircleTrench extends Trench {
 
   ArrayList<ArrayList<PVector>> outerTrenchWall;
   ArrayList<ArrayList<PVector>> innerTrenchWall;  
+  
+  int amplitudeMultiplier = 160;
+  
 
   CircleTrench() {
   }
@@ -19,10 +22,12 @@ class CircleTrench extends Trench {
 
   void generateTrenchLine() {
 
-    outerTrenchLine = generateTrenchLine(OUTSIDE, null);
-    innerTrenchLine = generateTrenchLine(INSIDE, outerTrenchLine);
+    outerTrenchLine = generateTrenchLine(OUTSIDE);
+    innerTrenchLine = generateTrenchLine(INSIDE);
 
     outerTrenchWall = generateTrenchWall(outerTrenchLine);
+    innerTrenchWall = generateTrenchWall(innerTrenchLine);
+    
     //innerTrenchWall = generateTrenchWall(innerTrenchLine);
 
     trenchFloor = generateTrenchFloor(outerTrenchLine);
@@ -31,7 +36,10 @@ class CircleTrench extends Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<PVector> generateTrenchLine(String alignment, ArrayList<PVector> toClone) {
+  ArrayList<PVector> generateTrenchLine(String alignment) {
+    
+    if(alignment == INSIDE)
+      amplitudeMultiplier -= trenchWidth;
 
     ArrayList<PVector> circleTrenchPoints = new ArrayList<PVector>();
 
@@ -41,8 +49,6 @@ class CircleTrench extends Trench {
     int xStepSize = 20;
 
     int zOffset = 100;
-
-    int amplitudeMultiplier = 100;
 
     int circleSize = 2;
 
