@@ -135,7 +135,7 @@ class CircleTrench extends Trench {
       //if(trenchBent > 4)
       tempTrenchWall.add(tempWall);
       
-      print(tempTrenchWall + "\n");
+      //print(tempTrenchWall + "\n");
     }
 
     return tempTrenchWall;

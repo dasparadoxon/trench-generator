@@ -1,39 +1,4 @@
-class TrenchWoodWallElement {
-
-  float rotation;
-  PVector centerPosition;
-  float lengthOfElement;
-}
-
-class Ladder {
-
-  PVector topLeft;
-  PVector topRight;
-  PVector bottomLeft;
-  PVector bottomRight;  
-
-  float w, h;
-  float rotation;
-
-  int leaderHeight = 10;
-
-  int ladderWidth = 30;
-  int ladderHeight = 70;
-}
-
-class SandBag {
-
-  public static final int lengthOfBag = 31;
-
-  int adaptedLength;
-
-  PVector centerPosition;
-
-  float rotation;
-}
-
-
-class TrenchWoodWall {
+class CircleTrenchWoodWall {
   
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE"; 
@@ -58,7 +23,7 @@ class TrenchWoodWall {
 
   ArrayList<SandBag> sandBags = new ArrayList<SandBag>();
 
-  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) {
+  CircleTrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) {
 
     hasLadder = addLadder;
     hasSandbags = addSandbags;
