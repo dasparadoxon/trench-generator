@@ -1,11 +1,11 @@
 
 
 class TrenchToXML {
-  
+
   XML trenchXml;
-  
+
   boolean debug = true;
-  
+
   String fileName = "trench.xml";
 
   void log(String message) {
@@ -20,41 +20,62 @@ class TrenchToXML {
   }
 
   void setUpXML() {
-    
-    trenchXml = new XML("Trench");
-    
-    XML outline = xml.addChild("outline");
-    
-    addPositionVector(outline,12.4,4,62.0);
-    addPositionVector(outline,142.4,44,32.0);
-    addPositionVector(outline,112.4,24,82.0);
-    
-    
-    
 
+    trenchXml = new XML("trench");
+  }
+
+  XML createOutline(String name) {
+    
+    XML newOutlineToReturn;
+    
+    newOutlineToReturn = trenchXml.addChild("outline");
+    
+    XML nameXML = newOutlineToReturn.addChild("name");
+    nameXML.setContent(name);
+
+    return newOutlineToReturn;
+  }
+
+  public void addPositionVector(XML parent, float x, float y, float z) {
+
+    XML positionVector;
+
+    positionVector = parent.addChild("positionVector");
+
+    XML vectorAxis;
+
+    vectorAxis = positionVector.addChild("xAxis");
+    vectorAxis.setContent(String.valueOf(x));
+    
+    vectorAxis = positionVector.addChild("yAxis");
+    vectorAxis.setContent(String.valueOf(y));
+    
+    vectorAxis = positionVector.addChild("zAxis");
+    vectorAxis.setContent(String.valueOf(z));
   }
   
-  void addPositionVector(XML parent,float x,float y,float z){
-    
+  public void addPositionVector(XML parent, int x, int y, int z) {
+
     XML positionVector;
-    
+
     positionVector = parent.addChild("positionVector");
-    
+
     XML vectorAxis;
-    
+
     vectorAxis = positionVector.addChild("xAxis");
-    vectorAxis.setContent("12.0");
-    vectorAxis = positionVector.addChild("yAxis");
-    vectorAxis.setContent("52.0");
-    vectorAxis = positionVector.addChild("zAxis");
-    vectorAxis.setContent("112.0");
+    vectorAxis.setContent(String.valueOf(x));
     
-  }
+    vectorAxis = positionVector.addChild("yAxis");
+    vectorAxis.setContent(String.valueOf(y));
+    
+    vectorAxis = positionVector.addChild("zAxis");
+    vectorAxis.setContent(String.valueOf(z));
+  }  
 
   void saveToFile() {
 
     log("Save Trench to XML File");
-    
+
     saveXML(trenchXml, dataPath("")+"/"+fileName);
   }
 }

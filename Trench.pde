@@ -110,7 +110,17 @@ class Trench {
       tempTrenchLine.add(rightUpCorner);
 
       tempTrenchLine.add(tempTrenchLine.get(0));
-    }   
+    }  
+    
+    // export to XML in memory
+    
+    XML outline = trenchToXML.createOutline("upperFrontLineArea_"+allignment+"Side");
+    
+    for (PVector trenchLineBent : tempTrenchLine) {
+      
+      trenchToXML.addPositionVector(outline,trenchLineBent.x,trenchLineBent.y,trenchLineBent.z);
+      
+    }
 
     return tempTrenchLine;
   }
@@ -160,6 +170,16 @@ class Trench {
 
       tempTrenchLine.add(tempTrenchLine.get(0));
     }   
+    
+    // export to XML in memory
+    
+    XML outline = trenchToXML.createOutline("upperFrontLineArea_"+allignment+"Side");
+    
+    for (PVector trenchLineBent : tempTrenchLine) {
+      
+      trenchToXML.addPositionVector(outline,trenchLineBent.x,trenchLineBent.y,trenchLineBent.z);
+      
+    }    
 
     return tempTrenchLine;
   }

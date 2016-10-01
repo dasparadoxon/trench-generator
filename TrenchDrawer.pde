@@ -1,7 +1,4 @@
 class TrenchDrawer {
-  
-  
-
 
   Trench trench;
 
@@ -74,6 +71,7 @@ class TrenchDrawer {
 
   void drawTrenchLine(ArrayList<PVector> toDraw, PVector positionToDraw) {
 
+
     beginShape();
 
     int c = 0;
@@ -89,6 +87,10 @@ class TrenchDrawer {
         prevTrench = trenchLineBent;  
 
         vertex(positionToDraw.x + trenchLineBent.x, positionToDraw.y + trenchLineBent.y, 0);
+        
+        
+        
+        
       } else {
 
 

@@ -56,7 +56,7 @@ void setup() {
 
   setupGUI();
   
-  trenchToXML.saveToFile();
+  
 
 
   ladderTextureImage = loadImage("ladder.png");
@@ -76,6 +76,11 @@ void setup() {
   lineTrenchDrawer = new TrenchDrawer(lineTrench);
 
   regenerate = true;
+}
+
+void exportToXML(float value){
+  
+    trenchToXML.saveToFile();
 }
 
 
@@ -108,6 +113,13 @@ void setupGUI() {
   cp5 = new ControlP5(this);
 
   cp5.setAutoDraw(false);  
+  
+   cp5.addButton("exportToXML")
+     .setValue(0)
+     .setCaptionLabel("EXPORT TO XML")
+     .setPosition(width-160, 60)
+     .setSize(140,20)
+     ;  
 
   modeDrownDown = cp5.addDropdownList("modeDropDownFunction")
     .setPosition(width-160, 20)
@@ -136,6 +148,8 @@ void setupGUI() {
     .setCaptionLabel("BATTLEFIELD DIMENSIONS");
 
   ;
+  
+
 }
 
 
