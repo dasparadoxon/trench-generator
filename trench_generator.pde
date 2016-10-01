@@ -50,7 +50,7 @@ TrenchToXML trenchToXML = new TrenchToXML();
 
 void setup() {
 
-  numberOfTrenchBents = 30;
+  numberOfTrenchBents = 7;
 
   size(800, 800, P3D);
 
@@ -141,7 +141,7 @@ void setupGUI() {
   trenchBentsSlider = cp5.addSlider("sliderValue")
     .setPosition(20, 20)
     .setRange(1, 50)
-    .setValue(15)
+    .setValue(7)
     .setWidth(200)
     .setHeight(20)
     .setCaptionLabel("TRENCH BENTS");

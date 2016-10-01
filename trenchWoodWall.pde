@@ -2,7 +2,7 @@
 
 
 class TrenchWoodWall {
-  
+
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE"; 
 
@@ -66,13 +66,13 @@ class TrenchWoodWall {
       tempWallElement.rotation = -angleInDegrees;
       tempWallElement.centerPosition = centerPos.copy();
       tempWallElement.centerPosition.z = - (heightOfWoodElement * elementNr) + (( (heightOfWall  - (numberOfElements * heightOfWoodElement))/numberOfElements)/2);
-      
-      if(alignment == OUTSIDE)
+
+      if (alignment == OUTSIDE)
         tempWallElement.centerPosition.z =  (heightOfWoodElement * elementNr) + (( (heightOfWall  - (numberOfElements * heightOfWoodElement))/numberOfElements)/2);
-        
-      if(alignment == INSIDE)
+
+      if (alignment == INSIDE)
         tempWallElement.centerPosition.z =  (heightOfWoodElement * elementNr) + (( (heightOfWall  - (numberOfElements * heightOfWoodElement))/numberOfElements)/2);        
-      
+
       tempWallElement.lengthOfElement = lengthOfElement;
 
       wallElements.add(tempWallElement);
@@ -180,33 +180,21 @@ class TrenchWoodWall {
       }
       alignmentShift = -alignmentShift;
       normalVector = new PVector(-normalVector.x, -normalVector.y, -normalVector.z);
-      
-      if (alignment=="OUTSIDE") {
-        alignmentShift = -alignmentShift;
-        normalVector = new PVector(-normalVector.x, -normalVector.y, -normalVector.z);
-      }
-    
 
       tempSandBag.centerPosition = PVector.add(tempSandBag.centerPosition, PVector.mult(normalVector, -22));
-      
-      if (alignment=="OUTSIDE") {
-        
-        tempSandBag.centerPosition = PVector.add(tempSandBag.centerPosition, PVector.mult(normalVector, 42));
-      }      
 
       tempSandBag.rotation = rotateTo;
 
       if (!hasLadder)
         sandBags.add(tempSandBag);
 
-       if (alignment!="OUTSIDE")
-       if (hasLadder && (i != (numberOfBags/2)))
+      if (hasLadder && (i != (numberOfBags/3)))
         sandBags.add(tempSandBag);
     }
-    
-    for(SandBag sandbagToXML:sandBags){
-      
-          trenchToXML.addSandbag(sandbagToXML.centerPosition.x,sandbagToXML.centerPosition.y,sandbagToXML.centerPosition.z,sandbagToXML.rotation);
+
+    for (SandBag sandbagToXML : sandBags) {
+
+      trenchToXML.addSandbag(sandbagToXML.centerPosition.x, sandbagToXML.centerPosition.y, sandbagToXML.centerPosition.z, sandbagToXML.rotation);
       
     }
   }

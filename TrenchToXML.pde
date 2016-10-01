@@ -120,6 +120,11 @@ class TrenchToXML {
     rotationXML = newSandbag.addChild("rotation");
     rotationXML.setContent(String.valueOf(rotation));
     
+    XML materialXML;
+    
+    materialXML = newSandbag.addChild("sandBag");
+    materialXML.setContent("sandbag");
+    
   }  
 
 

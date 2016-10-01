@@ -186,10 +186,6 @@ class Trench {
    *
    *************************************************************************************/
   ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) {
-    
-   
-      
-       
 
     int wall_height = 100;
 
