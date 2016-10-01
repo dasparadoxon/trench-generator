@@ -19,4 +19,4 @@ This is how the scene looks in a sample setup in Blender after importing it from
 
 <br/>
 
-Play fair.
+Play fair. Have fun.
