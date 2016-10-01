@@ -25,9 +25,7 @@ class Trench {
   }
 
   void generateTrenchLine() {
-
-
-
+    
     leftTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
     rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right", trenchWidth, numberOfTrenchBents);
 
@@ -114,7 +112,7 @@ class Trench {
     
     // export to XML in memory
     
-    XML outline = trenchToXML.createOutline("upperFrontLineArea_"+allignment+"Side");
+    XML outline = trenchToXML.createOutline("upperFrontLineArea_"+allignment+"Side","outsideGround");
     
     for (PVector trenchLineBent : tempTrenchLine) {
       
@@ -173,7 +171,7 @@ class Trench {
     
     // export to XML in memory
     
-    XML outline = trenchToXML.createOutline("upperFrontLineArea_"+allignment+"Side");
+    XML outline = trenchToXML.createOutline("upperFrontLineArea_"+allignment+"Side","outsideGround");
     
     for (PVector trenchLineBent : tempTrenchLine) {
       
@@ -188,6 +186,10 @@ class Trench {
    *
    *************************************************************************************/
   ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) {
+    
+   
+      
+       
 
     int wall_height = 100;
 
@@ -219,9 +221,20 @@ class Trench {
 
       if(trenchBent > 4)
         tempTrenchWall.add(tempWall);
+        
+       // export to XML in memory
+        
+      XML outline = trenchToXML.createOutline("trenchWall","trenchWallMaterial"); 
+      
+      for (PVector trenchWallPoint : tempWall) {
+        
+        trenchToXML.addPositionVector(outline,trenchWallPoint.x,trenchWallPoint.y,trenchWallPoint.z);
+        
+      }    
+         
     }
-
-    return tempTrenchWall;
+    
+    return tempTrenchWall;     
   }
 
   /*************************************************************************************
@@ -252,6 +265,16 @@ class Trench {
     PVector lastshift = left.get(0);
 
     tempTrenchFloor.add(new PVector(lastshift.x, lastshift.y, lastshift.z -100));  
+    
+    // export to XML in memory
+    
+    XML outline = trenchToXML.createOutline("tempTrenchFloor","trenchFloor");
+    
+    for (PVector floorPoint : tempTrenchFloor) {
+      
+      trenchToXML.addPositionVector(outline,floorPoint.x,floorPoint.y,floorPoint.z);
+      
+    }       
 
 
     return tempTrenchFloor;

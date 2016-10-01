@@ -1,36 +1,4 @@
-class TrenchWoodWallElement {
 
-  float rotation;
-  PVector centerPosition;
-  float lengthOfElement;
-}
-
-class Ladder {
-
-  PVector topLeft;
-  PVector topRight;
-  PVector bottomLeft;
-  PVector bottomRight;  
-
-  float w, h;
-  float rotation;
-
-  int leaderHeight = 10;
-
-  int ladderWidth = 30;
-  int ladderHeight = 70;
-}
-
-class SandBag {
-
-  public static final int lengthOfBag = 31;
-
-  int adaptedLength;
-
-  PVector centerPosition;
-
-  float rotation;
-}
 
 
 class TrenchWoodWall {
@@ -234,6 +202,12 @@ class TrenchWoodWall {
        if (alignment!="OUTSIDE")
        if (hasLadder && (i != (numberOfBags/2)))
         sandBags.add(tempSandBag);
+    }
+    
+    for(SandBag sandbagToXML:sandBags){
+      
+          trenchToXML.addSandbag(sandbagToXML.centerPosition.x,sandbagToXML.centerPosition.y,sandbagToXML.centerPosition.z,sandbagToXML.rotation);
+      
     }
   }
 }

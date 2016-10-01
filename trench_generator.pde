@@ -88,6 +88,15 @@ void exportToXML(float value){
 void draw() {
 
   if (regenerate) {
+    
+  TrenchToXML trenchToXML = new TrenchToXML(); 
+
+  circleTrench = new CircleTrench();
+  circleTrenchDrawer = new CircleTrenchDrawer(circleTrench);
+
+
+  lineTrench = new Trench();
+  lineTrenchDrawer = new TrenchDrawer(lineTrench);    
 
     lineTrench.generateTrench();
     circleTrench.generateTrench();    

@@ -35,7 +35,7 @@ class CircleTrenchDrawer {
     drawTrenchFloor(trench.outerTrenchLine, new PVector(0, 1, -100));
     
     
-    drawTrenchWoodWalls(trench.outerTrenchWoodWalls);
+    //drawTrenchWoodWalls(trench.outerTrenchWoodWalls);
     
     //drawTrenchWoodWalls(trench.innerTrenchWoodWalls);
 
