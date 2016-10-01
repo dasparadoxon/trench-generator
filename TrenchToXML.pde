@@ -1,20 +1,9 @@
-import java.io.File;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 
 class TrenchToXML {
-
+  
+  XML trenchXml;
+  
   boolean debug = true;
   
   String fileName = "trench.xml";
@@ -31,72 +20,41 @@ class TrenchToXML {
   }
 
   void setUpXML() {
+    
+    trenchXml = new XML("Trench");
+    
+    XML outline = xml.addChild("outline");
+    
+    addPositionVector(outline,12.4,4,62.0);
+    addPositionVector(outline,142.4,44,32.0);
+    addPositionVector(outline,112.4,24,82.0);
+    
+    
+    
 
-    log("Setting up XML Document.");
-
-    try {
-
-      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-      // root elements
-      Document doc = docBuilder.newDocument();
-
-      Element rootElement = doc.createElement("company");
-      doc.appendChild(rootElement);
-
-      // staff elements
-      Element staff = doc.createElement("Staff");
-      rootElement.appendChild(staff);
-
-      // set attribute to staff element
-      Attr attr = doc.createAttribute("id");
-      attr.setValue("1");
-      staff.setAttributeNode(attr);
-
-      // shorten way
-      // staff.setAttribute("id", "1");
-
-      // firstname elements
-      Element firstname = doc.createElement("firstname");
-      firstname.appendChild(doc.createTextNode("yong"));
-      staff.appendChild(firstname);
-
-      // lastname elements
-      Element lastname = doc.createElement("lastname");
-      lastname.appendChild(doc.createTextNode("mook kim"));
-      staff.appendChild(lastname);
-
-      // nickname elements
-      Element nickname = doc.createElement("nickname");
-      nickname.appendChild(doc.createTextNode("mkyong"));
-      staff.appendChild(nickname);
-
-      // salary elements
-      Element salary = doc.createElement("salary");
-      salary.appendChild(doc.createTextNode("100000"));
-      staff.appendChild(salary);
-
-      // write the content into xml file
-      TransformerFactory transformerFactory = TransformerFactory.newInstance();
-      Transformer transformer = transformerFactory.newTransformer();
-      DOMSource source = new DOMSource(doc);
-      //StreamResult result = new StreamResult(new File(fileName));
-
-      StreamResult result = new StreamResult(System.out);
-
-      transformer.transform(source, result);
-    } 
-    catch (ParserConfigurationException pce) {
-      pce.printStackTrace();
-    } 
-    catch (TransformerException tfe) {
-      tfe.printStackTrace();
-    }
+  }
+  
+  void addPositionVector(XML parent,float x,float y,float z){
+    
+    XML positionVector;
+    
+    positionVector = parent.addChild("positionVector");
+    
+    XML vectorAxis;
+    
+    vectorAxis = positionVector.addChild("xAxis");
+    vectorAxis.setContent("12.0");
+    vectorAxis = positionVector.addChild("yAxis");
+    vectorAxis.setContent("52.0");
+    vectorAxis = positionVector.addChild("zAxis");
+    vectorAxis.setContent("112.0");
+    
   }
 
   void saveToFile() {
 
     log("Save Trench to XML File");
+    
+    saveXML(trenchXml, dataPath("")+"/"+fileName);
   }
 }
