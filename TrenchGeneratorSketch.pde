@@ -36,8 +36,8 @@ void draw(){
     
     //print(exception.getStackTrace()[0].getLineNumber());
     
-    print(exception.getMessage());
-    //exception.printStackTrace();
+    print(exception.getMessage()+"\n");
+    exception.printStackTrace();
     exit();
   }
 }

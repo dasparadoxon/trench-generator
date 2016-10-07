@@ -68,6 +68,7 @@ class Trench {
     trenchFloor = generateTrenchFloor(leftTrenchLine, rightTrenchLine, trenchWidth);
 
     leftTrenchWoodWalls = generateTrenchWoodWalls(leftTrenchLine, false, false, "left");
+    
     rightTrenchWoodWalls = generateTrenchWoodWalls(rightTrenchLine, true, true, "right");
 
     barbedWireRows = generateBarbedWireRows(leftTrenchLine);
@@ -330,7 +331,7 @@ class Trench {
 
       if (hasLadder == false)placeLadder = false;
 
-      tempTrenchWoodWall = new TrenchWoodWall(trenchLine.get(trenchBent), trenchLine.get(trenchBent+1), placeLadder, allignment, hasSandbags);
+      tempTrenchWoodWall = new TrenchWoodWall(trenchLine.get(trenchBent), trenchLine.get(trenchBent+1), placeLadder, allignment, hasSandbags,trenchToXML);
 
       tempTrenchWoodWalls.add(tempTrenchWoodWall);
 

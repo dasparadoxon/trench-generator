@@ -32,7 +32,9 @@ public class TrenchWoodWall {
   
   TrenchToXML trenchToXML = null;
 
-  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) throws Exception {
+  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags,TrenchToXML trenchToXMLtoUse) throws Exception {
+    
+    trenchToXML = trenchToXMLtoUse;
     
     poles = new ArrayList<Pole>();
 

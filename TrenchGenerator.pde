@@ -39,32 +39,36 @@ class TrenchGenerator {
 
   RadioButton modeRadioButton;
 
-  Battlefield battlefield = new Battlefield(1800, 1800);
+  Battlefield battlefield;
 
-  TrenchToXML trenchToXML = new TrenchToXML();   
-  
+  TrenchToXML trenchToXML;   
+
   PeasyCam camera;
-  
-  PApplet app;
 
-  TrenchGenerator(PeasyCam cameraToUse,ControlP5 guiToUse,PApplet appToUse) {
-    
+  PApplet app;
+  
+  boolean circleModeAvailable = false;
+
+  TrenchGenerator(PeasyCam cameraToUse, ControlP5 guiToUse, PApplet appToUse) {
+
     camera = cameraToUse;
     cp5 = guiToUse;
     app = appToUse;
 
-    setupProcessingVideo();
+    setupGenerator();
   }
 
-  void setupProcessingVideo() {
+  void setupGenerator() {
 
     textures = new HashMap<String, PImage>();
 
+    battlefield = new Battlefield(1800, 1800);
 
+    trenchToXML = new TrenchToXML();   
 
     numberOfTrenchBents = 7;
 
-    
+
 
     setupGUI();
 
@@ -72,7 +76,7 @@ class TrenchGenerator {
 
     stroke(0, 0, 0);
 
-    
+
 
 
 
@@ -81,14 +85,14 @@ class TrenchGenerator {
   }
 
   void loadTextures() {
-    
+
     ladderTextureImage = loadImage("ladder.png");
 
     barbedWireTextureImage = loadImage("stacheldraht.png");
-    
-    textures.put("barbedWireTextureImage",ladderTextureImage);
-    
-    textures.put("barbedWireTextureImage",barbedWireTextureImage); 
+
+    textures.put("barbedWireTextureImage", ladderTextureImage);
+
+    textures.put("barbedWireTextureImage", barbedWireTextureImage);
   }
 
   void exportToXML(float value) {
@@ -98,28 +102,32 @@ class TrenchGenerator {
 
 
 
-  void draw() throws Exception{
+  void draw() throws Exception {
 
     if (regenerate) {
 
       TrenchToXML trenchToXML = new TrenchToXML(); 
-      
-      circleTrench = new CircleTrench();
-      circleTrench.setBattlefield(battlefield);
-      circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
-      circleTrench.setTrenchToXML(trenchToXML);
-      circleTrenchDrawer = new CircleTrenchDrawer(circleTrench,textures);
-  
-  
+
+      if (circleModeAvailable) {
+        circleTrench = new CircleTrench();
+        circleTrench.setBattlefield(battlefield);
+        circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
+        circleTrench.setTrenchToXML(trenchToXML);
+        circleTrenchDrawer = new CircleTrenchDrawer(circleTrench, textures);
+      }
+
+
       lineTrench = new Trench();
       lineTrench.setBattlefield(battlefield);
       lineTrench.setNumberOfTrenchBents(numberOfTrenchBents);
       lineTrench.setTrenchToXML(trenchToXML);
-      lineTrenchDrawer = new TrenchDrawer(lineTrench,textures);      
+      lineTrenchDrawer = new TrenchDrawer(lineTrench, textures);      
 
 
       lineTrench.generateTrench();
-      circleTrench.generateTrench();    
+      
+      if (circleModeAvailable) 
+        circleTrench.generateTrench();    
 
       regenerate = false;
     }
@@ -128,7 +136,7 @@ class TrenchGenerator {
     if (shapeMode == LINEMODE)
       lineTrenchDrawer.drawTrench();
 
-    if (shapeMode == CIRCLEMODE)
+    if (shapeMode == CIRCLEMODE && circleModeAvailable)
       circleTrenchDrawer.drawTrench();
 
 
