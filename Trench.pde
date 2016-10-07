@@ -1,9 +1,8 @@
 import java.util.logging.*;
 
-
-
-
 class Trench {
+  
+  private final Logger LOGGER = Logger.getLogger( Trench.class.getName() );
 
   ArrayList<PVector> leftTrenchLine;
   ArrayList<PVector> rightTrenchLine;
@@ -28,9 +27,10 @@ class Trench {
 
   Trench() {
     
-
+    setLogger(LOGGER);
     
-    //logger.warning("This is a warning!");      
+    LOGGER.log(Level.INFO,"Trench Constructor");
+ 
     
   }
   
@@ -52,6 +52,8 @@ class Trench {
   }
 
   void generateTrench() throws Exception {
+    
+    LOGGER.info("Generating Line Trench");
 
     generateTrenchLine();
   }
@@ -79,6 +81,8 @@ class Trench {
    *
    *************************************************************************************/
   ArrayList<PVector> generateTrenchLine(String allignment, int numberOfTrenchBents) {
+    
+    LOGGER.info("Generating Trench Line with Alignment : "+allignment+"/ Number of Bents : "+numberOfTrenchBents);
 
     int progressionInUnits = 1;
 

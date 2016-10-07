@@ -1,3 +1,5 @@
+import java.util.logging.*;
+
 class CircleTrenchDrawer extends TrenchDrawer{
 
   static final String OUTSIDE = "OUTSIDE";

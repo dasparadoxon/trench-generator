@@ -1,3 +1,5 @@
+import java.util.logging.*;
+
 class Battlefield {
 
   PVector dimensions = new PVector(); 

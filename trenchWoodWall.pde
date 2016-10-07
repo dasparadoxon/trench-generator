@@ -1,4 +1,4 @@
-
+import java.util.logging.*;
 
 public class TrenchWoodWall {
   

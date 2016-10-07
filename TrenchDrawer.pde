@@ -1,3 +1,5 @@
+import java.util.logging.*;
+
 class TrenchDrawer {
   
     
@@ -7,11 +9,17 @@ class TrenchDrawer {
 
   TrenchDrawer() {
 
-      
+    setLogger(LOGGER);
+
+    LOGGER.log(Level.INFO, "Empty Base Trench Drawer Constructor");
   }
   
 
   TrenchDrawer(Trench trenchToDraw,HashMap<String, PImage> texturePool) {
+    
+    setLogger(LOGGER);
+
+    LOGGER.log(Level.INFO, "Trench Drawer Constructor with Trench Data and "+texturePool.size()+" Textures.");    
     
     textures = texturePool;
 
@@ -20,6 +28,8 @@ class TrenchDrawer {
   
 
   void drawTrench() {
+    
+    LOGGER.fine("Drawing Trench.");
 
     background(255, 255, 255);
 

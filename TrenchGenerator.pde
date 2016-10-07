@@ -1,17 +1,20 @@
 import java.util.Map.*; 
 import peasy.*;
 import controlP5.*;
-
+import java.util.logging.*;
 
 final String CIRCLEMODE = "CIRCLEMODE";
 final String LINEMODE = "LINEMODE";
 
+//private static final Logger LOGGER = Logger.getLogger( TrenchGenerator.class.getName() );
 
 class TrenchGenerator {
 
+  private final Logger LOGGER = Logger.getLogger( TrenchGenerator.class.getName() );
+
   HashMap<String, PImage> textures;
 
-  String shapeMode = CIRCLEMODE;
+  String shapeMode = LINEMODE;
 
   ControlP5 cp5;
 
@@ -46,10 +49,14 @@ class TrenchGenerator {
   PeasyCam camera;
 
   PApplet app;
-  
+
   boolean circleModeAvailable = false;
 
   TrenchGenerator(PeasyCam cameraToUse, ControlP5 guiToUse, PApplet appToUse) {
+
+    setLogger(LOGGER);
+
+    LOGGER.log(Level.INFO, "Trench Generator Constructor");
 
     camera = cameraToUse;
     cp5 = guiToUse;
@@ -58,6 +65,8 @@ class TrenchGenerator {
     setupGenerator();
   }
 
+
+  
   void setupGenerator() {
 
     textures = new HashMap<String, PImage>();
@@ -68,18 +77,11 @@ class TrenchGenerator {
 
     numberOfTrenchBents = 7;
 
-
-
     setupGUI();
 
     loadTextures();   
 
     stroke(0, 0, 0);
-
-
-
-
-
 
     regenerate = true;
   }
@@ -100,15 +102,16 @@ class TrenchGenerator {
     trenchToXML.saveToFile();
   }
 
-
-
   void draw() throws Exception {
 
     if (regenerate) {
 
+      LOGGER.log(Level.INFO, "Generating the Trench Data Objects new.");
+
       TrenchToXML trenchToXML = new TrenchToXML(); 
 
       if (circleModeAvailable) {
+
         circleTrench = new CircleTrench();
         circleTrench.setBattlefield(battlefield);
         circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
@@ -125,13 +128,14 @@ class TrenchGenerator {
 
 
       lineTrench.generateTrench();
-      
+
       if (circleModeAvailable) 
         circleTrench.generateTrench();    
 
       regenerate = false;
     }
-
+    
+    LOGGER.fine("shapeMode is : "+shapeMode);
 
     if (shapeMode == LINEMODE)
       lineTrenchDrawer.drawTrench();
