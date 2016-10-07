@@ -32,7 +32,7 @@ public class TrenchWoodWall {
   
   TrenchToXML trenchToXML = null;
 
-  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) {
+  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) throws IOException {
     
  
     
@@ -88,8 +88,10 @@ public class TrenchWoodWall {
       wallElements.add(tempWallElement);
       
       // export to XML
+
       
       trenchToXML.addWoodWallElement(tempWallElement.centerPosition,tempWallElement.rotation,tempWallElement.lengthOfElement);
+
       
       if(elementNr == 0){
         
@@ -177,6 +179,12 @@ public class TrenchWoodWall {
       createSandBags(lengthOfElement, centerPos, relNormForLater, -angleInDegrees, normalVector, alignment, hasLadder);
     }
   }
+  
+  void setTrenchToXML(TrenchToXML xmlWriterToUse){
+    
+    trenchToXML = xmlWriterToUse;
+    
+  }  
 
   void createSandBags(float lengthOfElement, PVector centerPosition, PVector surfaceEdgeDirVec, float rotateTo, PVector normalVector, String alignment, boolean hasLadder ) {
 

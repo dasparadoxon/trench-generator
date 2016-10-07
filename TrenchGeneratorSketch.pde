@@ -16,6 +16,8 @@ ControlP5 cp5;
 
 void setup(){
   
+  size(800, 800, P3D);
+  
   setUpCameraLibrary();
   
   setUpGUILibrary();
@@ -26,7 +28,12 @@ void setup(){
 
 void draw(){
   
+  try{
+  
   trenchGenerator.draw();
+  } catch(IOException e){
+    
+  }
 }
 
 void setUpCameraLibrary(){

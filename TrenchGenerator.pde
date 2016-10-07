@@ -64,7 +64,7 @@ class TrenchGenerator {
 
     numberOfTrenchBents = 7;
 
-    app.size(800, 800, P3D);
+    
 
     setupGUI();
 
@@ -75,12 +75,7 @@ class TrenchGenerator {
     
 
 
-    circleTrench = new CircleTrench();
-    circleTrenchDrawer = new CircleTrenchDrawer(circleTrench,textures);
 
-
-    lineTrench = new Trench();
-    lineTrenchDrawer = new TrenchDrawer(lineTrench);
 
     regenerate = true;
   }
@@ -103,18 +98,25 @@ class TrenchGenerator {
 
 
 
-  void draw() {
+  void draw() throws IOException{
 
     if (regenerate) {
 
       TrenchToXML trenchToXML = new TrenchToXML(); 
-
+      
       circleTrench = new CircleTrench();
+      circleTrench.setBattlefield(battlefield);
+      circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
+      circleTrench.setTrenchToXML(trenchToXML);
       circleTrenchDrawer = new CircleTrenchDrawer(circleTrench,textures);
-
-
+  
+  
       lineTrench = new Trench();
-      lineTrenchDrawer = new TrenchDrawer(lineTrench);    
+      lineTrench.setBattlefield(battlefield);
+      lineTrench.setNumberOfTrenchBents(numberOfTrenchBents);
+      lineTrench.setTrenchToXML(trenchToXML);
+      lineTrenchDrawer = new TrenchDrawer(lineTrench,textures);      
+
 
       lineTrench.generateTrench();
       circleTrench.generateTrench();    

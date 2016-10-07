@@ -44,13 +44,19 @@ class Trench {
     
      battlefield =  battlefieldToSet;
   }
+  
+  void setTrenchToXML(TrenchToXML xmlWriterToUse){
+    
+    trenchToXML = xmlWriterToUse;
+    
+  }
 
-  void generateTrench() {
+  void generateTrench() throws IOException {
 
     generateTrenchLine();
   }
 
-  void generateTrenchLine() {
+  void generateTrenchLine() throws IOException {
     
     leftTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
     rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right", trenchWidth, numberOfTrenchBents);
@@ -305,7 +311,7 @@ class Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String allignment) {
+  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String allignment) throws IOException {
 
     ArrayList<TrenchWoodWall> tempTrenchWoodWalls;
 

@@ -11,7 +11,9 @@ class TrenchDrawer {
   }
   
 
-  TrenchDrawer(Trench trenchToDraw) {
+  TrenchDrawer(Trench trenchToDraw,HashMap<String, PImage> texturePool) {
+    
+    textures = texturePool;
 
     trench = trenchToDraw;
   }
