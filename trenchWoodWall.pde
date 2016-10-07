@@ -32,9 +32,7 @@ public class TrenchWoodWall {
   
   TrenchToXML trenchToXML = null;
 
-  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) throws IOException {
-    
- 
+  TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) throws Exception {
     
     poles = new ArrayList<Pole>();
 
@@ -89,6 +87,7 @@ public class TrenchWoodWall {
       
       // export to XML
 
+      if(trenchToXML == null) throw new Exception("XML Class not set in TrenchWoodWall Constructor.");
       
       trenchToXML.addWoodWallElement(tempWallElement.centerPosition,tempWallElement.rotation,tempWallElement.lengthOfElement);
 
@@ -166,7 +165,10 @@ public class TrenchWoodWall {
 
       theLadder.bottomRight = PVector.add(theLadder.bottomRight, PVector.mult(normalVector, allignment_distance_bottom));
       
+      if(trenchToXML == null) throw new Exception("XML Class not set in TrenchWoodWall Constructor.");  
+      
       trenchToXML.addLadder(theLadder);
+      
     }
 
 

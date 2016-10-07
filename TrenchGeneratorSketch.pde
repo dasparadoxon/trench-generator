@@ -30,9 +30,15 @@ void draw(){
   
   try{
   
-  trenchGenerator.draw();
-  } catch(IOException e){
+    trenchGenerator.draw();
+  
+  } catch(Exception exception){
     
+    //print(exception.getStackTrace()[0].getLineNumber());
+    
+    print(exception.getMessage());
+    //exception.printStackTrace();
+    exit();
   }
 }
 

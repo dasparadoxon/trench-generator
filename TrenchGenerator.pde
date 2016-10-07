@@ -98,7 +98,7 @@ class TrenchGenerator {
 
 
 
-  void draw() throws IOException{
+  void draw() throws Exception{
 
     if (regenerate) {
 

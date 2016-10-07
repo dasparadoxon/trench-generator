@@ -51,12 +51,12 @@ class Trench {
     
   }
 
-  void generateTrench() throws IOException {
+  void generateTrench() throws Exception {
 
     generateTrenchLine();
   }
 
-  void generateTrenchLine() throws IOException {
+  void generateTrenchLine() throws Exception {
     
     leftTrenchLine = generateTrenchLine("left", numberOfTrenchBents);
     rightTrenchLine = cloneTrenchLine(leftTrenchLine, "right", trenchWidth, numberOfTrenchBents);
@@ -311,7 +311,7 @@ class Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String allignment) throws IOException {
+  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String allignment) throws Exception {
 
     ArrayList<TrenchWoodWall> tempTrenchWoodWalls;
 
