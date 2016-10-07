@@ -1,7 +1,9 @@
 
 
-
-class TrenchWoodWall {
+public class TrenchWoodWall {
+  
+  //private static final Logger log = Logger.getLogger( TrenchWoodWall.class.getName() );
+  
 
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE"; 
@@ -10,6 +12,8 @@ class TrenchWoodWall {
   boolean hasSandbags = false;
 
   Ladder theLadder;
+  
+  ArrayList<Pole> poles;
 
   int numberOfWoodsOnWall = 10;
   int heightOfWall = 100;
@@ -25,8 +29,14 @@ class TrenchWoodWall {
   ArrayList<TrenchWoodWallElement> wallElements = new ArrayList<TrenchWoodWallElement>();
 
   ArrayList<SandBag> sandBags = new ArrayList<SandBag>();
+  
+  TrenchToXML trenchToXML = null;
 
   TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) {
+    
+ 
+    
+    poles = new ArrayList<Pole>();
 
     hasLadder = addLadder;
     hasSandbags = addSandbags;
@@ -76,6 +86,21 @@ class TrenchWoodWall {
       tempWallElement.lengthOfElement = lengthOfElement;
 
       wallElements.add(tempWallElement);
+      
+      // export to XML
+      
+      trenchToXML.addWoodWallElement(tempWallElement.centerPosition,tempWallElement.rotation,tempWallElement.lengthOfElement);
+      
+      if(elementNr == 0){
+        
+          Pole newPole = new Pole();
+          newPole.centerPosition = tempWallElement.centerPosition ;
+          newPole.lengthOfElement = 100.0;
+          newPole.rotation = tempWallElement.rotation;
+          
+          poles.add(newPole);
+        
+      }
     }
 
     if (hasLadder) {
@@ -138,6 +163,8 @@ class TrenchWoodWall {
       theLadder.bottomRight = PVector.add(theLadder.bottomRight, new PVector(0, 0, theLadder.ladderHeight));
 
       theLadder.bottomRight = PVector.add(theLadder.bottomRight, PVector.mult(normalVector, allignment_distance_bottom));
+      
+      trenchToXML.addLadder(theLadder);
     }
 
 

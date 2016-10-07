@@ -27,6 +27,13 @@ class TrenchWoodWallElement {
   float lengthOfElement;
 }
 
+class Pole {
+
+  float rotation;
+  PVector centerPosition;
+  float lengthOfElement;
+}
+
 class Ladder {
 
   PVector topLeft;

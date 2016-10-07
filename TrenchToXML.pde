@@ -7,9 +7,10 @@ class TrenchToXML {
   boolean debug = true;
 
   String fileName = "trench.xml";
-  
-  
+
+
   XML sandbagContainer;
+  XML woodWallElementsContainer;
 
   void log(String message) {
 
@@ -33,9 +34,29 @@ class TrenchToXML {
     }    
 
     trenchXml = new XML("trench");
-    
+
     sandbagContainer = createSandbagContainer();
-    
+
+    woodWallElementsContainer = createWoodWallElementsContainer();
+
+    //ladderContainer = createLadderContainer();
+  }
+
+  XML createOutline(String name, String materialName, String type) {
+
+    XML newOutlineToReturn;
+
+    newOutlineToReturn = trenchXml.addChild("outline");
+
+    XML nameXML = newOutlineToReturn.addChild("name");
+    nameXML.setContent(name);
+
+    XML materialNameXML = newOutlineToReturn.addChild("material");
+    materialNameXML.setContent(materialName); 
+
+    newOutlineToReturn.setString("type", type);
+
+    return newOutlineToReturn;
   }
 
   XML createOutline(String name, String materialName) {
@@ -48,7 +69,9 @@ class TrenchToXML {
     nameXML.setContent(name);
 
     XML materialNameXML = newOutlineToReturn.addChild("material");
-    materialNameXML.setContent(materialName);    
+    materialNameXML.setContent(materialName); 
+
+    newOutlineToReturn.setString("type", "Unknown");
 
     return newOutlineToReturn;
   }
@@ -94,11 +117,52 @@ class TrenchToXML {
     XML newSandbagContainerToReturn;
 
     newSandbagContainerToReturn = trenchXml.addChild("sandbags");
-    
+
     return newSandbagContainerToReturn;
   }
 
-  public void addSandbag(float x, float y, float z,float rotation) {
+  public XML createWoodWallElementsContainer() {
+
+    XML newWoodWallElementsContainer;
+
+    newWoodWallElementsContainer = trenchXml.addChild("woodWallElements");
+
+    return newWoodWallElementsContainer;
+  }
+
+  public void addWoodWallElement(PVector centerPosition, float rotation,float lengthOfElement) {
+
+    XML newWoodWallElementXML;
+
+    newWoodWallElementXML = woodWallElementsContainer.addChild("woodWallElement");
+
+    addPositionVector(newWoodWallElementXML, centerPosition.x, centerPosition.y, centerPosition.z);
+
+    XML rotationXML;
+
+    rotationXML = newWoodWallElementXML.addChild("rotation");
+    rotationXML.setContent(String.valueOf(rotation));
+    
+    XML lengthOfElementXML;
+
+    lengthOfElementXML = newWoodWallElementXML.addChild("lengthOfElement");
+    lengthOfElementXML.setContent(String.valueOf(lengthOfElement));    
+  }
+
+  public void addLadder(Ladder ladder) {
+
+    XML newLadder;
+
+    newLadder = createOutline("Ladder", "ladderMaterial");
+
+    addPositionVector(newLadder, ladder.topLeft.x, ladder.topLeft.y, ladder.topLeft.z);
+    addPositionVector(newLadder, ladder.topRight.x, ladder.topRight.y, ladder.topRight.z);
+    addPositionVector(newLadder, ladder.bottomRight.x, ladder.bottomRight.y, ladder.bottomRight.z);
+    addPositionVector(newLadder, ladder.bottomLeft.x, ladder.bottomLeft.y, ladder.bottomLeft.z);
+  }   
+
+
+  public void addSandbag(float x, float y, float z, float rotation) {
 
     XML newSandbag;
 
@@ -119,12 +183,11 @@ class TrenchToXML {
 
     rotationXML = newSandbag.addChild("rotation");
     rotationXML.setContent(String.valueOf(rotation));
-    
+
     XML materialXML;
-    
+
     materialXML = newSandbag.addChild("sandBag");
     materialXML.setContent("sandbag");
-    
   }  
 
 

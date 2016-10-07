@@ -17,6 +17,8 @@ import random
 objects = bpy.data.objects
 materials = bpy.data.materials
 
+frontFloor = None
+
 #def palettes():
 
 def duplicateObject(scene, name, copyobj):
@@ -37,6 +39,79 @@ def duplicateObject(scene, name, copyobj):
     ob_new.select = True
 
     return ob_new
+
+def putPalettesOnFloor():
+    
+    frontFloorPointIndex = 0 
+    
+    for frontFloorPoint in frontFloor.iter('positionVector'):
+        
+        print(frontFloorPoint)
+        
+        xCenterPosition = float(frontFloorPoint[0].text) * 0.01
+        yCenterPosition = float(frontFloorPoint[1].text) * 0.01
+        zCcenterPosition = float(frontFloorPoint[2].text) * 0.01          
+ 
+        scn = bpy.context.scene
+        
+        newFloorPalette = duplicateObject(scn,"FLOORPALETTE_"+str(frontFloorPointIndex),bpy.data.objects['PALETTE'])
+        
+        newFloorPalette.location = (xCenterPosition,yCenterPosition,zCcenterPosition)        
+        
+        frontFloorPointIndex += 1
+        
+        if(len(frontFloor)/2 < frontFloorPointIndex):
+           break
+
+def createWoodWalls():
+    
+    woodWallElementIndex = 0
+    
+    woodWallElements = xmlRoot.find('woodWallElements');
+    
+    for woodWallElement in woodWallElements:
+        
+        centerPos = woodWallElement.find('positionVector')
+ 
+        xCenterPosition = float(centerPos[0].text) * 0.01
+        yCenterPosition = float(centerPos[1].text) * 0.01
+        zCcenterPosition = float(centerPos[2].text) * 0.01    
+        
+        roationXMLElement = woodWallElement.find('rotation')
+        rotation = float(roationXMLElement.text)   
+        
+        lengthXMLElement = woodWallElement.find('lengthOfElement')
+        lengthOfElement = float(lengthXMLElement.text)*0.01325
+        
+        randomWoodWallType = random.randint(1,2)
+
+        
+        scn = bpy.context.scene
+        
+        randomWoodWallElement = random.randint(1,3)
+        
+        newWoodWallElement = duplicateObject(scn,"WOODWALLELEMENT"+str(woodWallElementIndex),bpy.data.objects['WOODWALLELEMENT'+str(randomWoodWallElement)])
+        
+        newWoodWallElement.location = (xCenterPosition,yCenterPosition,zCcenterPosition)
+        
+        newWoodWallElement.rotation_euler = (0,0,rotation)
+        
+        newWoodWallElement.scale = (1.3,lengthOfElement,1.5)
+     
+        woodWallElementIndex = woodWallElementIndex + 1     
+        
+        # second additional woodWallElement, not from XML
+        
+        newWoodWallElement = duplicateObject(scn,"WOODWALLELEMENT"+str(woodWallElementIndex),bpy.data.objects['WOODWALLELEMENT'+str(randomWoodWallElement)])
+        
+        newWoodWallElement.location = (xCenterPosition,yCenterPosition,zCcenterPosition - 0.07)
+        
+        newWoodWallElement.rotation_euler = (0,0,rotation)
+        
+        newWoodWallElement.scale = (1.3,lengthOfElement,1.5)
+     
+        woodWallElementIndex = woodWallElementIndex + 1              
+               
 
 def createSandbags():
     
@@ -64,20 +139,10 @@ def createSandbags():
         
         newSandbag.location = (xCenterPosition,yCenterPosition,zCcenterPosition)
         
-        newSandbag.scale = (0.072,0.11,0.1)
-        
-        #eul = mathutils.Euler((220.0, 140.0, 4, 'XYZ')
-        
-        #newSandbag.rotation = eul math.radians(90)
-        
-        print(math.radians(90))
+        newSandbag.scale = (0.125,0.191,0.174)
         
         newSandbag.rotation_euler = (0,0,rotation)
-        
-        #newSandbag.rotation.euler[2] = 1.5708
-        
-        #eul = mathutils.Euler(0.0, 0.0, rotation)        
-
+     
         sandbagIndex = sandbagIndex + 1
 
 
@@ -94,6 +159,9 @@ trenchWallMat = bpy.data.materials.get("trenchWallMaterial")
 
     
 for outline in xmlRoot.iter('outline'):  
+    
+    if(outline.get("type") == "floor"):
+        frontFloor = outline
     
     i = 0
     
@@ -131,9 +199,12 @@ for outline in xmlRoot.iter('outline'):
     me.from_pydata(verticies,[],faces)
     
     me.materials.append(bpy.data.materials.get(material))
-
     
 createSandbags()
+
+createWoodWalls()
+
+#putPalettesOnFloor()
 
 def cloneTrysForArchive():
     

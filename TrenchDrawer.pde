@@ -1,11 +1,21 @@
 class TrenchDrawer {
+  
+    
+  HashMap<String, PImage> textures;
 
   Trench trench;
+
+  TrenchDrawer() {
+
+      
+  }
+  
 
   TrenchDrawer(Trench trenchToDraw) {
 
     trench = trenchToDraw;
   }
+  
 
   void drawTrench() {
 
@@ -198,7 +208,7 @@ class TrenchDrawer {
       int heightOfRow = 20;
       int widthOfRow = 120;
 
-      texture(barbedWireTextureImage);
+      texture(textures.get("barbedWireTextureImage"));
       textureMode(NORMAL);
 
       noStroke();
@@ -230,7 +240,7 @@ class TrenchDrawer {
 
     noStroke();
 
-    texture(ladderTextureImage);
+    texture(textures.get("ladderTextureImage"));
 
     textureMode(IMAGE);
 

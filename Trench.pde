@@ -1,3 +1,8 @@
+import java.util.logging.*;
+
+
+
+
 class Trench {
 
   ArrayList<PVector> leftTrenchLine;
@@ -15,8 +20,29 @@ class Trench {
 
   int trenchOffset = 250;
   int trenchWidth = 50;
+  
+  int numberOfTrenchBents;
+  
+  Battlefield battlefield;
+  TrenchToXML trenchToXML;
 
   Trench() {
+    
+
+    
+    //logger.warning("This is a warning!");      
+    
+  }
+  
+  void setNumberOfTrenchBents(int numberOfTrenchBentsToSet){
+    
+    numberOfTrenchBents = numberOfTrenchBentsToSet;
+    
+  }
+  
+  void setBattlefield(Battlefield battlefieldToSet){
+    
+     battlefield =  battlefieldToSet;
   }
 
   void generateTrench() {
@@ -264,7 +290,7 @@ class Trench {
     
     // export to XML in memory
     
-    XML outline = trenchToXML.createOutline("tempTrenchFloor","trenchFloor");
+    XML outline = trenchToXML.createOutline("tempTrenchFloor","trenchFloor","floor");
     
     for (PVector floorPoint : tempTrenchFloor) {
       
@@ -331,3 +357,21 @@ class Trench {
     return tempRowOfBarbedWire;
   }
 }
+
+
+//Logger logger = Logger.getLogger(TrenchWoodWall.class.getName());
+
+//Handler handler = new FileHandler( sketchPath("")+"/log/"+TrenchWoodWall.class.getName()+".txt",true );
+//handler.setFormatter(new SimpleFormatter());
+//logger.addHandler( handler );
+
+//try
+//#
+  
+
+
+//}
+//catch ( Exception e )
+//{
+//  logger.log( Level.SEVERE, "Could not create logfile." + TrenchWoodWall.class.getName(), e );
+//}

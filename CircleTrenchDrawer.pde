@@ -1,4 +1,4 @@
-class CircleTrenchDrawer {
+class CircleTrenchDrawer extends TrenchDrawer{
 
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE";    
@@ -7,10 +7,14 @@ class CircleTrenchDrawer {
 
   CircleTrench trench;
 
-  CircleTrenchDrawer(CircleTrench trenchToDraw) {
+
+  CircleTrenchDrawer(CircleTrench trenchToDraw,HashMap<String, PImage> texturePool) {
+    
+    textures = texturePool;
 
     trench = trenchToDraw;
   }
+  
 
   void drawTrench() {
 
@@ -262,7 +266,7 @@ class CircleTrenchDrawer {
       int heightOfRow = 20;
       int widthOfRow = 120;
 
-      texture(barbedWireTextureImage);
+      texture(textures.get("barbedWireTextureImage"));
       textureMode(NORMAL);
 
       noStroke();
@@ -294,7 +298,7 @@ class CircleTrenchDrawer {
 
     noStroke();
 
-    texture(ladderTextureImage);
+    texture(textures.get("ladderTextureImage"));
 
     textureMode(IMAGE);
 

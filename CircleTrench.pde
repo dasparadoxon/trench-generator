@@ -14,6 +14,8 @@ class CircleTrench extends Trench {
   
   int amplitudeMultiplier = 160;
   
+  Battlefield battlefield;
+  
 
   CircleTrench() {
   }
