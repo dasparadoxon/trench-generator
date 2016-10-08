@@ -2,6 +2,8 @@ import java.util.logging.*;
 
 class CircleTrenchWoodWall {
   
+  private final Logger LOGGER = Logger.getLogger( CircleTrenchWoodWall.class.getName() );
+  
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE"; 
 

@@ -2,6 +2,8 @@ import java.util.logging.*;
 
 class CircleTrench extends Trench {
   
+  private final Logger LOGGER = Logger.getLogger( CircleTrench.class.getName() );
+  
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE";
   

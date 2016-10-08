@@ -2,6 +2,8 @@ import java.io.File;
 import java.util.logging.*;
 
 class TrenchToXML {
+  
+  private final Logger LOGGER = Logger.getLogger( TrenchToXML.class.getName() );
 
   XML trenchXml;
 

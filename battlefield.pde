@@ -1,6 +1,10 @@
 import java.util.logging.*;
 
+
+
 class Battlefield {
+  
+  private final Logger LOGGER = Logger.getLogger( Battlefield.class.getName() );
 
   PVector dimensions = new PVector(); 
 
@@ -12,6 +16,8 @@ class Battlefield {
 }
 
 class RowOfBarbedWire {
+  
+  private final Logger LOGGER = Logger.getLogger( RowOfBarbedWire.class.getName() );
 
   PVector centerPosition;
   PVector dimensions;
@@ -23,6 +29,8 @@ class RowOfBarbedWire {
 }
 
 class TrenchWoodWallElement {
+  
+  private final Logger LOGGER = Logger.getLogger( TrenchWoodWallElement.class.getName() );
 
   float rotation;
   PVector centerPosition;
@@ -30,6 +38,8 @@ class TrenchWoodWallElement {
 }
 
 class Pole {
+  
+  private final Logger LOGGER = Logger.getLogger( Pole.class.getName() );
 
   float rotation;
   PVector centerPosition;
@@ -37,6 +47,8 @@ class Pole {
 }
 
 class Ladder {
+  
+  private final Logger LOGGER = Logger.getLogger( Ladder.class.getName() );
 
   PVector topLeft;
   PVector topRight;
@@ -53,6 +65,8 @@ class Ladder {
 }
 
 class SandBag {
+  
+  private final Logger LOGGER = Logger.getLogger( SandBag.class.getName() );
 
   public static final int lengthOfBag = 31;
 

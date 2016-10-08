@@ -4,6 +4,7 @@ public class TrenchWoodWall {
   
   //private static final Logger log = Logger.getLogger( TrenchWoodWall.class.getName() );
   
+  private final Logger LOGGER = Logger.getLogger( TrenchWoodWall.class.getName() );
 
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE"; 

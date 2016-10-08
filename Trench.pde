@@ -27,7 +27,7 @@ class Trench {
 
   Trench() {
     
-    setLogger(LOGGER);
+    setLogger(LOGGER,Trench.class.getName());
     
     LOGGER.log(Level.INFO,"Trench Constructor");
  

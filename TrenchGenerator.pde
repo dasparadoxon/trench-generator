@@ -52,9 +52,9 @@ class TrenchGenerator {
 
   boolean circleModeAvailable = false;
 
-  TrenchGenerator(PeasyCam cameraToUse, ControlP5 guiToUse, PApplet appToUse) {
+  TrenchGenerator(PeasyCam cameraToUse, ControlP5 guiToUse, PApplet appToUse) throws Exception {
 
-    setLogger(LOGGER);
+    setLogger(LOGGER, TrenchGenerator.class.getName());
 
     LOGGER.log(Level.INFO, "Trench Generator Constructor");
 
@@ -66,8 +66,8 @@ class TrenchGenerator {
   }
 
 
-  
-  void setupGenerator() {
+
+  void setupGenerator() throws Exception {
 
     textures = new HashMap<String, PImage>();
 
@@ -86,13 +86,19 @@ class TrenchGenerator {
     regenerate = true;
   }
 
-  void loadTextures() {
+  void loadTextures() throws Exception {
 
     ladderTextureImage = loadImage("ladder.png");
 
+    if (ladderTextureImage == null)
+      throw new Exception("Could not load Ladder Texture");
+
     barbedWireTextureImage = loadImage("stacheldraht.png");
 
-    textures.put("barbedWireTextureImage", ladderTextureImage);
+    if (barbedWireTextureImage == null)
+      throw new Exception("Could not load barbed Wire Texture Image Texture");    
+
+    textures.put("ladderTextureImage", ladderTextureImage);
 
     textures.put("barbedWireTextureImage", barbedWireTextureImage);
   }
@@ -134,7 +140,7 @@ class TrenchGenerator {
 
       regenerate = false;
     }
-    
+
     LOGGER.fine("shapeMode is : "+shapeMode);
 
     if (shapeMode == LINEMODE)
@@ -156,17 +162,20 @@ class TrenchGenerator {
     cp5.addButton("exportToXML")
       .setValue(0)
       .setCaptionLabel("EXPORT TO XML")
-      .setPosition(width-160, 60)
+      .setPosition(width-160, 20)
       .setSize(140, 20)
       ;  
 
-    modeDrownDown = cp5.addDropdownList("modeDropDownFunction")
-      .setPosition(width-160, 20)
-      .setWidth(140)
-      .setCaptionLabel("MODES");
-    ;
+    if (circleModeAvailable) {
+      
+      modeDrownDown = cp5.addDropdownList("modeDropDownFunction")
+        .setPosition(width-160, 40)
+        .setWidth(140)
+        .setCaptionLabel("MODES");
+      ;
 
-    customizeModeDropDown(modeDrownDown);
+      customizeModeDropDown(modeDrownDown);
+    }
 
     trenchBentsSlider = cp5.addSlider("sliderValue")
       .setPosition(20, 20)
@@ -174,6 +183,7 @@ class TrenchGenerator {
       .setValue(7)
       .setWidth(200)
       .setHeight(20)
+      .plugTo(this)
       .setCaptionLabel("TRENCH BENTS");
 
     ;  
@@ -184,6 +194,7 @@ class TrenchGenerator {
       .setValue(800)
       .setWidth(200)
       .setHeight(20)
+      .plugTo(this)
       .setCaptionLabel("BATTLEFIELD DIMENSIONS");
 
     ;
@@ -243,6 +254,8 @@ class TrenchGenerator {
   }
 
   void sliderValue(float trenchBentsSliderValue) {
+    
+    LOGGER.info("Received Slider Value Change for Trent Bents Value !");
 
     if (trenchBentsSliderValue>1) {
 

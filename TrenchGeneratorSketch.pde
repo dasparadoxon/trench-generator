@@ -9,32 +9,16 @@ import controlP5.*;
 import peasy.*;
 import java.util.logging.*;
 
-private final Logger LOGGER = Logger.getLogger( "MAIN" );
+private final Logger LOGGER = Logger.getLogger(getClass().getName() );
 
 TrenchGenerator trenchGenerator;
-
 
 PeasyCam camera;
 ControlP5 cp5;
 
 void setup() {
 
-  //print(LOGGER.getHandlers());
-
-  //System.out.println(Arrays.toStringLOGGER.getHandlers());
-
-  //print(LOGGER.getHandlers().length);
-
-
-  /*Handler cH = new ConsoleHandler();
-   
-   LOGGER.setUseParentHandlers(false);
-   
-   LOGGER.setLevel(Level.INFO);
-   
-   LOGGER.addHandler(cH);*/
-
-  setLogger(LOGGER);
+  setLogger(LOGGER,getClass().getName());
 
   LOGGER.log( Level.INFO, "Setup" );
 
@@ -44,10 +28,21 @@ void setup() {
 
   setUpGUILibrary();
 
-  trenchGenerator = new TrenchGenerator(camera, cp5, this);
+  try {
+
+    trenchGenerator = new TrenchGenerator(camera, cp5, this);
+  } 
+  catch(Exception exception) {
+
+    LOGGER.log(Level.SEVERE, exception.getMessage()+"\n");
+
+    exit();
+  }
 }
 
 void draw() {
+
+  LOGGER.finest("Drawing...");
 
   try {
 
@@ -63,17 +58,23 @@ void draw() {
 
 void setUpCameraLibrary() {
 
+  LOGGER.info("Setting up Camera Library...");
+
   camera = new PeasyCam(this, 0, 0, 0, 500);
 }
 
 void setUpGUILibrary() {
 
+  LOGGER.info("Setting up GUI Library...");
+
   cp5 = new ControlP5(this);
 }
 
-public void setLogger(Logger loggerToSet) {
+// TODO : This has to be put into a base class for all other classes
+public void setLogger(Logger loggerToSet,String fileName) {
 
   loggerToSet.setUseParentHandlers(false);
+
   Handler conHdlr = new ConsoleHandler();
 
   conHdlr.setFormatter(new Formatter() {
@@ -86,4 +87,21 @@ public void setLogger(Logger loggerToSet) {
   }
   );
   loggerToSet.addHandler(conHdlr);
+
+  try {
+    Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
+
+    fileHandler.setFormatter(new Formatter() {
+      public String format(LogRecord record) {
+        return record.getLevel() + "  :  "
+          + record.getSourceClassName() + " -:- "
+          + record.getSourceMethodName() + " -:- "
+          + record.getMessage() + "\n";
+      }
+    }
+    );
+    loggerToSet.addHandler(fileHandler);
+  }
+  catch(Exception exception) {
+  }
 }

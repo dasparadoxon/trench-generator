@@ -1,6 +1,8 @@
 import java.util.logging.*;
 
 class CircleTrenchDrawer extends TrenchDrawer{
+  
+  private final Logger LOGGER = Logger.getLogger( CircleTrenchDrawer.class.getName() );
 
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE";    
