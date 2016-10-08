@@ -149,7 +149,10 @@ class TrenchGenerator {
     if (shapeMode == CIRCLEMODE && circleModeAvailable)
       circleTrenchDrawer.drawTrench();
 
-
+  camera.setMouseControlled(true);
+  if(trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() ) {
+    camera.setMouseControlled(false);
+  }   
 
     gui();
   }
@@ -255,7 +258,7 @@ class TrenchGenerator {
 
   void sliderValue(float trenchBentsSliderValue) {
     
-    LOGGER.info("Received Slider Value Change for Trent Bents Value !");
+    LOGGER.finest("Received Slider Value Change for Trent Bents Value !");
 
     if (trenchBentsSliderValue>1) {
 
@@ -268,6 +271,8 @@ class TrenchGenerator {
   void battleFieldDimensions(float battleFieldDimensionsValue) {
 
     if (battleFieldDimensionsValue>1) {
+      
+      LOGGER.finest("Received battleFieldDimensionsValue Value Change for battleFieldDimensionsValue !");
 
       battlefield.dimensions.set(new PVector(battleFieldDimensionsValue, battleFieldDimensionsValue, 0));
 

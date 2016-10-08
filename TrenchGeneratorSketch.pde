@@ -45,6 +45,8 @@ void draw() {
   LOGGER.finest("Drawing...");
 
   try {
+    
+  
 
     trenchGenerator.draw();
   } 
