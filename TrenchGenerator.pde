@@ -120,7 +120,7 @@ class TrenchGenerator {
 
       LOGGER.log(Level.INFO, "Generating the Trench Data Objects new.");
 
-      TrenchToXML trenchToXML = new TrenchToXML(); 
+      trenchToXML = new TrenchToXML(); 
 
       if (circleModeAvailable) {
 

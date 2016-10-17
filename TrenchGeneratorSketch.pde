@@ -109,38 +109,44 @@ void setUpGUILibrary() {
 public void setLogger(Logger loggerToSet,String fileName, Level level) {
 
   loggerToSet.setUseParentHandlers(false);
-
-  Handler conHdlr = new ConsoleHandler();
   
-  conHdlr.setLevel(level);
-
-  conHdlr.setFormatter(new Formatter() {
-    public String format(LogRecord record) {
-      return record.getLevel() + "  :  "
-        + record.getSourceClassName() + " -:- "
-        + record.getSourceMethodName() + " -:- "
-        + record.getMessage() + "\n";
-    }
-  }
-  );
-  loggerToSet.addHandler(conHdlr);
-
-  try {
-    Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
+  Handler[] handlers = loggerToSet.getHandlers();
+  
+  if(handlers.length == 0){
     
-    fileHandler.setLevel(level);
-
-    fileHandler.setFormatter(new Formatter() {
-      public String format(LogRecord record) {
-        return record.getLevel() + "  :  "
-          + record.getSourceClassName() + " -:- "
-          + record.getSourceMethodName() + " -:- "
-          + record.getMessage() + "\n";
+      Handler conHdlr = new ConsoleHandler();
+      
+      conHdlr.setLevel(level);
+    
+      conHdlr.setFormatter(new Formatter() {
+        public String format(LogRecord record) {
+          return record.getLevel() + "  :  "
+            + record.getSourceClassName() + " -:- "
+            + record.getSourceMethodName() + " -:- "
+            + record.getMessage() + "\n";
+        }
       }
-    }
-    );
-    loggerToSet.addHandler(fileHandler);
-  }
-  catch(Exception exception) {
+      );
+      loggerToSet.addHandler(conHdlr);
+    
+      try {
+        Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
+        
+        fileHandler.setLevel(level);
+    
+        fileHandler.setFormatter(new Formatter() {
+          public String format(LogRecord record) {
+            return record.getLevel() + "  :  "
+              + record.getSourceClassName() + " -:- "
+              + record.getSourceMethodName() + " -:- "
+              + record.getMessage() + "\n";
+          }
+        }
+        );
+        loggerToSet.addHandler(fileHandler);
+      }
+      catch(Exception exception) {
+      }
+      
   }
 }
