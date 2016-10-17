@@ -4,7 +4,9 @@ public class TrenchWoodWall {
   
   //private static final Logger log = Logger.getLogger( TrenchWoodWall.class.getName() );
   
-  private final Logger LOGGER = Logger.getLogger( TrenchWoodWall.class.getName() );
+  //private final Logger LOGGER = Logger.getLogger( TrenchWoodWall.class.getName() ); 
+  
+  private Logger LOGGER;
 
   static final String OUTSIDE = "OUTSIDE";
   static final String INSIDE = "INSIDE"; 
@@ -35,7 +37,17 @@ public class TrenchWoodWall {
 
   TrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags,TrenchToXML trenchToXMLtoUse) throws Exception {
     
+    LOGGER = Logger.getLogger( TrenchWoodWall.class.getName() ); 
+    
+    setLogger(LOGGER,TrenchWoodWall.class.getName(),Level.INFO);
+    
+    LOGGER.setUseParentHandlers(false);
+    
+    LOGGER.info("Generating Trench Wood Wall at "+origin.toString());  
+    
     trenchToXML = trenchToXMLtoUse;
+    
+    if(trenchToXMLtoUse == null)LOGGER.severe("NO VALID XML WRITER SET IN TRENCH WOOD WALL");
     
     poles = new ArrayList<Pole>();
 
@@ -237,5 +249,18 @@ public class TrenchWoodWall {
       trenchToXML.addSandbag(sandbagToXML.centerPosition.x, sandbagToXML.centerPosition.y, sandbagToXML.centerPosition.z, sandbagToXML.rotation);
       
     }
+  }
+  
+  void close(){
+    
+     //get all handlers
+   Handler[] handlers = LOGGER.getHandlers();
+   
+   //remove all handlers
+   for(int i = 0; i < handlers.length; i++)
+   { 
+       LOGGER.removeHandler(handlers[i]);
+       handlers[i].close(); 
+   } 
   }
 }

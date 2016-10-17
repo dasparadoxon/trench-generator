@@ -24,6 +24,8 @@ class TrenchGenerator {
 
   Slider trenchBentsSlider;
   Slider battleFieldDimensionSlider;
+  
+  Button exportButton;
 
   CircleTrench circleTrench;
   CircleTrenchDrawer circleTrenchDrawer;
@@ -54,7 +56,7 @@ class TrenchGenerator {
 
   TrenchGenerator(PeasyCam cameraToUse, ControlP5 guiToUse, PApplet appToUse) throws Exception {
 
-    setLogger(LOGGER, TrenchGenerator.class.getName());
+    setLogger(LOGGER, TrenchGenerator.class.getName(),Level.INFO);
 
     LOGGER.log(Level.INFO, "Trench Generator Constructor");
 
@@ -68,12 +70,14 @@ class TrenchGenerator {
 
 
   void setupGenerator() throws Exception {
+    
+    LOGGER.info("Setting up Trench Generator");
 
     textures = new HashMap<String, PImage>();
 
     battlefield = new Battlefield(1800, 1800);
 
-    trenchToXML = new TrenchToXML();   
+    //trenchToXML = new TrenchToXML();   
 
     numberOfTrenchBents = 7;
 
@@ -104,6 +108,8 @@ class TrenchGenerator {
   }
 
   void exportToXML(float value) {
+    
+    LOGGER.info("Method linked to export Button pressed...");
 
     trenchToXML.saveToFile();
   }
@@ -122,6 +128,7 @@ class TrenchGenerator {
         circleTrench.setBattlefield(battlefield);
         circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
         circleTrench.setTrenchToXML(trenchToXML);
+        
         circleTrenchDrawer = new CircleTrenchDrawer(circleTrench, textures);
       }
 
@@ -130,6 +137,7 @@ class TrenchGenerator {
       lineTrench.setBattlefield(battlefield);
       lineTrench.setNumberOfTrenchBents(numberOfTrenchBents);
       lineTrench.setTrenchToXML(trenchToXML);
+      
       lineTrenchDrawer = new TrenchDrawer(lineTrench, textures);      
 
 
@@ -149,10 +157,11 @@ class TrenchGenerator {
     if (shapeMode == CIRCLEMODE && circleModeAvailable)
       circleTrenchDrawer.drawTrench();
 
-  camera.setMouseControlled(true);
-  if(trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() ) {
-    camera.setMouseControlled(false);
-  }   
+    camera.setMouseControlled(true);
+
+    if (trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() || exportButton.isInside()) {
+      camera.setMouseControlled(false);
+    }   
 
     gui();
   }
@@ -162,15 +171,16 @@ class TrenchGenerator {
 
     cp5.setAutoDraw(false);  
 
-    cp5.addButton("exportToXML")
+    exportButton = cp5.addButton("exportToXML")
       .setValue(0)
       .setCaptionLabel("EXPORT TO XML")
       .setPosition(width-160, 20)
+      .plugTo(this)
       .setSize(140, 20)
       ;  
 
     if (circleModeAvailable) {
-      
+
       modeDrownDown = cp5.addDropdownList("modeDropDownFunction")
         .setPosition(width-160, 40)
         .setWidth(140)
@@ -249,15 +259,18 @@ class TrenchGenerator {
   void gui() {
     hint(DISABLE_DEPTH_TEST);
     camera.beginHUD();
+    pushMatrix();
+    fill(121);
     rect(10, 10, 320, 80);
-    rect(width-170, 10, 160, 80);
+    rect(width-170, 10, 160, 40);
+    popMatrix();
     cp5.draw();
     camera.endHUD();
     hint(ENABLE_DEPTH_TEST);
   }
 
   void sliderValue(float trenchBentsSliderValue) {
-    
+
     LOGGER.finest("Received Slider Value Change for Trent Bents Value !");
 
     if (trenchBentsSliderValue>1) {
@@ -271,7 +284,7 @@ class TrenchGenerator {
   void battleFieldDimensions(float battleFieldDimensionsValue) {
 
     if (battleFieldDimensionsValue>1) {
-      
+
       LOGGER.finest("Received battleFieldDimensionsValue Value Change for battleFieldDimensionsValue !");
 
       battlefield.dimensions.set(new PVector(battleFieldDimensionsValue, battleFieldDimensionsValue, 0));

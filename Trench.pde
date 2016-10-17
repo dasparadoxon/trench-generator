@@ -27,7 +27,7 @@ class Trench {
 
   Trench() {
     
-    setLogger(LOGGER,Trench.class.getName());
+    setLogger(LOGGER,Trench.class.getName(),Level.INFO);
     
     LOGGER.log(Level.INFO,"Trench Constructor");
  
@@ -45,7 +45,12 @@ class Trench {
      battlefield =  battlefieldToSet;
   }
   
-  void setTrenchToXML(TrenchToXML xmlWriterToUse){
+  void setTrenchToXML(TrenchToXML xmlWriterToUse) throws Exception {
+    
+    LOGGER.info("Setting the xmlWriter Object.");
+
+    if(xmlWriterToUse == null)
+      throw new Exception("xmlWriter not valid");
     
     trenchToXML = xmlWriterToUse;
     
@@ -164,6 +169,8 @@ class Trench {
    *
    *************************************************************************************/
   ArrayList<PVector> cloneTrenchLine(ArrayList<PVector> trenchLineToClone, String allignment, int offsetX, int numberOfTrenchBents) {
+    
+    LOGGER.info("Cloning Trench Line with Alignment : "+allignment+"/ Number of Bents : "+numberOfTrenchBents);
 
     int progressionInUnits = 1;
 
@@ -223,6 +230,8 @@ class Trench {
    *
    *************************************************************************************/
   ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) {
+    
+    LOGGER.info("Generating Trench Wall from Trench Line with  : "+(trenchLine.size()-3)+" Trenchbents and 3 outer Trench Line Points");
 
     int wall_height = 100;
 
@@ -274,6 +283,8 @@ class Trench {
    *
    *************************************************************************************/
   ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> left, ArrayList<PVector> right, int offsetX) {
+    
+  LOGGER.info("Generating Trench Floor from two Vector Sets and "+offsetX+" X Offset");
 
     ArrayList<PVector> tempTrenchFloor;
 
@@ -316,7 +327,9 @@ class Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String allignment) throws Exception {
+  ArrayList<TrenchWoodWall> generateTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String alignment) throws Exception {
+    
+    LOGGER.info("Generating "+alignment+" Trench Wood Walls, Ladders:"+hasLadder+" and Sandbags:"+hasSandbags);
 
     ArrayList<TrenchWoodWall> tempTrenchWoodWalls;
 
@@ -335,9 +348,11 @@ class Trench {
 
       if (hasLadder == false)placeLadder = false;
 
-      tempTrenchWoodWall = new TrenchWoodWall(trenchLine.get(trenchBent), trenchLine.get(trenchBent+1), placeLadder, allignment, hasSandbags,trenchToXML);
+      tempTrenchWoodWall = new TrenchWoodWall(trenchLine.get(trenchBent), trenchLine.get(trenchBent+1), placeLadder, alignment, hasSandbags,trenchToXML);
 
       tempTrenchWoodWalls.add(tempTrenchWoodWall);
+      
+      tempTrenchWoodWall.close();
 
       c++;
     }

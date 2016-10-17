@@ -6,22 +6,24 @@ class TrenchToXML {
   private final Logger LOGGER = Logger.getLogger( TrenchToXML.class.getName() );
 
   XML trenchXml;
-
-  boolean debug = true;
-
-  String fileName = "trench.xml";
-
-
+  
   XML sandbagContainer;
   XML woodWallElementsContainer;
 
-  void log(String message) {
-
-    if (debug)
-      print(message+"\n");
-  }
+  String fileName = "trench.xml";
+  
+  int outlines = 0;
 
   TrenchToXML() {
+    
+    setLogger(LOGGER,Trench.class.getName(),Level.INFO);
+    
+    String callerClassName = new Exception().getStackTrace()[1].getClassName();
+    
+    //setLogger(LOGGER, TrenchToXML.class.getName(),Level.FINE);
+    //LOGGER.setLevel(Level.FINEST);
+    
+    LOGGER.info("TrenchToXML called from : "+callerClassName);
 
     setUpXML();
   }
@@ -29,10 +31,14 @@ class TrenchToXML {
   void setUpXML() {
 
     String fileToDelete =  dataPath("")+"/"+fileName;
+    
+    LOGGER.info("XML Output path and filename to delete : "+fileToDelete);
+    LOGGER.setLevel(Level.FINEST);
 
     File f = new File(fileToDelete);
 
     if (f.exists()) {
+      LOGGER.info("XML File exists, deleting.");
       f.delete();
     }    
 
@@ -46,6 +52,10 @@ class TrenchToXML {
   }
 
   XML createOutline(String name, String materialName, String type) {
+    
+    outlines++;
+    
+    LOGGER.info("Creating outline for :"+name+" with material : "+materialName+" and type :"+type);
 
     XML newOutlineToReturn;
 
@@ -80,6 +90,8 @@ class TrenchToXML {
   }
 
   public void addPositionVector(XML parent, float x, float y, float z) {
+    
+    LOGGER.finest("Add Position Vector : X:"+x+" Y:"+y+" Z:"+z);
 
     XML positionVector;
 
@@ -98,6 +110,8 @@ class TrenchToXML {
   }
 
   public void addPositionVector(XML parent, int x, int y, int z) {
+    
+     LOGGER.finest("Add Position Vector INT : X:"+x+" Y:"+y+" Z:"+z);
 
     XML positionVector;
 
@@ -116,6 +130,8 @@ class TrenchToXML {
   }
 
   public XML createSandbagContainer() {
+    
+     LOGGER.fine("Creating Sandbag Container");
 
     XML newSandbagContainerToReturn;
 
@@ -125,6 +141,8 @@ class TrenchToXML {
   }
 
   public XML createWoodWallElementsContainer() {
+    
+    LOGGER.finest("Creating Woodwall Element Container");
 
     XML newWoodWallElementsContainer;
 
@@ -134,6 +152,8 @@ class TrenchToXML {
   }
 
   public void addWoodWallElement(PVector centerPosition, float rotation,float lengthOfElement) {
+    
+    LOGGER.fine("Adding WoodWall Element at "+centerPosition.toString()+" Rotation:"+rotation+" Length :"+lengthOfElement);
 
     XML newWoodWallElementXML;
 
@@ -153,6 +173,8 @@ class TrenchToXML {
   }
 
   public void addLadder(Ladder ladder) {
+    
+    LOGGER.finest("Adding Ladder.");
 
     XML newLadder;
 
@@ -166,6 +188,8 @@ class TrenchToXML {
 
 
   public void addSandbag(float x, float y, float z, float rotation) {
+    
+    LOGGER.finest("Adding Sandbag");
 
     XML newSandbag;
 
@@ -196,7 +220,10 @@ class TrenchToXML {
 
   void saveToFile() {
 
-    log("Save Trench to XML File");
+    LOGGER.info("Save Trench to XML File");
+    LOGGER.info("Number of Shapes : "+outlines);
+    LOGGER.info("Number of Sandbags : "+sandbagContainer.getChildren().length);
+    LOGGER.info("Number of Woodwall Elements :" + woodWallElementsContainer.getChildren().length);
 
     saveXML(trenchXml, dataPath("")+"/"+fileName);
   }

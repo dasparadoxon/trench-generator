@@ -18,7 +18,7 @@ ControlP5 cp5;
 
 void setup() {
 
-  setLogger(LOGGER,getClass().getName());
+  setLogger(LOGGER,getClass().getName(),Level.INFO);
 
   LOGGER.log( Level.INFO, "Setup" );
 
@@ -45,9 +45,6 @@ void draw() {
   LOGGER.finest("Drawing...");
 
   try {
-    
-  
-
     trenchGenerator.draw();
   } 
   catch(Exception exception) {
@@ -73,7 +70,7 @@ void setUpGUILibrary() {
 }
 
 // TODO : This has to be put into a base class for all other classes
-public void setLogger(Logger loggerToSet,String fileName) {
+/*public void setLogger(Logger loggerToSet,String fileName) {
 
   loggerToSet.setUseParentHandlers(false);
 
@@ -92,6 +89,46 @@ public void setLogger(Logger loggerToSet,String fileName) {
 
   try {
     Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
+
+    fileHandler.setFormatter(new Formatter() {
+      public String format(LogRecord record) {
+        return record.getLevel() + "  :  "
+          + record.getSourceClassName() + " -:- "
+          + record.getSourceMethodName() + " -:- "
+          + record.getMessage() + "\n";
+      }
+    }
+    );
+    loggerToSet.addHandler(fileHandler);
+  }
+  catch(Exception exception) {
+  }
+}*/
+
+// TODO : This has to be put into a base class for all other classes
+public void setLogger(Logger loggerToSet,String fileName, Level level) {
+
+  loggerToSet.setUseParentHandlers(false);
+
+  Handler conHdlr = new ConsoleHandler();
+  
+  conHdlr.setLevel(level);
+
+  conHdlr.setFormatter(new Formatter() {
+    public String format(LogRecord record) {
+      return record.getLevel() + "  :  "
+        + record.getSourceClassName() + " -:- "
+        + record.getSourceMethodName() + " -:- "
+        + record.getMessage() + "\n";
+    }
+  }
+  );
+  loggerToSet.addHandler(conHdlr);
+
+  try {
+    Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
+    
+    fileHandler.setLevel(level);
 
     fileHandler.setFormatter(new Formatter() {
       public String format(LogRecord record) {

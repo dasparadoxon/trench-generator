@@ -10,7 +10,7 @@ class TrenchDrawer {
 
   TrenchDrawer() {
 
-    setLogger(LOGGER,TrenchDrawer.class.getName());
+    setLogger(LOGGER,TrenchDrawer.class.getName(),Level.INFO);
 
     LOGGER.log(Level.INFO, "Empty Base Trench Drawer Constructor");
   }
@@ -20,7 +20,7 @@ class TrenchDrawer {
     
     
     
-    setLogger(LOGGER,TrenchDrawer.class.getName());
+    setLogger(LOGGER,TrenchDrawer.class.getName(),Level.INFO);
 
     LOGGER.log(Level.INFO, "Trench Drawer Constructor with Trench Data and "+texturePool.size()+" Textures.");    
     
