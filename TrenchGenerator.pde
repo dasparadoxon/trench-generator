@@ -28,6 +28,7 @@ class TrenchGenerator {
   Slider trenchBentsSlider;
   Slider battleFieldDimensionSlider;
   Slider battleFieldDimensionSlider2;
+  Slider circleRadiusSlider;
 
   Button exportButton;
 
@@ -43,8 +44,8 @@ class TrenchGenerator {
   PImage barbedWireTextureImage;
 
   int numberOfTrenchBents = 10;
-  
   int numberOfCircleSegments = 8;
+  float circleRadius = 250;
 
   DropdownList modeDrownDown;
 
@@ -142,6 +143,7 @@ class TrenchGenerator {
         circleTrench.setBattlefield(battlefield);
         circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
         circleTrench.setTrenchToXML(trenchToXML);
+        circleTrench.setAmplitudeMultiplier((int)circleRadius);
         circleTrench.setCircleSegmentNumber(numberOfCircleSegments);
 
         circleTrenchDrawer = new CircleTrenchDrawer(circleTrench, textures);
@@ -179,7 +181,7 @@ class TrenchGenerator {
 
     camera.setMouseControlled(true);
 
-    if (trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() || exportButton.isInside() || modeDrownDown.isInside()) {
+    if (trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() || exportButton.isInside() || modeDrownDown.isInside() || circleRadiusSlider.isInside()) {
       camera.setMouseControlled(false);
     }   
 
@@ -257,11 +259,11 @@ class TrenchGenerator {
 
     circleModeControllerGroup = cp5.addGroup("circleModeControllsGroup")
     .setLabel("CIRCLE MODE CONTROLLER")
-    .setBarHeight(20)
+    //.setBarHeight(20)
       .setPosition(10, 10)
-      .setBackgroundHeight(75)
+      .setBackgroundHeight(100)
       .setWidth(320)
-      .setHeight(75)
+      .setHeight(100)
       .setBackgroundColor(color(121))
       .hideBar()
       ;
@@ -284,7 +286,17 @@ class TrenchGenerator {
       .setHeight(20)
       .plugTo(this)
       .setGroup(circleModeControllerGroup)
-      .setCaptionLabel("BATTLEFIELD DIMENSIONS");       
+      .setCaptionLabel("BATTLEFIELD DIMENSIONS");    
+      
+    circleRadiusSlider = cp5.addSlider("circleRadiusSlider")
+      .setPosition(10, 70)
+      .setRange(150, 540)
+      .setValue(circleRadius)
+      .setWidth(200)
+      .setHeight(20)
+      .plugTo(this)
+      .setGroup(circleModeControllerGroup)
+      .setCaptionLabel("CIRCLE RADIUS");         
 
 
     if (shapeMode == LINEMODE) {
@@ -373,6 +385,17 @@ class TrenchGenerator {
       regenerate = true;
     }
   }
+  
+  void circleRadiusSlider(float valueCircleRadiusSlider) {
+
+    LOGGER.finest("Received Slider Value Change for Circle Radius !");
+
+
+      circleRadius = (int)valueCircleRadiusSlider;
+
+      regenerate = true;
+
+  }  
 
   void battleFieldDimensions(float battleFieldDimensionsValue) {
 
@@ -403,8 +426,6 @@ class TrenchGenerator {
   void numberOfCircleSegmentsFunction(float segmentNumberToSet) {
     
     LOGGER.info("Number of CircleSegments Slider : "+segmentNumberToSet);
-    
-    //circleTrench.setCircleSegmentNumber((int)circleSegmentNumberToSet);
     
     numberOfCircleSegments = (int)segmentNumberToSet;
     

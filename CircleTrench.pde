@@ -32,6 +32,11 @@ class CircleTrench extends Trench {
     
   }
   
+  void setAmplitudeMultiplier(int amplitudeMultiplierToSet){
+    
+    amplitudeMultiplier = amplitudeMultiplierToSet;
+  }
+  
   void setCircleSegmentNumber(int segmentNumberToSet){
    
     xStepSize = segmentNumberToSet;
