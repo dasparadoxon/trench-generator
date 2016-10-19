@@ -2,6 +2,8 @@ import java.util.logging.*;
 
 class CircleTrench extends Trench {
   
+  int xStepSize = 42;
+  
   private final Logger LOGGER = Logger.getLogger( CircleTrench.class.getName() );
   
   static final String OUTSIDE = "OUTSIDE";
@@ -16,7 +18,7 @@ class CircleTrench extends Trench {
   ArrayList<CircleTrenchWoodWall> outerTrenchWoodWalls;
   ArrayList<CircleTrenchWoodWall> innerTrenchWoodWalls;  
   
-  int amplitudeMultiplier = 160;
+  int amplitudeMultiplier = 460;
   
   Battlefield battlefield;
   
@@ -27,6 +29,12 @@ class CircleTrench extends Trench {
 
     
     LOGGER.fine("Circle Trench Constructor");
+    
+  }
+  
+  void setCircleSegmentNumber(int segmentNumberToSet){
+   
+    xStepSize = segmentNumberToSet;
     
   }
 
@@ -81,7 +89,7 @@ class CircleTrench extends Trench {
     int yOffset = (int)battlefield.dimensions.y / 4;
     int xOffset = (int)battlefield.dimensions.y / 2;
 
-    int xStepSize = 20;
+    
 
     int zOffset = 100;
 

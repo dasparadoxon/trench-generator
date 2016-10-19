@@ -121,7 +121,7 @@ public void setLogger(Logger loggerToSet, String fileName, Level levelToSet) {
 
 void controlEvent(ControlEvent theEvent) {
     
-    LOGGER.info("Drop Down Event");
+    LOGGER.finest("Drop Down Event");
     // DropdownList is of type ControlGroup.
     // A controlEvent will be triggered from inside the ControlGroup class.
     // therefore you need to check the originator of the Event with
