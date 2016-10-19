@@ -18,7 +18,7 @@ ControlP5 cp5;
 
 void setup() {
 
-  setLogger(LOGGER,getClass().getName(),Level.INFO);
+  setLogger(LOGGER, getClass().getName(), Level.INFO);
 
   LOGGER.log( Level.INFO, "Setup" );
 
@@ -53,7 +53,7 @@ void draw() {
     exception.printStackTrace();
     exit();
   }
-  
+
   //exit();
 }
 
@@ -71,28 +71,21 @@ void setUpGUILibrary() {
   cp5 = new ControlP5(this);
 }
 
-// TODO : This has to be put into a base class for all other classes
-/*public void setLogger(Logger loggerToSet,String fileName) {
+public void setLogger(Logger loggerToSet, String fileName, Level levelToSet) {
 
   loggerToSet.setUseParentHandlers(false);
 
-  Handler conHdlr = new ConsoleHandler();
+  Handler[] handlers = loggerToSet.getHandlers();
 
-  conHdlr.setFormatter(new Formatter() {
-    public String format(LogRecord record) {
-      return record.getLevel() + "  :  "
-        + record.getSourceClassName() + " -:- "
-        + record.getSourceMethodName() + " -:- "
-        + record.getMessage() + "\n";
-    }
-  }
-  );
-  loggerToSet.addHandler(conHdlr);
+  LOGGER.fine("Setting Logger :"+loggerToSet.getName()+" L: "+levelToSet.toString()+" | "+handlers.length+" Handlers.");
 
-  try {
-    Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
+  if (handlers.length == 0) {
 
-    fileHandler.setFormatter(new Formatter() {
+    Handler conHdlr = new ConsoleHandler();
+
+    conHdlr.setLevel(levelToSet);
+
+    conHdlr.setFormatter(new Formatter() {
       public String format(LogRecord record) {
         return record.getLevel() + "  :  "
           + record.getSourceClassName() + " -:- "
@@ -101,30 +94,14 @@ void setUpGUILibrary() {
       }
     }
     );
-    loggerToSet.addHandler(fileHandler);
-  }
-  catch(Exception exception) {
-  }
-}*/
+    loggerToSet.addHandler(conHdlr);
 
-// TODO : This has to be put into a base class for all other classes
-public void setLogger(Logger loggerToSet,String fileName, Level levelToSet) {
-  
-  
+    try {
+      Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
 
-  loggerToSet.setUseParentHandlers(false);
-  
-  Handler[] handlers = loggerToSet.getHandlers();
-  
-  LOGGER.fine("Setting Logger :"+loggerToSet.getName()+" L: "+levelToSet.toString()+" | "+handlers.length+" Handlers.");
-  
-  if(handlers.length == 0){
-    
-      Handler conHdlr = new ConsoleHandler();
-      
-      conHdlr.setLevel(levelToSet);
-    
-      conHdlr.setFormatter(new Formatter() {
+      fileHandler.setLevel(levelToSet);
+
+      fileHandler.setFormatter(new Formatter() {
         public String format(LogRecord record) {
           return record.getLevel() + "  :  "
             + record.getSourceClassName() + " -:- "
@@ -133,28 +110,40 @@ public void setLogger(Logger loggerToSet,String fileName, Level levelToSet) {
         }
       }
       );
-      loggerToSet.addHandler(conHdlr);
-    
-      try {
-        Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
-        
-        fileHandler.setLevel(levelToSet);
-    
-        fileHandler.setFormatter(new Formatter() {
-          public String format(LogRecord record) {
-            return record.getLevel() + "  :  "
-              + record.getSourceClassName() + " -:- "
-              + record.getSourceMethodName() + " -:- "
-              + record.getMessage() + "\n";
-          }
-        }
-        );
-        loggerToSet.addHandler(fileHandler);
-      }
-      catch(Exception exception) {
-      }
-      
+      loggerToSet.addHandler(fileHandler);
+    }
+    catch(Exception exception) {
+    }
   }
-  
+
   loggerToSet.setLevel(levelToSet);
 }
+
+void controlEvent(ControlEvent theEvent) {
+    
+    LOGGER.info("Drop Down Event");
+    // DropdownList is of type ControlGroup.
+    // A controlEvent will be triggered from inside the ControlGroup class.
+    // therefore you need to check the originator of the Event with
+    // if (theEvent.isGroup())
+    // to avoid an error message thrown by controlP5.
+
+    if (theEvent.isGroup()) {
+      
+      //println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
+    } else if (theEvent.isController()) {
+      
+      LOGGER.finest("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController().getName());
+
+      if(theEvent.getController().getName()=="modeDropDownFunction"){
+      
+        if (theEvent.getController().getValue() == 0)
+          trenchGenerator.setShapeMode(LINEMODE);
+  
+  
+        if (theEvent.getController().getValue() == 1)
+         trenchGenerator.setShapeMode(CIRCLEMODE);
+         
+      }
+    }
+  }

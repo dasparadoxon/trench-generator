@@ -14,7 +14,7 @@ class TrenchGenerator {
 
   HashMap<String, PImage> textures;
 
-  String shapeMode = LINEMODE;
+  String shapeMode = CIRCLEMODE;
 
   ControlP5 cp5;
 
@@ -88,6 +88,13 @@ class TrenchGenerator {
     stroke(0, 0, 0);
 
     regenerate = true;
+  }
+  
+  public void setShapeMode(String mode){
+   
+       shapeMode = mode;
+       regenerate = true;
+    
   }
 
   void loadTextures() throws Exception {
@@ -166,7 +173,7 @@ class TrenchGenerator {
 
     camera.setMouseControlled(true);
 
-    if (trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() || exportButton.isInside()) {
+    if (trenchBentsSlider.isInside() || battleFieldDimensionSlider.isInside() || exportButton.isInside() || modeDrownDown.isInside()) {
       camera.setMouseControlled(false);
     }   
 
@@ -189,7 +196,7 @@ class TrenchGenerator {
     if (circleModeAvailable) {
 
       modeDrownDown = cp5.addDropdownList("modeDropDownFunction")
-        .setPosition(width-160, 40)
+        .setPosition(width-160, 50)
         .setWidth(140)
         .setCaptionLabel("MODES");
       ;
@@ -237,7 +244,7 @@ class TrenchGenerator {
     //ddl.scroll(0);
     ddl.setColorBackground(color(60));
     ddl.setColorActive(color(255, 128));
-    ddl.setValue(0);
+    ddl.setValue(2);
     ddl.close();
   }
 
@@ -269,7 +276,13 @@ class TrenchGenerator {
     pushMatrix();
     fill(121);
     rect(10, 10, 320, 80);
-    rect(width-170, 10, 160, 40);
+    
+    int rectHeight = 40;
+
+    if(circleModeAvailable)rectHeight = 70;
+    
+     rect(width-170, 10, 160, rectHeight);
+    
     popMatrix();
     cp5.draw();
     camera.endHUD();
@@ -301,24 +314,5 @@ class TrenchGenerator {
   }
 
 
-  void modeDropDownFunction(ControlEvent theEvent) {
-    // DropdownList is of type ControlGroup.
-    // A controlEvent will be triggered from inside the ControlGroup class.
-    // therefore you need to check the originator of the Event with
-    // if (theEvent.isGroup())
-    // to avoid an error message thrown by controlP5.
-
-    if (theEvent.isGroup()) {
-      // check if the Event was triggered from a ControlGroup
-      //println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
-    } else if (theEvent.isController()) {
-      //println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
-
-      if (theEvent.getController().getValue() == 0)
-        shapeMode = LINEMODE;
-
-      if (theEvent.getController().getValue() == 1)
-        shapeMode = CIRCLEMODE;
-    }
-  }
+  
 }

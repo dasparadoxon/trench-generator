@@ -12,7 +12,7 @@ class TrenchDrawer {
 
     setLogger(LOGGER,TrenchDrawer.class.getName(),Level.INFO);
 
-    LOGGER.log(Level.INFO, "Empty Base Trench Drawer Constructor");
+    LOGGER.log(Level.FINE, "Empty Base Trench Drawer Constructor");
   }
   
 

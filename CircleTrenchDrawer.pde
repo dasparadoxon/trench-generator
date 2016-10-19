@@ -14,7 +14,7 @@ class CircleTrenchDrawer extends TrenchDrawer{
 
   CircleTrenchDrawer(CircleTrench trenchToDraw,HashMap<String, PImage> texturePool) {
     
-    setLogger(LOGGER,Trench.class.getName(),Level.FINEST);
+    setLogger(LOGGER,Trench.class.getName(),Level.INFO);
     
     LOGGER.fine("CircleTrenchDrawer Constructor");
     
@@ -26,7 +26,7 @@ class CircleTrenchDrawer extends TrenchDrawer{
 
   void drawTrench() {
     
-    LOGGER.fine("Drawing Circular Trench");
+    LOGGER.finest("Drawing Circular Trench");
 
     background(255, 255, 255);
 
@@ -49,9 +49,9 @@ class CircleTrenchDrawer extends TrenchDrawer{
     drawTrenchFloor(trench.outerTrenchLine, new PVector(0, 1, -100));
     
     
-    //drawTrenchWoodWalls(trench.outerTrenchWoodWalls);
+    drawCircleTrenchWoodWalls(trench.outerTrenchWoodWalls);
     
-    //drawTrenchWoodWalls(trench.innerTrenchWoodWalls);
+    drawCircleTrenchWoodWalls(trench.innerTrenchWoodWalls);
 
 
     /*
@@ -183,11 +183,11 @@ class CircleTrenchDrawer extends TrenchDrawer{
   };
 
 
-  void drawTrenchWoodWalls(ArrayList<TrenchWoodWall> trenchWoodWallsToDraw) {
+  void drawCircleTrenchWoodWalls(ArrayList<CircleTrenchWoodWall> trenchWoodWallsToDraw) {
 
     int i = 0;
 
-    for (TrenchWoodWall trenchWoodWallToDraw : trenchWoodWallsToDraw) {
+    for (CircleTrenchWoodWall trenchWoodWallToDraw : trenchWoodWallsToDraw) {
 
       i++;
 
@@ -226,7 +226,7 @@ class CircleTrenchDrawer extends TrenchDrawer{
       drawSandBags(trenchWoodWallToDraw.sandBags);
     }
 
-    TrenchWoodWall lastWall = trenchWoodWallsToDraw.get(trenchWoodWallsToDraw.size()-1);
+    CircleTrenchWoodWall lastWall = trenchWoodWallsToDraw.get(trenchWoodWallsToDraw.size()-1);
 
     pushMatrix();
 

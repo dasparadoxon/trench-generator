@@ -182,7 +182,7 @@ class CircleTrench extends Trench {
    *************************************************************************************/
   ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> trenchLine) {
     
-    LOGGER.info("Generating Trench Floor...");
+    LOGGER.fine("Generating Trench Floor...");
 
     ArrayList<PVector> tempTrenchFloor;
     
