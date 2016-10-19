@@ -61,7 +61,7 @@ void setUpCameraLibrary() {
 
   LOGGER.info("Setting up Camera Library...");
 
-  camera = new PeasyCam(this, 0, 0, 0, 500);
+  camera = new PeasyCam(this, 200, 0, 0, 1200);
 }
 
 void setUpGUILibrary() {

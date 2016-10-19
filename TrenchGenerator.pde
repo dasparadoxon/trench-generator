@@ -17,7 +17,7 @@ class TrenchGenerator {
 
   HashMap<String, PImage> textures;
 
-  String shapeMode = CIRCLEMODE;
+  String shapeMode = LINEMODE;
 
   ControlP5 cp5;
 
@@ -29,6 +29,7 @@ class TrenchGenerator {
   Slider battleFieldDimensionSlider;
   Slider battleFieldDimensionSlider2;
   Slider circleRadiusSlider;
+  Slider numberOfCircleSegmentsSlider;
 
   Button exportButton;
 
@@ -43,7 +44,7 @@ class TrenchGenerator {
   PImage ladderTextureImage;
   PImage barbedWireTextureImage;
 
-  int numberOfTrenchBents = 10;
+  int numberOfTrenchBents = 15;
   int numberOfCircleSegments = 8;
   float circleRadius = 250;
 
@@ -74,8 +75,6 @@ class TrenchGenerator {
     setupGenerator();
   }
 
-
-
   void setupGenerator() throws Exception {
 
     LOGGER.info("Setting up Trench Generator");
@@ -83,10 +82,6 @@ class TrenchGenerator {
     textures = new HashMap<String, PImage>();
 
     battlefield = new Battlefield(1800, 1800);
-
-    //trenchToXML = new TrenchToXML();   
-
-    numberOfTrenchBents = 7;
 
     setupGUI();
 
@@ -239,8 +234,8 @@ class TrenchGenerator {
 
     trenchBentsSlider = cp5.addSlider("sliderValue")
       .setPosition(10, 10)
-      .setRange(1, 50)
-      .setValue(7)
+      .setRange(5, 50)
+      .setValue(numberOfTrenchBents)
       .setWidth(200)
       .setHeight(20)
       .setGroup(lineModeControllerGroup)
@@ -250,7 +245,7 @@ class TrenchGenerator {
     battleFieldDimensionSlider = cp5.addSlider("battleFieldDimensions")
       .setPosition(10, 40)
       .setRange(600, 4000)
-      .setValue(800)
+      .setValue(battlefield.dimensions.x)
       .setWidth(200)
       .setHeight(20)
       .plugTo(this)
@@ -268,7 +263,7 @@ class TrenchGenerator {
       .hideBar()
       ;
 
-    trenchBentsSlider = cp5.addSlider("numberOfCircleSegmentsFunction")
+    numberOfCircleSegmentsSlider = cp5.addSlider("numberOfCircleSegmentsFunction")
       .setPosition(10, 10)
       .setRange(1, 50)
       .setValue(7)
@@ -281,7 +276,7 @@ class TrenchGenerator {
     battleFieldDimensionSlider2 = cp5.addSlider("battleFieldDimensionsforCircleTrench")
       .setPosition(10, 40)
       .setRange(600, 4000)
-      .setValue(800)
+      .setValue(battlefield.dimensions.x)
       .setWidth(200)
       .setHeight(20)
       .plugTo(this)
