@@ -22,14 +22,31 @@ class CircleTrench extends Trench {
   
 
   CircleTrench() {
+    
+    setLogger(LOGGER,Trench.class.getName(),Level.INFO);
+
+    
+    LOGGER.fine("Circle Trench Constructor");
+    
   }
 
-  void generate() {
+  void generate() throws Exception {
+    
+    LOGGER.info("Generating Circle Trench");
 
     generateTrenchLine();
   }
+  
+  void setBattlefield(Battlefield battlefieldToSet){
+    
+    LOGGER.fine("Setting Battlefield : " + battlefieldToSet.dimensions.toString());
+    
+     battlefield =  battlefieldToSet;
+  }  
 
-  void generateTrenchLine() {
+  void generateTrenchLine() throws Exception {
+    
+    LOGGER.fine("Generating Circle Trench Line");
 
     outerTrenchLine = generateTrenchLine(OUTSIDE);
     innerTrenchLine = generateTrenchLine(INSIDE);
@@ -39,21 +56,28 @@ class CircleTrench extends Trench {
 
     trenchFloor = generateTrenchFloor(outerTrenchLine);
     
-    //outerTrenchWoodWalls = generateTrenchWoodWalls(outerTrenchLine, true, true, OUTSIDE);
-    //innerTrenchWoodWalls = generateTrenchWoodWalls(innerTrenchLine, false, false, INSIDE);
+    outerTrenchWoodWalls = generateCircleTrenchWoodWalls(outerTrenchLine, true, true, OUTSIDE);
+    innerTrenchWoodWalls = generateCircleTrenchWoodWalls(innerTrenchLine, false, false, INSIDE);
     
   }  
 
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<PVector> generateTrenchLine(String alignment) {
+  ArrayList<PVector> generateTrenchLine(String alignment) throws Exception {
+    
+    LOGGER.fine("Generating Circle Trench Line with alignment : "+alignment);
     
     if(alignment == INSIDE)
       amplitudeMultiplier -= trenchWidth;
 
     ArrayList<PVector> circleTrenchPoints = new ArrayList<PVector>();
-
+    
+    if(battlefield == null)
+      throw new Exception("Battlefield in Circle Trench not set !");
+    
+    LOGGER.fine("Battlefield in CircleTrench : " + battlefield.dimensions.toString());
+    
     int yOffset = (int)battlefield.dimensions.y / 4;
     int xOffset = (int)battlefield.dimensions.y / 2;
 
@@ -62,6 +86,8 @@ class CircleTrench extends Trench {
     int zOffset = 100;
 
     int circleSize = 2;
+    
+    
 
     if (alignment == OUTSIDE) {
 
@@ -71,6 +97,8 @@ class CircleTrench extends Trench {
       circleTrenchPoints.add(new PVector(0, battlefield.dimensions.y, zOffset));
       circleTrenchPoints.add(new PVector(0, 0, zOffset));
     }
+    
+     
 
     for (int sinusCounter = 0; sinusCounter < 200; sinusCounter = sinusCounter + xStepSize) {
 
@@ -109,6 +137,8 @@ class CircleTrench extends Trench {
    *
    *************************************************************************************/
   ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) {
+    
+    LOGGER.fine("Generation Circle Trench Wall.");
 
     int wall_height = 100;
 
@@ -151,6 +181,8 @@ class CircleTrench extends Trench {
    *
    *************************************************************************************/
   ArrayList<PVector> generateTrenchFloor(ArrayList<PVector> trenchLine) {
+    
+    LOGGER.info("Generating Trench Floor...");
 
     ArrayList<PVector> tempTrenchFloor;
     
@@ -177,7 +209,9 @@ class CircleTrench extends Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<CircleTrenchWoodWall> generateCicleTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String alignment) {
+  ArrayList<CircleTrenchWoodWall> generateCircleTrenchWoodWalls(ArrayList<PVector> trenchLine, boolean hasLadder, boolean hasSandbags, String alignment) {
+    
+    LOGGER.fine("Generating Circle Trench Wood Wall");
 
     ArrayList<CircleTrenchWoodWall> tempTrenchWoodWalls;
 

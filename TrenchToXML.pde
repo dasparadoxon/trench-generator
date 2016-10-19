@@ -23,7 +23,7 @@ class TrenchToXML {
     //setLogger(LOGGER, TrenchToXML.class.getName(),Level.FINE);
     //LOGGER.setLevel(Level.FINEST);
     
-    LOGGER.info("TrenchToXML called from : "+callerClassName);
+    LOGGER.fine("TrenchToXML called from : "+callerClassName);
 
     setUpXML();
   }
@@ -32,13 +32,13 @@ class TrenchToXML {
 
     String fileToDelete =  dataPath("")+"/"+fileName;
     
-    LOGGER.info("XML Output path and filename to delete : "+fileToDelete);
-    LOGGER.setLevel(Level.FINEST);
+    LOGGER.fine("XML Output path and filename to delete : "+fileToDelete);
+    
 
     File f = new File(fileToDelete);
 
     if (f.exists()) {
-      LOGGER.info("XML File exists, deleting.");
+      LOGGER.fine("XML File exists, deleting.");
       f.delete();
     }    
 
@@ -55,7 +55,7 @@ class TrenchToXML {
     
     outlines++;
     
-    LOGGER.info("Creating outline for :"+name+" with material : "+materialName+" and type :"+type);
+    LOGGER.fine("Creating outline for :"+name+" with material : "+materialName+" and type :"+type);
 
     XML newOutlineToReturn;
 
@@ -73,6 +73,8 @@ class TrenchToXML {
   }
 
   XML createOutline(String name, String materialName) {
+    
+    LOGGER.fine("Creating Outline for : "+name+" with the Material : "+materialName);
 
     XML newOutlineToReturn;
 
@@ -91,7 +93,7 @@ class TrenchToXML {
 
   public void addPositionVector(XML parent, float x, float y, float z) {
     
-    LOGGER.finest("Add Position Vector : X:"+x+" Y:"+y+" Z:"+z);
+    LOGGER.finest("Add Position Vector into : "+parent.getName()+" with position X:"+x+" Y:"+y+" Z:"+z);
 
     XML positionVector;
 
@@ -221,9 +223,9 @@ class TrenchToXML {
   void saveToFile() {
 
     LOGGER.info("Save Trench to XML File");
-    LOGGER.info("Number of Shapes : "+outlines);
-    LOGGER.info("Number of Sandbags : "+sandbagContainer.getChildren().length);
-    LOGGER.info("Number of Woodwall Elements :" + woodWallElementsContainer.getChildren().length);
+    LOGGER.fine("Number of Shapes : "+outlines);
+    LOGGER.fine("Number of Sandbags : "+sandbagContainer.getChildren().length);
+    LOGGER.fine("Number of Woodwall Elements :" + woodWallElementsContainer.getChildren().length);
 
     saveXML(trenchXml, dataPath("")+"/"+fileName);
   }

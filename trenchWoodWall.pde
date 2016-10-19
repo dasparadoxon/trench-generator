@@ -41,9 +41,9 @@ public class TrenchWoodWall {
     
     setLogger(LOGGER,TrenchWoodWall.class.getName(),Level.INFO);
     
-    LOGGER.setUseParentHandlers(false);
+    //LOGGER.setUseParentHandlers(false);
     
-    LOGGER.info("Generating Trench Wood Wall at "+origin.toString());  
+    LOGGER.fine("Generating Trench Wood Wall at "+origin.toString());  
     
     trenchToXML = trenchToXMLtoUse;
     
@@ -209,7 +209,7 @@ public class TrenchWoodWall {
 
     int numberOfBags = (int)floor(lengthOfElement / SandBag.lengthOfBag); 
 
-    //if ((numberOfBags % 2)==0) 
+    //if ((numberOfBags % 3)==0) 
     //  numberOfBags--;
 
     int positionShift = 35;

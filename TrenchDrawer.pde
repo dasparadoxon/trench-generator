@@ -22,7 +22,7 @@ class TrenchDrawer {
     
     setLogger(LOGGER,TrenchDrawer.class.getName(),Level.INFO);
 
-    LOGGER.log(Level.INFO, "Trench Drawer Constructor with Trench Data and "+texturePool.size()+" Textures.");    
+    LOGGER.fine( "Trench Drawer Constructor with Trench Data and "+texturePool.size()+" Textures.");    
     
     textures = texturePool;
 

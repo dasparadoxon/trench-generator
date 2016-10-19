@@ -28,6 +28,10 @@ class CircleTrenchWoodWall {
   ArrayList<SandBag> sandBags = new ArrayList<SandBag>();
 
   CircleTrenchWoodWall(PVector origin, PVector second, boolean addLadder, String alignment, boolean addSandbags) {
+    
+    setLogger(LOGGER,Trench.class.getName(),Level.INFO);
+    
+    LOGGER.fine("CircleTrenchWoodWall Constructor");
 
     hasLadder = addLadder;
     hasSandbags = addSandbags;

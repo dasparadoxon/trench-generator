@@ -22,14 +22,14 @@ class Trench {
   
   int numberOfTrenchBents;
   
-  Battlefield battlefield;
+  public Battlefield battlefield;
   TrenchToXML trenchToXML;
 
   Trench() {
     
     setLogger(LOGGER,Trench.class.getName(),Level.INFO);
     
-    LOGGER.log(Level.INFO,"Trench Constructor");
+    LOGGER.fine("Trench Constructor");
  
     
   }
@@ -41,6 +41,8 @@ class Trench {
   }
   
   void setBattlefield(Battlefield battlefieldToSet){
+    
+    LOGGER.info("Setting Battlefield : " + battlefieldToSet.dimensions.toString());
     
      battlefield =  battlefieldToSet;
   }

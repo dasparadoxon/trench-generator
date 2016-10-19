@@ -24,7 +24,7 @@ class TrenchGenerator {
 
   Slider trenchBentsSlider;
   Slider battleFieldDimensionSlider;
-  
+
   Button exportButton;
 
   CircleTrench circleTrench;
@@ -52,11 +52,11 @@ class TrenchGenerator {
 
   PApplet app;
 
-  boolean circleModeAvailable = false;
+  boolean circleModeAvailable = true;
 
   TrenchGenerator(PeasyCam cameraToUse, ControlP5 guiToUse, PApplet appToUse) throws Exception {
 
-    setLogger(LOGGER, TrenchGenerator.class.getName(),Level.INFO);
+    setLogger(LOGGER, TrenchGenerator.class.getName(), Level.INFO);
 
     LOGGER.log(Level.INFO, "Trench Generator Constructor");
 
@@ -70,7 +70,7 @@ class TrenchGenerator {
 
 
   void setupGenerator() throws Exception {
-    
+
     LOGGER.info("Setting up Trench Generator");
 
     textures = new HashMap<String, PImage>();
@@ -108,7 +108,7 @@ class TrenchGenerator {
   }
 
   void exportToXML(float value) {
-    
+
     LOGGER.info("Method linked to export Button pressed...");
 
     trenchToXML.saveToFile();
@@ -118,35 +118,42 @@ class TrenchGenerator {
 
     if (regenerate) {
 
-      LOGGER.log(Level.INFO, "Generating the Trench Data Objects new.");
+      LOGGER.log(Level.FINE, "Generating the Trench Data Objects new inside the draw (main loop) method.");
 
       trenchToXML = new TrenchToXML(); 
 
-      if (circleModeAvailable) {
+      if (shapeMode == CIRCLEMODE ) {
+        
+        LOGGER.info("CIRCLEMODE");
 
         circleTrench = new CircleTrench();
         circleTrench.setBattlefield(battlefield);
         circleTrench.setNumberOfTrenchBents(numberOfTrenchBents);
         circleTrench.setTrenchToXML(trenchToXML);
-        
+
         circleTrenchDrawer = new CircleTrenchDrawer(circleTrench, textures);
       }
 
+      if (shapeMode == LINEMODE) {
+        
+        LOGGER.info("LINEMODE");
+        
+        lineTrench = new Trench();
+        lineTrench.setBattlefield(battlefield);
+        lineTrench.setNumberOfTrenchBents(numberOfTrenchBents);
+        lineTrench.setTrenchToXML(trenchToXML);
 
-      lineTrench = new Trench();
-      lineTrench.setBattlefield(battlefield);
-      lineTrench.setNumberOfTrenchBents(numberOfTrenchBents);
-      lineTrench.setTrenchToXML(trenchToXML);
-      
-      lineTrenchDrawer = new TrenchDrawer(lineTrench, textures);      
+        lineTrenchDrawer = new TrenchDrawer(lineTrench, textures);      
 
+        lineTrench.generateTrench();
+      }
 
-      lineTrench.generateTrench();
-
-      if (circleModeAvailable) 
+      if (circleModeAvailable && shapeMode == CIRCLEMODE) 
         circleTrench.generateTrench();    
 
       regenerate = false;
+      
+      LOGGER.fine("Finished generating Trench Data for Mode : "+shapeMode);
     }
 
     LOGGER.fine("shapeMode is : "+shapeMode);

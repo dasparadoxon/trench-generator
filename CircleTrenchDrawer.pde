@@ -14,6 +14,10 @@ class CircleTrenchDrawer extends TrenchDrawer{
 
   CircleTrenchDrawer(CircleTrench trenchToDraw,HashMap<String, PImage> texturePool) {
     
+    setLogger(LOGGER,Trench.class.getName(),Level.FINEST);
+    
+    LOGGER.fine("CircleTrenchDrawer Constructor");
+    
     textures = texturePool;
 
     trench = trenchToDraw;
@@ -21,6 +25,8 @@ class CircleTrenchDrawer extends TrenchDrawer{
   
 
   void drawTrench() {
+    
+    LOGGER.fine("Drawing Circular Trench");
 
     background(255, 255, 255);
 

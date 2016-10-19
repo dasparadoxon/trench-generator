@@ -53,6 +53,8 @@ void draw() {
     exception.printStackTrace();
     exit();
   }
+  
+  //exit();
 }
 
 void setUpCameraLibrary() {
@@ -106,17 +108,21 @@ void setUpGUILibrary() {
 }*/
 
 // TODO : This has to be put into a base class for all other classes
-public void setLogger(Logger loggerToSet,String fileName, Level level) {
+public void setLogger(Logger loggerToSet,String fileName, Level levelToSet) {
+  
+  
 
   loggerToSet.setUseParentHandlers(false);
   
   Handler[] handlers = loggerToSet.getHandlers();
   
+  LOGGER.fine("Setting Logger :"+loggerToSet.getName()+" L: "+levelToSet.toString()+" | "+handlers.length+" Handlers.");
+  
   if(handlers.length == 0){
     
       Handler conHdlr = new ConsoleHandler();
       
-      conHdlr.setLevel(level);
+      conHdlr.setLevel(levelToSet);
     
       conHdlr.setFormatter(new Formatter() {
         public String format(LogRecord record) {
@@ -132,7 +138,7 @@ public void setLogger(Logger loggerToSet,String fileName, Level level) {
       try {
         Handler fileHandler = new FileHandler(sketchPath()+"/log/"+fileName);
         
-        fileHandler.setLevel(level);
+        fileHandler.setLevel(levelToSet);
     
         fileHandler.setFormatter(new Formatter() {
           public String format(LogRecord record) {
@@ -149,4 +155,6 @@ public void setLogger(Logger loggerToSet,String fileName, Level level) {
       }
       
   }
+  
+  loggerToSet.setLevel(levelToSet);
 }
