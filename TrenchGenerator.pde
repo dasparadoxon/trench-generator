@@ -17,7 +17,7 @@ class TrenchGenerator {
 
   HashMap<String, PImage> textures;
 
-  String shapeMode = LINEMODE;
+  String shapeMode = CIRCLEMODE;
 
   ControlP5 cp5;
 
@@ -325,6 +325,7 @@ class TrenchGenerator {
     ddl.setColorBackground(color(60));
     ddl.setColorActive(color(255, 128));
     ddl.setValue(2);
+    
     ddl.close();
   }
 

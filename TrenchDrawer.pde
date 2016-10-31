@@ -30,7 +30,7 @@ class TrenchDrawer {
   }
   
 
-  void drawTrench() {
+  void drawTrench() throws Exception {
     
     LOGGER.fine("Drawing Trench.");
 

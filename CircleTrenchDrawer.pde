@@ -1,7 +1,9 @@
-import java.util.logging.*;
+import java.util.logging.*; //<>//
 
-class CircleTrenchDrawer extends TrenchDrawer{
-  
+class CircleTrenchDrawer extends TrenchDrawer {
+
+  boolean outsideOnly = true;
+
   private final Logger LOGGER = Logger.getLogger( CircleTrenchDrawer.class.getName() );
 
   static final String OUTSIDE = "OUTSIDE";
@@ -12,20 +14,20 @@ class CircleTrenchDrawer extends TrenchDrawer{
   CircleTrench trench;
 
 
-  CircleTrenchDrawer(CircleTrench trenchToDraw,HashMap<String, PImage> texturePool) {
-    
-    setLogger(LOGGER,Trench.class.getName(),Level.INFO);
-    
+  CircleTrenchDrawer(CircleTrench trenchToDraw, HashMap<String, PImage> texturePool) {
+
+    setLogger(LOGGER, Trench.class.getName(), Level.FINEST);
+
     LOGGER.fine("CircleTrenchDrawer Constructor");
-    
+
     textures = texturePool;
 
     trench = trenchToDraw;
   }
-  
 
-  void drawTrench() {
-    
+
+  void drawTrench() throws Exception {
+
     LOGGER.finest("Drawing Circular Trench");
 
     background(255, 255, 255);
@@ -34,24 +36,33 @@ class CircleTrenchDrawer extends TrenchDrawer{
     translate(-width/2, -height/2);
     rotateX(PI/4);
 
-    fill(81, 89, 0);
+    LOGGER.finest("Drawing outer Trench Area");
+
+    /* OUTER */
 
     drawTrenchLine(trench.outerTrenchLine, new PVector(0, 1, 0), OUTSIDE);
-    drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
-
-    fill(137, 87, 51);
-
     drawTrenchWalls(trench.outerTrenchWall, new PVector(0, 1, 0), OUTSIDE);
-    drawTrenchWalls(trench.innerTrenchWall, new PVector(0, 1, 0), INSIDE);
 
     fill(111, 111, 0);
 
     drawTrenchFloor(trench.outerTrenchLine, new PVector(0, 1, -100));
-    
-    
     drawCircleTrenchWoodWalls(trench.outerTrenchWoodWalls);
-    
-    drawCircleTrenchWoodWalls(trench.innerTrenchWoodWalls);
+
+    /* INNER */
+
+    if (!outsideOnly) {
+
+      LOGGER.finest("Drawing inner Trench Area");
+
+      fill(81, 89, 0);
+
+      drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
+      drawTrenchWalls(trench.innerTrenchWall, new PVector(0, 1, 0), INSIDE);
+
+      fill(137, 87, 51);
+
+      drawCircleTrenchWoodWalls(trench.innerTrenchWoodWalls);
+    }
 
 
     /*
@@ -82,7 +93,12 @@ class CircleTrenchDrawer extends TrenchDrawer{
   /*************************************************************************************
    *
    *************************************************************************************/
-  void drawTrenchLine(ArrayList<PVector> toDraw, PVector positionToDraw, String alignment) {
+  void drawTrenchLine(ArrayList<PVector> toDraw, PVector positionToDraw, String alignment) throws Exception {
+
+    LOGGER.finest("Drawing Trench Line");
+
+    if (toDraw == null)
+      throw new Exception("Trench to Draw NULL");
 
     pushMatrix();
 
@@ -116,6 +132,8 @@ class CircleTrenchDrawer extends TrenchDrawer{
    *
    *************************************************************************************/
   void drawTrenchFloor(ArrayList<PVector> floorToDraw, PVector positionToDraw) {
+
+    LOGGER.finest("Drawing Trench Floor");
 
     beginShape();
 
@@ -172,7 +190,7 @@ class CircleTrenchDrawer extends TrenchDrawer{
         for (PVector trenchWallPoint : trenchWall) {
 
           //if (c != ringDividerIndex)
-            vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
+          vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
         }
 
         endShape();
