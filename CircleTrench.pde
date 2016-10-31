@@ -3,8 +3,8 @@ import java.util.logging.*;
 class CircleTrench extends Trench {
 
   int xStepSize = 42;
-  
-  boolean outsideOnly = true;
+
+  boolean outsideOnly = false;
 
   private final Logger LOGGER = Logger.getLogger( CircleTrench.class.getName() );
 
@@ -58,16 +58,12 @@ class CircleTrench extends Trench {
   }  
 
   void generateTrenchLine() throws Exception {
-    
-    
 
     LOGGER.fine("Generating Circle Trench Line");
 
-
     outerTrenchLine = generateTrenchLine(OUTSIDE);
 
-
-    outerTrenchWall = generateTrenchWall(outerTrenchLine);
+    outerTrenchWall = generateTrenchWall(outerTrenchLine,OUTSIDE);
 
     trenchFloor = generateTrenchFloor(outerTrenchLine);
 
@@ -76,7 +72,7 @@ class CircleTrench extends Trench {
     if (!outsideOnly) {
 
       innerTrenchLine = generateTrenchLine(INSIDE);
-      innerTrenchWall = generateTrenchWall(innerTrenchLine);
+      innerTrenchWall = generateTrenchWall(innerTrenchLine,INSIDE);
       innerTrenchWoodWalls = generateCircleTrenchWoodWalls(innerTrenchLine, false, false, INSIDE);
     }
   }  
@@ -113,7 +109,7 @@ class CircleTrench extends Trench {
 
     LOGGER.finest("xOffset : "+xOffset+" | yOffset : "+ yOffset + " | zOffset : " + zOffset + " | Circle Size : "+circleSize);
 
-    if (alignment == "BLAH") {
+    if (alignment == "OUTSIDE") {
 
       LOGGER.finest("Adding outside area to the trench points of the outer circle Trench");
 
@@ -124,9 +120,9 @@ class CircleTrench extends Trench {
       circleTrenchPoints.add(new PVector(0, 0, zOffset));
     }
 
+    int firstHalfTurnAngle = 180;
 
-
-    for (int sinusCounter = 0; sinusCounter < 200; sinusCounter = sinusCounter + xStepSize) {
+    for (int sinusCounter = 0; sinusCounter < firstHalfTurnAngle; sinusCounter = sinusCounter + xStepSize) {
 
       float sinusValue = sin(radians(sinusCounter)) * amplitudeMultiplier;
       float cosValue = cos(radians(sinusCounter))*amplitudeMultiplier;
@@ -162,9 +158,11 @@ class CircleTrench extends Trench {
   /*************************************************************************************
    *
    *************************************************************************************/
-  ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine) {
+  ArrayList<ArrayList<PVector>> generateTrenchWall(ArrayList<PVector> trenchLine, String alignment) {
 
     LOGGER.fine("Generation Circle Trench Wall.");
+    
+    int indexOfBentToIgnoreToSeperateOuterWallsFromTrenchWalls = 4;
 
     int wall_height = 100;
 
@@ -174,32 +172,34 @@ class CircleTrench extends Trench {
 
     for (int trenchBent = 0; trenchBent < trenchLine.size()-1; trenchBent++) {
 
-      ArrayList<PVector> tempWall = new ArrayList<PVector>();
+     if (trenchBent != indexOfBentToIgnoreToSeperateOuterWallsFromTrenchWalls || alignment == INSIDE) {
 
-      PVector start = trenchLine.get(trenchBent);
+        ArrayList<PVector> tempWall = new ArrayList<PVector>();
 
-      tempWall.add(start);
+        PVector start = trenchLine.get(trenchBent);
 
-      PVector down = new PVector(start.x, start.y, start.z - wall_height);
+        tempWall.add(start);
 
-      tempWall.add(down);
+        PVector down = new PVector(start.x, start.y, start.z - wall_height);
 
-      PVector oneStepUp = trenchLine.get(trenchBent + 1);
+        tempWall.add(down);
 
-      PVector oneStep = new PVector(oneStepUp.x, oneStepUp.y, oneStepUp.z - wall_height);
+        PVector oneStepUp = trenchLine.get(trenchBent + 1);
 
-      tempWall.add(oneStep);
+        PVector oneStep = new PVector(oneStepUp.x, oneStepUp.y, oneStepUp.z - wall_height);
 
-      tempWall.add(oneStepUp);
+        tempWall.add(oneStep);
 
-      tempWall.add(start);
+        tempWall.add(oneStepUp);
 
-      //if(trenchBent > 4)
-      tempTrenchWall.add(tempWall);
+        tempWall.add(start);
 
-      //print(tempTrenchWall + "\n");
+        //if(trenchBent > 4)
+        tempTrenchWall.add(tempWall);
+
+        //print(tempTrenchWall + "\n");
+      }
     }
-
     return tempTrenchWall;
   }
 

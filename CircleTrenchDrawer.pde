@@ -2,7 +2,7 @@ import java.util.logging.*; //<>//
 
 class CircleTrenchDrawer extends TrenchDrawer {
 
-  boolean outsideOnly = true;
+  boolean outsideOnly = false;
 
   private final Logger LOGGER = Logger.getLogger( CircleTrenchDrawer.class.getName() );
 
@@ -16,11 +16,11 @@ class CircleTrenchDrawer extends TrenchDrawer {
 
   CircleTrenchDrawer(CircleTrench trenchToDraw, HashMap<String, PImage> texturePool) {
 
-    setLogger(LOGGER, Trench.class.getName(), Level.FINEST);
+    setLogger(LOGGER, Trench.class.getName(), Level.INFO);
 
     LOGGER.fine("CircleTrenchDrawer Constructor");
 
-    textures = texturePool;
+    textures = texturePool; //<>//
 
     trench = trenchToDraw;
   }
@@ -58,6 +58,7 @@ class CircleTrenchDrawer extends TrenchDrawer {
 
       drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
       drawTrenchWalls(trench.innerTrenchWall, new PVector(0, 1, 0), INSIDE);
+      
 
       fill(137, 87, 51);
 
@@ -158,10 +159,17 @@ class CircleTrenchDrawer extends TrenchDrawer {
    *
    *************************************************************************************/
   void drawTrenchWalls(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positionToDraw, String alignment) {
+    
+    
 
     int c = 0;
+    int numberOfWalls = wallsToDraw.size();
+    
+    LOGGER.finest("Drawing "+numberOfWalls+" Trench Wall Shapes.");
 
     PVector prevTrench = new PVector();
+    
+    //int indexOfWallConnecting
 
     if (alignment == OUTSIDE) {
 
@@ -170,8 +178,7 @@ class CircleTrenchDrawer extends TrenchDrawer {
         beginShape();
 
         for (PVector trenchWallPoint : trenchWall) {
-
-          if (c != ringDividerIndex)
+                   
             vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
         }
 
