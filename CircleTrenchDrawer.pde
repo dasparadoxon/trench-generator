@@ -1,4 +1,4 @@
-import java.util.logging.*; //<>//
+import java.util.logging.*; //<>// //<>//
 
 class CircleTrenchDrawer extends TrenchDrawer {
 
@@ -20,7 +20,7 @@ class CircleTrenchDrawer extends TrenchDrawer {
 
     LOGGER.fine("CircleTrenchDrawer Constructor");
 
-    textures = texturePool; //<>//
+    textures = texturePool;
 
     trench = trenchToDraw;
   }
@@ -40,8 +40,10 @@ class CircleTrenchDrawer extends TrenchDrawer {
 
     /* OUTER */
 
-    drawTrenchLine(trench.outerTrenchLine, new PVector(0, 1, 0), OUTSIDE);
-    drawTrenchWalls(trench.outerTrenchWall, new PVector(0, 1, 0), OUTSIDE);
+    fill(81, 89, 0);    
+
+    //drawTrenchLine(trench.outerTrenchLine, new PVector(0, 1, 0), OUTSIDE);
+    //drawTrenchWalls(trench.outerTrenchWall, new PVector(0, 1, 0), OUTSIDE);
 
     fill(111, 111, 0);
 
@@ -56,13 +58,12 @@ class CircleTrenchDrawer extends TrenchDrawer {
 
       fill(81, 89, 0);
 
-      drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
-      drawTrenchWalls(trench.innerTrenchWall, new PVector(0, 1, 0), INSIDE);
-      
+      //drawTrenchLine(trench.innerTrenchLine, new PVector(0, 1, 0), INSIDE);
+      //drawTrenchWalls(trench.innerTrenchWall, new PVector(0, 1, 0), INSIDE);
 
       fill(137, 87, 51);
 
-      drawCircleTrenchWoodWalls(trench.innerTrenchWoodWalls);
+      //drawCircleTrenchWoodWalls(trench.innerTrenchWoodWalls);
     }
 
 
@@ -159,16 +160,16 @@ class CircleTrenchDrawer extends TrenchDrawer {
    *
    *************************************************************************************/
   void drawTrenchWalls(ArrayList<ArrayList<PVector>> wallsToDraw, PVector positionToDraw, String alignment) {
-    
-    
+
+
 
     int c = 0;
     int numberOfWalls = wallsToDraw.size();
-    
+
     LOGGER.finest("Drawing "+numberOfWalls+" Trench Wall Shapes.");
 
     PVector prevTrench = new PVector();
-    
+
     //int indexOfWallConnecting
 
     if (alignment == OUTSIDE) {
@@ -178,8 +179,8 @@ class CircleTrenchDrawer extends TrenchDrawer {
         beginShape();
 
         for (PVector trenchWallPoint : trenchWall) {
-                   
-            vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
+
+          vertex(positionToDraw.x + trenchWallPoint.x, positionToDraw.y + trenchWallPoint.y, positionToDraw.z + trenchWallPoint.z);
         }
 
         endShape();

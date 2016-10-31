@@ -95,16 +95,18 @@ class CircleTrenchWoodWall {
 
       theLadder.ladderHeight = -100;
 
-      int allignment_distance = 4;
-      int allignment_distance_bottom = 35;
+      int alignment_distance = 35;
+      int alignment_distance_bottom = 4;
 
       if (alignment=="left") {
 
-        allignment_distance = 35;
-        allignment_distance_bottom = 4;
+        alignment_distance = 25;
+        alignment_distance_bottom = 4;
       }
+      
+      int circleCorrectionOffset = 40;
 
-
+      //centerPos = PVector.add(centerPos,PVector.mult(relNormForLater,20));
 
       theLadder.topLeft = centerPos.copy();
 
@@ -112,7 +114,7 @@ class CircleTrenchWoodWall {
 
       theLadder.topLeft = PVector.add(theLadder.topLeft, PVector.mult(relNormForLater, 15));
 
-      theLadder.topLeft = PVector.add(theLadder.topLeft, PVector.mult(normalVector, allignment_distance));
+      theLadder.topLeft = PVector.add(theLadder.topLeft, PVector.mult(normalVector, alignment_distance - circleCorrectionOffset));
 
 
 
@@ -122,7 +124,7 @@ class CircleTrenchWoodWall {
 
       theLadder.topRight = PVector.add(theLadder.topRight, PVector.mult(relNormForLater, -15));
 
-      theLadder.topRight = PVector.add(theLadder.topRight, PVector.mult(normalVector, allignment_distance));
+      theLadder.topRight = PVector.add(theLadder.topRight, PVector.mult(normalVector, alignment_distance - circleCorrectionOffset ));
 
 
 
@@ -132,7 +134,7 @@ class CircleTrenchWoodWall {
 
       theLadder.bottomLeft = PVector.add(theLadder.bottomLeft, new PVector(0, 0, theLadder.ladderHeight));
 
-      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft, PVector.mult(normalVector, allignment_distance_bottom));
+      theLadder.bottomLeft = PVector.add(theLadder.bottomLeft, PVector.mult(normalVector, alignment_distance_bottom - circleCorrectionOffset));
 
 
       theLadder.bottomRight = centerPos.copy();
@@ -142,7 +144,7 @@ class CircleTrenchWoodWall {
 
       theLadder.bottomRight = PVector.add(theLadder.bottomRight, new PVector(0, 0, theLadder.ladderHeight));
 
-      theLadder.bottomRight = PVector.add(theLadder.bottomRight, PVector.mult(normalVector, allignment_distance_bottom));
+      theLadder.bottomRight = PVector.add(theLadder.bottomRight, PVector.mult(normalVector, alignment_distance_bottom - circleCorrectionOffset));
     }
 
 
